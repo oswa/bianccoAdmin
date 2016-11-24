@@ -10,6 +10,10 @@ package com.biancco.admin.app.exception;
  */
 public class ApplicationException extends RuntimeException {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
      * The message.
      */
     private String messageError;
