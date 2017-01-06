@@ -11,14 +11,12 @@
     <!--bean id="propertyConfigurer"
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
           p:location="/WEB-INF/jdbc.properties" />
-
-<bean id="dataSource"
-    class="org.springframework.jdbc.datasource.DriverManagerDataSource"
-    p:driverClassName="${jdbc.driverClassName}"
-    p:url="${jdbc.url}"
-    p:username="${jdbc.username}"
-    p:password="${jdbc.password}" /-->
-
-    <!-- ADD PERSISTENCE SUPPORT HERE (jpa, hibernate, etc) -->
+	-->
+	
+    <!-- Hibernate configuration-->
+	<import resource="classpath:/db/hibernate.xml" />
+    
+    <!-- DAO beans -->
+	<import resource="classpath:/db/dao.xml" />
 
 </beans>

@@ -7,6 +7,7 @@
   <name>BIANCCO Administrator</name>
   <properties>
 	<spring.version>4.3.3.RELEASE</spring.version>
+	<hibernate.version>5.2.2.Final</hibernate.version>
 	<jackson.version>1.9.10</jackson.version>
 	<jdk.version>1.8</jdk.version>
   </properties>
@@ -26,6 +27,16 @@
         <configuration>
           <warSourceDirectory>webapp</warSourceDirectory>
           <failOnMissingWebXml>false</failOnMissingWebXml>
+        </configuration>
+      </plugin>
+      <!-- For Unit test -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <!-- env -->
+          <argLine>-Des.env=D -Dmock.withoutErrors=true</argLine>
+          <skipTests>true</skipTests>
         </configuration>
       </plugin>
     </plugins>
@@ -49,6 +60,45 @@
 		<artifactId>spring-webmvc</artifactId>
 		<version>${spring.version}</version>
 	</dependency>
+	
+	<!-- Hibernate -->
+	<dependency>
+		<groupId>org.hibernate</groupId>
+		<artifactId>hibernate-entitymanager</artifactId>
+		<version>${hibernate.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.hibernate</groupId>
+		<artifactId>hibernate-core</artifactId>
+		<version>${hibernate.version}</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-tx</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+	
+	<!-- Postgresl -->
+	<dependency>
+  	<groupId>org.postgresql</groupId>
+		<artifactId>postgresql</artifactId>
+		<version>9.4.1212</version>
+	</dependency>
+	
+	<!-- Apache Commons DBCP -->
+    <dependency>
+		<groupId>commons-dbcp</groupId>
+		<artifactId>commons-dbcp</artifactId>
+		<version>1.4</version>
+	</dependency>
+
+	<!-- Spring ORM support -->
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-orm</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
 
 	<!-- Jackson JSON Mapper -->
 	<dependency>
@@ -63,11 +113,21 @@
 		<artifactId>jstl</artifactId>
 		<version>1.2</version>
 	</dependency>
+
 	<!-- javax servlet -->
 	<dependency>
     	<groupId>javax.servlet</groupId>
 	    <artifactId>javax.servlet-api</artifactId>
 	    <version>3.0.1</version>
 	</dependency>
+	
+	<!-- JUnit -->
+	<dependency>
+		<groupId>junit</groupId>
+      	<artifactId>junit</artifactId>
+      	<version>4.12</version>
+      	<type>jar</type>
+      	<scope>test</scope>
+    </dependency>
   </dependencies>
 </project>

@@ -1,5 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <display-name>CentralPaymentsPlatformAdministrator</display-name>
+	
+    <!-- Filter to handle the Hibernate Session -->
+    <filter>
+        <filter-name>hibernateFilter</filter-name>
+        <filter-class>com.biancco.admin.filter.HibernateSessionFilter</filter-class>
+        <init-param>
+            <param-name>singleSession</param-name>
+            <param-value>true</param-value>
+        </init-param>        
+    </filter>
+    <filter-mapping>
+        <filter-name>hibernateFilter</filter-name>
+        <url-pattern>/app/*</url-pattern>
+    </filter-mapping>
+    <!-- Filter to handle the session -->
+    <filter>
+		<filter-name>sessionFilter</filter-name>
+		<filter-class>com.biancco.admin.filter.SessionFilter</filter-class>
+		<init-param>
+			<param-name>URL-Exceptions</param-name>
+			<param-value>/login</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>sessionFilter</filter-name>
+		<servlet-name>dispatcher</servlet-name>
+	</filter-mapping>
+    <!-- Application context -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath*:/spring/applicationContext.xml</param-value>
@@ -7,6 +36,7 @@
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+    <!-- Dispatcher -->
     <servlet>
         <servlet-name>dispatcher</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -20,11 +50,13 @@
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>/app/*</url-pattern>
     </servlet-mapping>
+    <!-- Session timeout -->
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
+    <!-- Initial page -->
     <welcome-file-list>
         <welcome-file>login.jsp</welcome-file>
     </welcome-file-list>

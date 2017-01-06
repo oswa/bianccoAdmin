@@ -26,7 +26,7 @@
   <body>
 
     <div class="container">
-        <form class="form-signin" id="loginForm" method="post" action="${pageContext.request.contextPath}/app/login/signin">
+        <form class="form-signin" id="loginForm" method="post" action="${pageContext.request.contextPath}/login/signin">
             <h4 class="form-signin-heading">BIANCCO Administrador</h4>
             <label for="user" class="sr-only">Usuario</label>
             <input type="text" id="user" name="user" class="form-control" placeholder="User" required autofocus>
