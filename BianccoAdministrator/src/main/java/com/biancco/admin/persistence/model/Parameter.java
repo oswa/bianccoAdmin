@@ -16,34 +16,34 @@ import javax.persistence.Table;
  * @author SOSExcellence.
  */
 @Entity
-@Table(name = "PARAMETERS")
+@Table(name = "parameters")
 public class Parameter {
 	/**
 	 * The identifier.
 	 */
 	@Id
-	@Column(name = "ID_PARAM")
+	@Column(name = "id_param")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long identifier;
 	/**
 	 * The group.
 	 */
-	@Column(name = "GROUP_PARAM")
+	@Column(name = "group_param")
 	private String group;
 	/**
 	 * The name.
 	 */
-	@Column(name = "NAME")
+	@Column(name = "name")
 	private String name;
 	/**
 	 * The value.
 	 */
-	@Column(name = "VALUE_PARAM")
+	@Column(name = "value_param")
 	private String value;
 	/**
 	 * The description.
 	 */
-	@Column(name = "DESCRIPTION")
+	@Column(name = "description")
 	private String description;
 
 	/**
