@@ -8,14 +8,12 @@
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
-    <!--bean id="propertyConfigurer"
-          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
-          p:location="/WEB-INF/jdbc.properties" />
-	-->
-	
+	<!-- Register Autowired annotation -->
+	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
+
     <!-- Hibernate configuration-->
 	<import resource="classpath:/db/hibernate.xml" />
-    
+
     <!-- DAO beans -->
 	<import resource="classpath:/db/dao.xml" />
 

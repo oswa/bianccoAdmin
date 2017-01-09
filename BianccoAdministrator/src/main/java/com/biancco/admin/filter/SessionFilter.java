@@ -32,10 +32,10 @@ public class SessionFilter implements Filter {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void doFilter(ServletRequest arg0, ServletResponse arg1, FilterChain arg2)
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
 			throws IOException, ServletException {
-		// TODO Auto-generated method stub
-
+		System.out.println("do filter...");
+		filterChain.doFilter(request, response);
 	}
 
 	/**
@@ -44,7 +44,7 @@ public class SessionFilter implements Filter {
 	@Override
 	public void init(FilterConfig arg0) throws ServletException {
 		// TODO Auto-generated method stub
-
+		System.out.println("Iinit filter...");
 	}
 
 }
