@@ -18,12 +18,6 @@
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
 		<property name="dataSource" ref="bianccoDS" />
 		<property name="packagesToScan" value="com.biancco.admin.persistence.model"/>
-		<!-- <property name="packagesToScan">
-			<list>
-				<value>com.biancco.admin.persistence.model</value>
-			</list>
-		</property>
-		 -->
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop>

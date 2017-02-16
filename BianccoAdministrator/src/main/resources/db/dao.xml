@@ -6,5 +6,13 @@
     <bean id="ParameterDAO" class="com.biancco.admin.persistence.dao.impl.ParameterDAOImplementation">
 	   <property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
+	
+	<bean id="EmployeeDAO" class="com.biancco.admin.persistence.dao.impl.EmployeeDAOImpl">
+	   <property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+	
+	<bean id="ModuleDAO" class="com.biancco.admin.persistence.dao.impl.ModuleDAOImpl">
+	   <property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
 
 </beans>

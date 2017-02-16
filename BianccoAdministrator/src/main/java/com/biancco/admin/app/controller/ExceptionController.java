@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.biancco.admin.app.exception.ApplicationException;
-import com.biancco.admin.view.model.SimpleResponse;
+import com.biancco.admin.model.view.SimpleResponse;
 
 /**
  * Exception Controller.

@@ -1,7 +1,7 @@
 /**
  * SOSExcellence S.A. de C.V. All rights reserved 2016.
  */
-package com.biancco.admin.view.model;
+package com.biancco.admin.model.view;
 
 /**
  * Simple message.
