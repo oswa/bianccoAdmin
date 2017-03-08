@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.biancco.admin.app.exception.ApplicationException;
+import com.biancco.admin.app.exception.DBException;
 import com.biancco.admin.model.view.SimpleResponse;
 
 /**
@@ -19,18 +20,33 @@ import com.biancco.admin.model.view.SimpleResponse;
  */
 @Controller
 public class ExceptionController {
-    /**
-     * Handles Applications exception.
-     *
-     * @param exception
-     *            The exception.
-     * @return Error view.
-     */
-    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(ApplicationException.class)
-    public @ResponseBody SimpleResponse handleApplicationException(final ApplicationException exception) {
-        SimpleResponse response = new SimpleResponse();
-        response.setMessage(exception.getMessage());
-        return response;
-    }
+	/**
+	 * Handles Applications exception.
+	 *
+	 * @param exception
+	 *            The exception.
+	 * @return Error view.
+	 */
+	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+	@ExceptionHandler(ApplicationException.class)
+	public @ResponseBody SimpleResponse handleApplicationException(final ApplicationException exception) {
+		SimpleResponse response = new SimpleResponse();
+		response.setMessage(exception.getMessage());
+		return response;
+	}
+
+	/**
+	 * Handles DB exception.
+	 *
+	 * @param exception
+	 *            The exception.
+	 * @return Error view.
+	 */
+	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+	@ExceptionHandler(DBException.class)
+	public @ResponseBody SimpleResponse handleDBException(final DBException exception) {
+		SimpleResponse response = new SimpleResponse();
+		response.setMessage(exception.getMessage());
+		return response;
+	}
 }

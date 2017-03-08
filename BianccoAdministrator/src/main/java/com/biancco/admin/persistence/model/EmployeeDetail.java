@@ -4,6 +4,7 @@
 package com.biancco.admin.persistence.model;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -87,6 +88,11 @@ public class EmployeeDetail {
 	 */
 	@Column(name = "ife")
 	private String ife;
+	/**
+	 * The birthdate.
+	 */
+	@Column(name = "date_born")
+	private Timestamp date_born;
 	/**
 	 * The date of the superintendente.
 	 */
@@ -296,7 +302,7 @@ public class EmployeeDetail {
 	/**
 	 * @return the date_superintendente
 	 */
-	public Timestamp getDate_superintendente() {
+	public Date getDate_superintendente() {
 		return date_superintendente;
 	}
 
@@ -311,7 +317,7 @@ public class EmployeeDetail {
 	/**
 	 * @return the date_precio_unitario
 	 */
-	public Timestamp getDate_precio_unitario() {
+	public Date getDate_precio_unitario() {
 		return date_precio_unitario;
 	}
 
@@ -326,7 +332,7 @@ public class EmployeeDetail {
 	/**
 	 * @return the date_firma_registro
 	 */
-	public Timestamp getDate_firma_registro() {
+	public Date getDate_firma_registro() {
 		return date_firma_registro;
 	}
 
@@ -341,7 +347,7 @@ public class EmployeeDetail {
 	/**
 	 * @return the date_firma_vigencia
 	 */
-	public Timestamp getDate_firma_vigencia() {
+	public Date getDate_firma_vigencia() {
 		return date_firma_vigencia;
 	}
 
@@ -351,6 +357,21 @@ public class EmployeeDetail {
 	 */
 	public void setDate_firma_vigencia(Timestamp date_firma_vigencia) {
 		this.date_firma_vigencia = date_firma_vigencia;
+	}
+
+	/**
+	 * @return the date_born.
+	 */
+	public Date getDate_born() {
+		return date_born;
+	}
+
+	/**
+	 * @param date_born
+	 *            the date_born to set.
+	 */
+	public void setDate_born(Timestamp date_born) {
+		this.date_born = date_born;
 	}
 
 	/**

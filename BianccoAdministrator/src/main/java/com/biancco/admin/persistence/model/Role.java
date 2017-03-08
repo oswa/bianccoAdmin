@@ -3,7 +3,7 @@
  */
 package com.biancco.admin.persistence.model;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +13,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Type;
 
 /**
  * Role.
@@ -43,12 +45,13 @@ public class Role {
 	 * Enable flag.
 	 */
 	@Column(name = "enable")
+	@Type(type = "yes_no")
 	private Boolean enable = false;
 	/**
 	 * Permission list.
 	 */
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
-	private Set<Permission> permissions;
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "role")
+	private List<Permission> permissions;
 
 	/**
 	 * @return the idRole.
@@ -113,7 +116,7 @@ public class Role {
 	/**
 	 * @return the modules.
 	 */
-	public Set<Permission> getPermissions() {
+	public List<Permission> getPermissions() {
 		return permissions;
 	}
 
@@ -121,7 +124,7 @@ public class Role {
 	 * @param modules
 	 *            the modules to set.
 	 */
-	public void setPermissions(Set<Permission> permissions) {
+	public void setPermissions(List<Permission> permissions) {
 		this.permissions = permissions;
 	}
 }

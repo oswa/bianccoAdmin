@@ -3,58 +3,79 @@
  */
 package com.biancco.admin.persistence.dao;
 
-import com.biancco.admin.persistence.model.EmployeeDetail;
+import com.biancco.admin.app.exception.DBException;
+import com.biancco.admin.persistence.model.Employee;
 
 /**
- * Manage the persisten info for an employee.
+ * Manage the persistent info for an employee.
  * 
  * @author SOSExcellence.
  *
  */
 public interface EmployeeDAO {
 	/**
-	 * Return an Employee based on its id
+	 * Return an Employee based on its id.
 	 * 
 	 * @param idEmployee
-	 *            the identitifier
-	 * @return the Employee object corresponding to the id
+	 *            the identifier.
+	 * @return the Employee object corresponding to the id.
+	 * @throws DBException
+	 *             If a problem occurs.
 	 */
-	EmployeeDetail getEmployeeById(long idEmployee);
+	Employee getById(long idEmployee) throws DBException;
 
 	/**
-	 * Return an Employee based on its id
+	 * Return an Employee based on its id.
 	 * 
 	 * @param nick
-	 *            the identitifier for the user
+	 *            the identifier for the user.
+	 * @return the Employee object corresponding to the id.
+	 * @throws DBException
+	 *             If a problem occurs.
+	 */
+	Employee getByNick(String nick) throws DBException;
+
+	/**
+	 * Insert a new Employee.
+	 * 
+	 * @param employee
+	 *            The employee.
+	 * @return Employee.
+	 * @throws DBException
+	 *             If a problem occurs.
+	 */
+	Employee save(Employee employee) throws DBException;
+
+	/**
+	 * Delete an Employee from persistent data.
+	 * 
+	 * @param employee
+	 *            the element to delete.
+	 * @throws DBException
+	 *             If a problem occurs.
+	 */
+	void delete(Employee employee) throws DBException;
+
+	/**
+	 * Update an Employee in persistent data.
+	 * 
+	 * @param employee
+	 *            the element to update.
+	 * @throws DBException
+	 *             If a problem occurs.
+	 */
+	void update(Employee employee) throws DBException;
+
+	/**
+	 * Validates the user credentials.
+	 * 
+	 * @param nick
+	 *            The user nick.
 	 * @param pass
-	 *            the password.
-	 * @return the Employee object corresponding to the id
+	 *            The password.
+	 * @return A valid employee.
+	 * @throws DBException
+	 *             If a problem occurs.
 	 */
-	EmployeeDetail getEmployeeByNick(String nick, String pass);
-
-	/**
-	 * Insert a new Employee
-	 * 
-	 * @param Employee
-	 * @return true if successful
-	 */
-	boolean insertEmployee(EmployeeDetail Employee);
-
-	/**
-	 * Delete an Employee from persistent data
-	 * 
-	 * @param Employee
-	 *            the element to delete
-	 * @return true id successful
-	 */
-	boolean deleteEmployee(EmployeeDetail Employee);
-
-	/**
-	 * Update an Employee in persisten data
-	 * 
-	 * @param Employee
-	 *            the element to update
-	 * @return true id successful
-	 */
-	boolean updateEmployee(EmployeeDetail Employee);
+	Employee validateCredentials(String nick, String pass) throws DBException;
 }

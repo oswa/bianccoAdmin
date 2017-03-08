@@ -12,15 +12,18 @@
 
         <title>Biancco Admin</title>
 
-        <!-- Bootstrap core CSS $pageContext.request.contextPath -->
-        <link href="js/lib/bootstrap.min.css" rel="stylesheet">
-        <!-- Custom styles for this template -->
+		<link href="${pageContext.request.contextPath}/js/lib/bootstrap.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/css/signin.css" rel="stylesheet">
+        
+        <script type="text/javascript" src="${pageContext.request.contextPath}/js/utils.js"></script>
+		<!--
+		<link href="js/lib/bootstrap.min.css" rel="stylesheet">
         <link href="css/signin.css" rel="stylesheet">
         
         <script type="text/javascript" src="js/lib/jquery.min.js"></script>
-        <!-- script type="text/javascript" src="js/lib/tether.min.js"></script -->
         <script type="text/javascript" src="js/lib/bootstrap.min.js"></script>
         <script type="text/javascript" src="js/utils.js"></script>
+		 -->
   </head>
 
   <body>
@@ -39,9 +42,17 @@
         			<strong>Error!</strong> <c:out value="${model.message}"/>.
       			</div>
 			</c:if>            
-            <img src="image/footer_biancco_519.png" width="300px"/>
+            <img src="${pageContext.request.contextPath}/image/footer_biancco_519.png" width="300px"/>
         </form>
     </div>
-            
+    
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/lib/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="' + ${pageContext.request.contextPath} + '/js/lib/assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/lib/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="${pageContext.request.contextPath}/js/lib/assets/js/ie10-viewport-bug-workaround.js"></script>
   </body>
 </html>

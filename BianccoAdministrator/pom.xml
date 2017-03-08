@@ -9,7 +9,7 @@
 	<spring.version>4.3.3.RELEASE</spring.version>
 	<hibernate.version>5.2.2.Final</hibernate.version>
 	<jackson.version>1.9.10</jackson.version>
-	<jdk.version>1.8</jdk.version>
+	<jdk.version>1.6</jdk.version>
   </properties>
   <build>
     <plugins>
@@ -33,6 +33,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.12.4</version>
         <configuration>
           <!-- env -->
           <argLine>-Des.env=D -Dmock.withoutErrors=true</argLine>
@@ -42,22 +43,32 @@
     </plugins>
   </build>
   <dependencies>
-	<!-- Spring dependencies -->
+	<!-- Spring dependencies 
 	<dependency>
 		<groupId>org.springframework</groupId>
 		<artifactId>spring-core</artifactId>
 		<version>${spring.version}</version>
 	</dependency>
 
+	
+
+	
+	-->
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-webmvc</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+	
 	<dependency>
 		<groupId>org.springframework</groupId>
 		<artifactId>spring-web</artifactId>
 		<version>${spring.version}</version>
 	</dependency>
-
+	
 	<dependency>
 		<groupId>org.springframework</groupId>
-		<artifactId>spring-webmvc</artifactId>
+		<artifactId>spring-context</artifactId>
 		<version>${spring.version}</version>
 	</dependency>
 	
@@ -67,6 +78,7 @@
 		<artifactId>hibernate-entitymanager</artifactId>
 		<version>${hibernate.version}</version>
 	</dependency>
+	<!-- 
 	<dependency>
 		<groupId>org.hibernate</groupId>
 		<artifactId>hibernate-core</artifactId>
@@ -77,6 +89,13 @@
 		<groupId>org.springframework</groupId>
 		<artifactId>spring-tx</artifactId>
 		<version>${spring.version}</version>
+	</dependency>
+	 -->
+	<!-- Log4j -->
+	<dependency>
+		<groupId>log4j</groupId>
+		<artifactId>log4j</artifactId>
+		<version>1.2.17</version>
 	</dependency>
 	
 	<!-- Postgresl -->

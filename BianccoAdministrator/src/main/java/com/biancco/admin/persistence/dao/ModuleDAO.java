@@ -23,14 +23,13 @@ public interface ModuleDAO {
 	 * @throws DBException
 	 *             If a problem occurs.
 	 */
-	Long save(Module module) throws DBException;
+	Module save(Module module) throws DBException;
 
 	/**
 	 * Updates a module.
 	 * 
 	 * @param module
 	 *            A module.
-	 * @return The identifier saved.
 	 * @throws DBException
 	 *             If a problem occurs.
 	 */
@@ -41,11 +40,21 @@ public interface ModuleDAO {
 	 * 
 	 * @param module
 	 *            A module.
-	 * @return The identifier saved.
 	 * @throws DBException
 	 *             If a problem occurs.
 	 */
 	void delete(Module module) throws DBException;
+
+	/**
+	 * Gets a module by identifier.
+	 * 
+	 * @param module
+	 *            A module.
+	 * @return Module found.
+	 * @throws DBException
+	 *             If a problem occurs.
+	 */
+	Module getById(Long identifier) throws DBException;
 
 	/**
 	 * Gets all modules.

@@ -7,7 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.biancco.admin.app.exception.ApplicationException;
+import com.biancco.admin.app.exception.DBException;
+import com.biancco.admin.model.view.InitialView;
 import com.biancco.admin.model.view.SimpleResponse;
+import com.biancco.admin.persistence.model.Employee;
 
 /**
  * Authentication service.
@@ -25,6 +28,18 @@ public interface AuthenticationService {
 	 * @return Simple response object.
 	 * @throws ApplicationException
 	 *             If a problem occurs.
+	 * @throws DBException
+	 *             If a db problem occurs.
 	 */
-	SimpleResponse validateUser(final HttpServletRequest request, HttpSession session) throws ApplicationException;
+	SimpleResponse validateUser(final HttpServletRequest request, HttpSession session)
+			throws ApplicationException, DBException;
+
+	/**
+	 * Gets the initial view.
+	 * 
+	 * @param employee
+	 *            The employee signed.
+	 * @return Initial view.
+	 */
+	InitialView getInitialView(Employee employee);
 }

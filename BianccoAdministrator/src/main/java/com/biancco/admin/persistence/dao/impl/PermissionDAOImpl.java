@@ -14,17 +14,16 @@ import javax.persistence.criteria.Root;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.biancco.admin.app.exception.DBException;
-import com.biancco.admin.persistence.dao.ModuleDAO;
-import com.biancco.admin.persistence.model.Module;
+import com.biancco.admin.persistence.dao.PermissionDAO;
+import com.biancco.admin.persistence.model.Permission;
 
 /**
- * Module DAO implementation.
- * 
+ *
  * @author SOSExcellence.
  */
-public class ModuleDAOImpl implements ModuleDAO {
+public class PermissionDAOImpl implements PermissionDAO {
 	/**
-	 * Entity Manager.
+	 * Entity Manger.
 	 */
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -34,23 +33,11 @@ public class ModuleDAOImpl implements ModuleDAO {
 	 */
 	@Override
 	@Transactional
-	public Module save(Module module) throws DBException {
+	public Permission save(Permission permission) throws DBException {
 		try {
-			this.entityManager.persist(module);
+			this.entityManager.persist(permission);
 			this.entityManager.flush();
-			return module;
-		} catch (Exception e) {
-			throw new DBException(e);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void update(Module module) throws DBException {
-		try {
-			// this.entityManager.persist(module);
+			return permission;
 		} catch (Exception e) {
 			throw new DBException(e);
 		}
@@ -61,9 +48,22 @@ public class ModuleDAOImpl implements ModuleDAO {
 	 */
 	@Override
 	@Transactional
-	public void delete(Module module) throws DBException {
+	public void update(Permission permission) throws DBException {
 		try {
-			this.entityManager.remove(module);
+			//
+		} catch (Exception e) {
+			throw new DBException(e);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@Transactional
+	public void delete(Permission permission) throws DBException {
+		try {
+			this.entityManager.remove(permission);
 		} catch (Exception e) {
 			throw new DBException(e);
 		}
@@ -74,32 +74,18 @@ public class ModuleDAOImpl implements ModuleDAO {
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public List<Module> getAll() throws DBException {
+	public List<Permission> getAll() throws DBException {
 		try {
 			CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
 
-			CriteriaQuery<Module> q = builder.createQuery(Module.class);
-			Root<Module> root = q.from(Module.class);
+			CriteriaQuery<Permission> q = builder.createQuery(Permission.class);
+			Root<Permission> root = q.from(Permission.class);
 			q.select(root);
-			q.orderBy(builder.asc(root.get("name")));
+			q.orderBy(builder.asc(root.get("role")));
 
 			return this.entityManager.createQuery(q).getResultList();
 		} catch (Exception e) {
 			throw new DBException(e);
 		}
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	@Transactional
-	public Module getById(Long identifier) throws DBException {
-		try {
-			return this.entityManager.find(Module.class, identifier);
-		} catch (Exception e) {
-			throw new DBException(e);
-		}
-	}
-
 }

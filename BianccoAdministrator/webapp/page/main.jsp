@@ -12,20 +12,20 @@
 
     <title>Biancco Main Page</title>
     
-    <link href="../js/lib/bootstrap.min.css" rel="stylesheet">
-    <link href="../js/lib/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-    <link href="../css/app.css" rel="stylesheet">
-    <script src="../js/lib/assets/js/ie-emulation-modes-warning.js"></script>
+    <link href="${pageContext.request.contextPath}/js/lib/bootstrap.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/js/lib/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/app.css" rel="stylesheet">
+    <script src="${pageContext.request.contextPath}/js/lib/assets/js/ie-emulation-modes-warning.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/utils.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/app.js"></script>
     
     <!-- 
-        <link href="js/lib/bootstrap.min.css" rel="stylesheet">
-    
-        <link href="css/signin.css" rel="stylesheet">
-        
-        <script type="text/javascript" src="js/lib/jquery.min.js"></script>
-        <script type="text/javascript" src="js/lib/tether.min.js"></script>
-        <script type="text/javascript" src="js/lib/bootstrap.min.js"></script>
-        <script type="text/javascript" src="js/utils.js"></script>
+        <link href="../js/lib/bootstrap.min.css" rel="stylesheet">
+    	<link href="../js/lib/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    	<link href="../css/app.css" rel="stylesheet">
+    	<script src="../js/lib/assets/js/ie-emulation-modes-warning.js"></script>
+    	<script type="text/javascript" src="../js/utils.js"></script>
+    	<script type="text/javascript" src="../js/app.js"></script>
      -->
 
   </head>
@@ -46,7 +46,7 @@
         </div-->
         <div class="navbar-header">
         	<p class="nav navbar-nav">
-        		<img src="../image/lg_gbiancco.png" width="150px" />
+        		<img src="${pageContext.request.contextPath}/image/lg_gbiancco.png" width="150px" />
            	</p>
            	<p class="nav navbar-nav">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
         </div>
@@ -55,14 +55,9 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">M&oacute;dulos <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="#">Empresas</a></li>
-                <li><a href="#">Calidad</a></li>
-                <li><a href="#">Oficina</a></li>
-                <li><a href="#">Control vehicular</a></li>
-                <li><a href="#">Inventarios</a></li>
-                <li><a href="#">Empleados</a></li>
-                <li><a href="#">Contabilidad</a></li>
-                <li><a href="#">Resultados</a></li>
+              	<c:forEach items="${model.menu}" var="item" varStatus="loop">
+              		<li><a href="#" onclick="goToView(${item.module});"><c:out value="${item.option}"/></a></li>
+              	</c:forEach>
               </ul>
             </li>
             <li class="dropdown">
@@ -75,7 +70,7 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
           	<li>
-          		<p class="navbar-brand">Bienvenido&nbsp;<b>Oswaldo</b>&nbsp;&nbsp;<b>|</b></p>
+          		<p class="navbar-brand">Bienvenido&nbsp;<b><c:out value="${model.name}"/></b>&nbsp;&nbsp;<b>|</b></p>
           	</li>
           	<li>
                 <p class="navbar-btn">
@@ -88,35 +83,30 @@
     </nav>
 
     <div class="container" id="content">
-
-      <div class="page-header">
-        <h3>M&oacute;dulos</h3>
-      </div>
-      <br>
-      <div class="row">
-        <div class="col-md-3" align="center"><div><a href="#"><img alt="Empresas" src="../image/folder-home.png"></a></div>Empresas</div>
-        <div class="col-md-3" align="center"><div><a href="#"><img alt="Calidad" src="../image/sign-check.png"></a></div>Calidad</div>
-        <div class="col-md-3" align="center"><div><a href="#"><img alt="Oficina" src="../image/screen.png"></a></div>Oficina</div>
-        <div class="col-md-3" align="center"><div><a href="#"><img alt="Control vehicular" src="../image/cone.png"></a></div>Control vehicular</div>
-      </div>
-      <br><br>
-      <div class="row">
-        <div class="col-md-3" align="center"><div><a href="#"><img alt="Compras" src="../image/bag.png"></a></div>Compras</div>
-        <div class="col-md-3" align="center"><div><a href="#"><img alt="Empleados" src="../image/users.png"></a></div>Empleados</div>
-        <div class="col-md-3" align="center"><div><a href="#"><img alt="Contabilidad" src="../image/money.png"></a></div>Contabilidad</div>
-        <div class="col-md-3" align="center"><div><a href="#"><img alt="Resultados" src="../image/pie-chart.png"></a></div>Resultados</div>
-      </div>
-
+    	<%@include file="modules.jsp"%>
+    	
+    	<!-- -------------------------------------------------------- -->
+    	
+    	
+    	
+    	<!-- -------------------------------------------------------- -->
+    	
     </div> <!-- /container -->
 
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/lib/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="' + ${pageContext.request.contextPath} + '/js/lib/assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/lib/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="${pageContext.request.contextPath}/js/lib/assets/js/ie10-viewport-bug-workaround.js"></script>
+    <!--
     <script type="text/javascript" src="../js/lib/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../js/lib/assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script type="text/javascript" src="../js/lib/bootstrap.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../js/lib/assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="../js/lib/assets/js/ie10-viewport-bug-workaround.js"></script> 
+     -->
   </body>
 </html>

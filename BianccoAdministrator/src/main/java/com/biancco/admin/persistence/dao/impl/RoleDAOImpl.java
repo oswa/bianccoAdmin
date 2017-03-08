@@ -14,15 +14,15 @@ import javax.persistence.criteria.Root;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.biancco.admin.app.exception.DBException;
-import com.biancco.admin.persistence.dao.ModuleDAO;
-import com.biancco.admin.persistence.model.Module;
+import com.biancco.admin.persistence.dao.RoleDAO;
+import com.biancco.admin.persistence.model.Role;
 
 /**
- * Module DAO implementation.
+ * Role DAO implementation.
  * 
  * @author SOSExcellence.
  */
-public class ModuleDAOImpl implements ModuleDAO {
+public class RoleDAOImpl implements RoleDAO {
 	/**
 	 * Entity Manager.
 	 */
@@ -34,23 +34,11 @@ public class ModuleDAOImpl implements ModuleDAO {
 	 */
 	@Override
 	@Transactional
-	public Module save(Module module) throws DBException {
+	public Role save(Role role) throws DBException {
 		try {
-			this.entityManager.persist(module);
+			this.entityManager.persist(role);
 			this.entityManager.flush();
-			return module;
-		} catch (Exception e) {
-			throw new DBException(e);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void update(Module module) throws DBException {
-		try {
-			// this.entityManager.persist(module);
+			return role;
 		} catch (Exception e) {
 			throw new DBException(e);
 		}
@@ -61,9 +49,22 @@ public class ModuleDAOImpl implements ModuleDAO {
 	 */
 	@Override
 	@Transactional
-	public void delete(Module module) throws DBException {
+	public void update(Role role) throws DBException {
 		try {
-			this.entityManager.remove(module);
+			//
+		} catch (Exception e) {
+			throw new DBException(e);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@Transactional
+	public void delete(Role role) throws DBException {
+		try {
+			this.entityManager.remove(role);
 		} catch (Exception e) {
 			throw new DBException(e);
 		}
@@ -74,12 +75,12 @@ public class ModuleDAOImpl implements ModuleDAO {
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public List<Module> getAll() throws DBException {
+	public List<Role> getAll() throws DBException {
 		try {
 			CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
 
-			CriteriaQuery<Module> q = builder.createQuery(Module.class);
-			Root<Module> root = q.from(Module.class);
+			CriteriaQuery<Role> q = builder.createQuery(Role.class);
+			Root<Role> root = q.from(Role.class);
 			q.select(root);
 			q.orderBy(builder.asc(root.get("name")));
 
@@ -88,18 +89,4 @@ public class ModuleDAOImpl implements ModuleDAO {
 			throw new DBException(e);
 		}
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	@Transactional
-	public Module getById(Long identifier) throws DBException {
-		try {
-			return this.entityManager.find(Module.class, identifier);
-		} catch (Exception e) {
-			throw new DBException(e);
-		}
-	}
-
 }

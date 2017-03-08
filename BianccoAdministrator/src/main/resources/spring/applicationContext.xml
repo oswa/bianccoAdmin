@@ -10,11 +10,13 @@
 
 	<!-- Register Autowired annotation -->
 	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
-
-    <!-- Hibernate configuration-->
+	
+    <!-- JPA/Hibernate configuration-->
 	<import resource="classpath:/db/hibernate.xml" />
 
     <!-- DAO beans -->
 	<import resource="classpath:/db/dao.xml" />
-
+	
+	<!-- Services -->
+	<import resource="classpath:/bean/service.xml" />
 </beans>
