@@ -128,7 +128,7 @@ function showWaitDialog(_msg) {
     	        pleaseWaitDiv.modal();
     	    },
     	    hidePleaseWait: function () {
-    	        pleaseWaitDiv.modal('hide');
+    	    	pleaseWaitDiv.removeClass('fade').modal('hide');
     	    },
     	};
     })();

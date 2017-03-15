@@ -31,8 +31,8 @@ public interface BianccoConstants {
 	 */
 	String MODEL_ATTRIBUTE = "model";
 	/**
-	 * Employee attribute.
+	 * User attribute.
 	 */
-	String ATTR_EMPLOYEE = "employee";
+	String ATTR_USER = "user";
 
 }

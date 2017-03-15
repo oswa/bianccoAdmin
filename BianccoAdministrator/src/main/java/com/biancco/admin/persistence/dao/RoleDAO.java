@@ -48,9 +48,12 @@ public interface RoleDAO {
 	/**
 	 * Gets all roles.
 	 * 
+	 * @param enabledOnly
+	 *            Enabled filter.
+	 * 
 	 * @return A role list.
 	 * @throws DBException
 	 *             If a problem occurs.
 	 */
-	List<Role> getAll() throws DBException;
+	List<Role> getAll(boolean enabledOnly) throws DBException;
 }

@@ -3,8 +3,8 @@
  */
 package com.biancco.admin.persistence.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -32,7 +32,7 @@ public class Employee {
 	/**
 	 * The employee detail.
 	 */
-	@OneToOne(mappedBy = "employee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "employee")
 	private EmployeeDetail employeeDetail;
 	/**
 	 * The role.
@@ -50,6 +50,12 @@ public class Employee {
 	 */
 	@Column(name = "password")
 	private String password;
+	/**
+	 * Enable flag.
+	 */
+	@Column(name = "enable")
+	@Convert(converter = BooleanYNConverter.class)
+	private Boolean enable = false;
 
 	/**
 	 * @return the idEmployee.
@@ -124,5 +130,20 @@ public class Employee {
 	 */
 	public void setEmployeeDetail(EmployeeDetail employeeDetail) {
 		this.employeeDetail = employeeDetail;
+	}
+
+	/**
+	 * @return the enable.
+	 */
+	public Boolean getEnable() {
+		return enable;
+	}
+
+	/**
+	 * @param enable
+	 *            the enable to set.
+	 */
+	public void setEnable(Boolean enable) {
+		this.enable = enable;
 	}
 }

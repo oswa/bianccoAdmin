@@ -13,12 +13,14 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.biancco.admin.app.exception.DBException;
+import com.biancco.admin.app.util.BianccoConstants;
 import com.biancco.admin.model.view.InitialView;
 import com.biancco.admin.model.view.OptionMenu;
 import com.biancco.admin.model.view.SimpleResponse;
 import com.biancco.admin.persistence.dao.EmployeeDAO;
 import com.biancco.admin.persistence.model.Employee;
 import com.biancco.admin.persistence.model.Permission;
+import com.biancco.admin.persistence.model.PermissionType;
 import com.biancco.admin.service.AuthenticationService;
 
 /**
@@ -43,7 +45,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		modules = new HashMap<String, String>();
 		modules.put("EMPRESAS", "company");
 		modules.put("EMPLEADOS", "employee");
-		modules.put("CONFIGURACION", "configuration");
+		// modules.put("CONFIGURACION", "configuration");
 	}
 	/**
 	 * The links.
@@ -57,6 +59,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		icons.put("EMPRESAS", "folder-home.png");
 		icons.put("EMPLEADOS", "users.png");
 	}
+	/**
+	 * Configuration option.
+	 */
+	private static final String CONFIG_OPTION = "CONFIGURACION";
 
 	/**
 	 * {@inheritDoc}
@@ -76,7 +82,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 				response.setMessage("Usuario no encontrado");
 			}
 			// create session
-			session.setAttribute("employee", employee);
+			session.setAttribute(BianccoConstants.ATTR_USER, employee);
 		} else {
 			response.setMessage("Verifica usuario y contraseña y vuelve a intentar");
 			System.out.println("Parametros nulos");
@@ -88,7 +94,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public InitialView getInitialView(Employee employee) {
+	public InitialView getInitialView(Employee employee, HttpSession session) {
 		InitialView view = new InitialView();
 		// assign name
 		String name = employee.getNick();
@@ -99,12 +105,23 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		// extract permissions
 		for (Permission p : employee.getRole().getPermissions()) {
 			String moduleName = p.getModule().getName();
+			if (moduleName.equals(CONFIG_OPTION)) {
+				// set permission to session
+				session.setAttribute("config", true);
+
+				view.setConfigOption(true);
+				continue;
+			}
+			String moduleId = modules.get(moduleName);
+			PermissionType pType = p.getType();
 			OptionMenu o = new OptionMenu();
 			o.setOption(formatOptionMenu(moduleName));
-			o.setType(p.getType());
-			o.setModule(modules.get(moduleName));
+			o.setType(pType);
+			o.setModule(moduleId);
 			o.setIcon(icons.get(moduleName));
 			view.addOption(o);
+			// set permission to session
+			session.setAttribute(moduleId, pType);
 		}
 		return view;
 	}

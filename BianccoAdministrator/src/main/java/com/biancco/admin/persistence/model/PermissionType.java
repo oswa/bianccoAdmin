@@ -11,24 +11,31 @@ public enum PermissionType {
 	/**
 	 * QUERY.
 	 */
-	QUERY("CONSULTA"),
+	QUERY("CONSULTA", "Q"),
 	/**
 	 * MODIFY.
 	 */
-	MODIFY("MOFICACION");
+	MODIFY("MOFICACION", "M");
 	/**
-	 * The name.
+	 * Name.
 	 */
 	private String name;
+	/**
+	 * Type.
+	 */
+	private String type;
 
 	/**
 	 * Constructor.
 	 * 
 	 * @param name
 	 *            the name.
+	 * @param type
+	 *            the type.
 	 */
-	private PermissionType(String name) {
+	private PermissionType(String name, String type) {
 		this.name = name;
+		this.type = type;
 	}
 
 	/**
@@ -36,5 +43,12 @@ public enum PermissionType {
 	 */
 	public String getName() {
 		return name;
+	}
+
+	/**
+	 * @return the type.
+	 */
+	public String getType() {
+		return type;
 	}
 }

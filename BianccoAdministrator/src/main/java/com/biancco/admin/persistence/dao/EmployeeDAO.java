@@ -3,7 +3,10 @@
  */
 package com.biancco.admin.persistence.dao;
 
+import java.util.List;
+
 import com.biancco.admin.app.exception.DBException;
+import com.biancco.admin.model.employee.EmployeeBasicRecord;
 import com.biancco.admin.persistence.model.Employee;
 
 /**
@@ -78,4 +81,13 @@ public interface EmployeeDAO {
 	 *             If a problem occurs.
 	 */
 	Employee validateCredentials(String nick, String pass) throws DBException;
+
+	/**
+	 * Gets all employees (basi record).
+	 * 
+	 * @return A employee list.
+	 * @throws DBException
+	 *             If a problem occurs.
+	 */
+	List<EmployeeBasicRecord> getAll() throws DBException;
 }

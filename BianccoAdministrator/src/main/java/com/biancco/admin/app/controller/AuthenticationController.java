@@ -60,9 +60,9 @@ public class AuthenticationController {
 		// build view
 		ModelAndView view = new ModelAndView("/page/main");
 		// validate session
-		if (session.getAttribute(BianccoConstants.ATTR_EMPLOYEE) != null) {
-			Employee emp = (Employee) session.getAttribute(BianccoConstants.ATTR_EMPLOYEE);
-			InitialView iView = this.authenticationService.getInitialView(emp);
+		if (session.getAttribute(BianccoConstants.ATTR_USER) != null) {
+			Employee emp = (Employee) session.getAttribute(BianccoConstants.ATTR_USER);
+			InitialView iView = this.authenticationService.getInitialView(emp, session);
 			view.addObject(BianccoConstants.MODEL_ATTRIBUTE, iView);
 		} else {
 			view.setViewName("/login");

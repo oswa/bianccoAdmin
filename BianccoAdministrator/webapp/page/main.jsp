@@ -8,7 +8,7 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="BIANCCO Administrator">
     <meta name="author" content="SOSExcellence">
-    <link rel="icon" href="favicon.ico">
+    <link rel="icon" href="${pageContext.request.contextPath}/favicon.ico">
 
     <title>Biancco Main Page</title>
     
@@ -16,8 +16,17 @@
     <link href="${pageContext.request.contextPath}/js/lib/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/app.css" rel="stylesheet">
     <script src="${pageContext.request.contextPath}/js/lib/assets/js/ie-emulation-modes-warning.js"></script>
+    
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/lib/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="${pageContext.request.contextPath}/js/lib/assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/lib/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/lib/assets/js/ie10-viewport-bug-workaround.js"></script>
+    
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/utils.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/app.js"></script>
+    <c:forEach items="${model.menu}" var="item" varStatus="loop">
+    	<script type="text/javascript" src="${pageContext.request.contextPath}/js/${item.module}.js"></script>
+    </c:forEach>
     
     <!-- 
         <link href="../js/lib/bootstrap.min.css" rel="stylesheet">
@@ -56,21 +65,23 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">M&oacute;dulos <span class="caret"></span></a>
               <ul class="dropdown-menu">
               	<c:forEach items="${model.menu}" var="item" varStatus="loop">
-              		<li><a href="#" onclick="goToView(${item.module});"><c:out value="${item.option}"/></a></li>
+              		<li><a href="#" onclick="goToView('${item.module}');"><c:out value="${item.option}"/></a></li>
               	</c:forEach>
               </ul>
             </li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administraci&oacute;n <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Carpetas</a></li>
-                <li><a href="#">Accesos</a></li>
-              </ul>
-            </li>
+            <c:if test="${model.configOption}">
+	            <li class="dropdown">
+	              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administraci&oacute;n <span class="caret"></span></a>
+	              <ul class="dropdown-menu">
+	                <li><a href="#">Carpetas</a></li>
+	                <li><a href="#">Accesos</a></li>
+	              </ul>
+	            </li>
+            </c:if>
           </ul>
           <ul class="nav navbar-nav navbar-right">
           	<li>
-          		<p class="navbar-brand">Bienvenido&nbsp;<b><c:out value="${model.name}"/></b>&nbsp;&nbsp;<b>|</b></p>
+          		<p class="navbar-brand" style="font-size:16px;">Bienvenido&nbsp;<b><c:out value="${model.name}"/></b>&nbsp;&nbsp;<b>|</b></p>
           	</li>
           	<li>
                 <p class="navbar-btn">
@@ -90,18 +101,14 @@
     	
     	
     	<!-- -------------------------------------------------------- -->
-    	
+    	<br>
     </div> <!-- /container -->
 
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/lib/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="' + ${pageContext.request.contextPath} + '/js/lib/assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/lib/bootstrap.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="${pageContext.request.contextPath}/js/lib/assets/js/ie10-viewport-bug-workaround.js"></script>
+    
     <!--
     <script type="text/javascript" src="../js/lib/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../js/lib/assets/js/vendor/jquery.min.js"><\/script>')</script>

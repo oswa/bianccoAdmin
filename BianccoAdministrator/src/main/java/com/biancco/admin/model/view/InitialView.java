@@ -20,6 +20,10 @@ public class InitialView {
 	 * The name.
 	 */
 	private String name;
+	/**
+	 * The config option flag.
+	 */
+	private boolean configOption = false;
 
 	/**
 	 * @return the menu.
@@ -60,5 +64,19 @@ public class InitialView {
 			this.menu = new ArrayList<OptionMenu>();
 		}
 		this.menu.add(option);
+	}
+
+	/**
+	 * @return the configOption.
+	 */
+	public boolean isConfigOption() {
+		return configOption;
+	}
+
+	/**
+	 * @param configOption the configOption to set.
+	 */
+	public void setConfigOption(boolean configOption) {
+		this.configOption = configOption;
 	}
 }

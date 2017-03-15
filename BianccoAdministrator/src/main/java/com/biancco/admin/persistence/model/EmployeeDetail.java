@@ -12,8 +12,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 /**
@@ -36,7 +36,7 @@ public class EmployeeDetail {
 	 * Identifier of employee.
 	 */
 	@OneToOne(fetch = FetchType.LAZY)
-	@PrimaryKeyJoinColumn
+	@JoinColumn(name = "id_employee")
 	private Employee employee;
 	/**
 	 * First Name.
@@ -63,11 +63,6 @@ public class EmployeeDetail {
 	 */
 	@Column(name = "mail")
 	private String mail;
-	/**
-	 * The position of the employee.
-	 */
-	@Column(name = "position")
-	private String position;
 	/**
 	 * The RFC.
 	 */
@@ -113,11 +108,6 @@ public class EmployeeDetail {
 	 */
 	@Column(name = "date_firma_vigencia")
 	private Timestamp date_firma_vigencia;
-	/**
-	 * Enable flag.
-	 */
-	@Column(name = "enable")
-	private Boolean enable;
 
 	/**
 	 * @return the idEmployeeDetail.
@@ -222,21 +212,6 @@ public class EmployeeDetail {
 	 */
 	public void setMail(String mail) {
 		this.mail = mail;
-	}
-
-	/**
-	 * @return the position
-	 */
-	public String getPosition() {
-		return position;
-	}
-
-	/**
-	 * @param position
-	 *            the position to set
-	 */
-	public void setPosition(String position) {
-		this.position = position;
 	}
 
 	/**
@@ -372,20 +347,5 @@ public class EmployeeDetail {
 	 */
 	public void setDate_born(Timestamp date_born) {
 		this.date_born = date_born;
-	}
-
-	/**
-	 * @return the enable
-	 */
-	public Boolean getEnable() {
-		return enable;
-	}
-
-	/**
-	 * @param enable
-	 *            the enable to set
-	 */
-	public void setEnable(Boolean enable) {
-		this.enable = enable;
 	}
 }

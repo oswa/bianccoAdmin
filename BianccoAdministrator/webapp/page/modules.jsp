@@ -13,7 +13,7 @@
 	<c:if test="${loop.index lt 4}">
 		<div class="col-md-3" align="center">
 			<div>
-				<a href="#" onclick="goToView(${item.module});"><img alt="${item.option}" src="${pageContext.request.contextPath}/image/${item.icon}"></a>
+				<a href="#" onclick="goToView('${item.module}');"><img alt="${item.option}" src="${pageContext.request.contextPath}/image/${item.icon}"></a>
 			</div>
 			<c:out value="${item.option}"/>
 		</div>
@@ -29,7 +29,7 @@
 	<c:if test="${loop.index ge 4}">
 		<div class="col-md-3" align="center">
 			<div>
-				<a href="#" onclick="goToView(${item.module});"><img alt="${item.option}" src="../image/${item.icon}"></a>
+				<a href="#" onclick="goToView(${item.module});"><img alt="${item.option}" src="${pageContext.request.contextPath}/image/${item.icon}"></a>
 			</div>
 			<c:out value="${item.option}"/>
 		</div>

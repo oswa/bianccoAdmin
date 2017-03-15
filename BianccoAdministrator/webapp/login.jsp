@@ -8,12 +8,14 @@
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
         <meta name="description" content="BIANCCO Administrator">
         <meta name="author" content="SOSExcellence">
-        <link rel="icon" href="favicon.ico">
+        <link rel="icon" href="${pageContext.request.contextPath}/favicon.ico">
 
         <title>Biancco Admin</title>
 
 		<link href="${pageContext.request.contextPath}/js/lib/bootstrap.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/css/signin.css" rel="stylesheet">
+        
+        <script type="text/javascript" src="${pageContext.request.contextPath}/js/lib/jquery.min.js"></script>
         
         <script type="text/javascript" src="${pageContext.request.contextPath}/js/utils.js"></script>
 		<!--
@@ -49,7 +51,7 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/lib/jquery.min.js"></script>
+    
     <script>window.jQuery || document.write('<script src="' + ${pageContext.request.contextPath} + '/js/lib/assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/lib/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->

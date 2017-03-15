@@ -39,7 +39,9 @@ public interface AuthenticationService {
 	 * 
 	 * @param employee
 	 *            The employee signed.
+	 * @param session
+	 *            The HTTP session.
 	 * @return Initial view.
 	 */
-	InitialView getInitialView(Employee employee);
+	InitialView getInitialView(Employee employee, HttpSession session);
 }

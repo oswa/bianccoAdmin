@@ -1,12 +1,12 @@
 /**
- * Application functions.
+ * Employee module functions. 
  */
 /**
- * Goes to main page by module.
+ * Shows add employee view.
  */
-function goToView(_module) {
+function addEmployee() {
 	jQuery.ajax({
-		url: currentURL() + '/app/' + _module,
+		url: currentURL() + '/app/employee/add',
 		data: $('#user').val(),
         cache: false,
         contentType: 'application/x-www-form-urlencoded',
@@ -27,4 +27,19 @@ function goToView(_module) {
 			hideWaitDialog();
 		}
 	});
+}
+
+/**
+ * Shows employee detail.
+ * @param _emp Employee.
+ */
+function editEmployee(_emp) {
+	//
+}
+
+/**
+ * Saves employee.
+ */
+function saveEmployee() {
+	//
 }

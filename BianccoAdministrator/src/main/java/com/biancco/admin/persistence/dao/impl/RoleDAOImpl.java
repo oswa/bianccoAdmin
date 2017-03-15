@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -75,13 +76,17 @@ public class RoleDAOImpl implements RoleDAO {
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public List<Role> getAll() throws DBException {
+	public List<Role> getAll(boolean enabledOnly) throws DBException {
 		try {
 			CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
 
 			CriteriaQuery<Role> q = builder.createQuery(Role.class);
 			Root<Role> root = q.from(Role.class);
 			q.select(root);
+			if (enabledOnly) {
+				Predicate pEnabled = builder.equal(root.get("enable"), enabledOnly);
+				q.where(pEnabled);
+			}
 			q.orderBy(builder.asc(root.get("name")));
 
 			return this.entityManager.createQuery(q).getResultList();

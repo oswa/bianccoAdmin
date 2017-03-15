@@ -4,13 +4,12 @@
 package com.biancco.admin.persistence.model;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Type;
 
 /**
  * Module.
@@ -41,7 +40,7 @@ public class Module {
 	 * Enable flag.
 	 */
 	@Column(name = "enable")
-	@Type(type = "yes_no")
+	@Convert(converter = BooleanYNConverter.class)
 	private Boolean enable = false;
 
 	/**
