@@ -35,6 +35,7 @@ public class EmployeeDetailDAOImpl implements EmployeeDetailDAO {
 			this.entityManager.flush();
 			return detail;
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new DBException(e);
 		}
 	}

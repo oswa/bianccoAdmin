@@ -7,11 +7,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.biancco.admin.app.exception.ApplicationException;
@@ -62,6 +64,61 @@ public class EmployeeController {
 		// build view
 		ModelAndView view = new ModelAndView("/page/employee/new_edit");
 		view.addObject(BianccoConstants.MODEL_ATTRIBUTE, info);
+		return view;
+	}
+
+	/**
+	 * Shows view to edit employee.
+	 * 
+	 * @param request
+	 *            The HTTP request.
+	 * @param response
+	 *            The HTTP response.
+	 * @param session
+	 *            The HTTP session.
+	 * @return view.
+	 * @throws DBException
+	 *             If a db exception thrown.
+	 * @throws ApplicationException
+	 *             If an application exception thrown.
+	 */
+	@RequestMapping(method = RequestMethod.POST, value = "/edit")
+	public ModelAndView editEmployee(final HttpServletRequest request, final HttpServletResponse response,
+			HttpSession session, @RequestParam(value = "_emp", required = true) long idEmployee)
+			throws ApplicationException, DBException {
+		this.logger.info("Controller | editEmployee " + idEmployee);
+		// get info needed of view
+		EmployeeModuleView info = this.employeeService.getEmployee(session, idEmployee);
+		// build view
+		ModelAndView view = new ModelAndView("/page/employee/new_edit");
+		view.addObject(BianccoConstants.MODEL_ATTRIBUTE, info);
+		return view;
+	}
+
+	/**
+	 * Saves an employee.
+	 * 
+	 * @param request
+	 *            The HTTP request.
+	 * @param response
+	 *            The HTTP response.
+	 * @param session
+	 *            The HTTP session.
+	 * @return view.
+	 * @throws DBException
+	 *             If a db exception thrown.
+	 * @throws ApplicationException
+	 *             If an application exception thrown.
+	 */
+	@RequestMapping(method = RequestMethod.POST, value = "/save")
+	public ModelAndView saveEmployee(final HttpServletRequest request, final HttpServletResponse response,
+			HttpSession session, @RequestParam(value = "_detail", required = true) String detailEncoded,
+			@RequestParam(value = "_role") long idRole) throws ApplicationException, DBException {
+		this.logger.info(
+				"Controller | saveEmployee " + ReflectionToStringBuilder.toString(detailEncoded) + " - " + idRole);
+		this.employeeService.saveEmployee(detailEncoded, idRole);
+		// build view
+		ModelAndView view = this.employeeService.getMainView(session);
 		return view;
 	}
 }

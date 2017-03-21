@@ -3,6 +3,7 @@
  */
 package com.biancco.admin.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,13 +15,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.biancco.admin.app.exception.DBException;
 import com.biancco.admin.app.util.BianccoConstants;
-import com.biancco.admin.model.employee.EmployeeBasicRecord;
+import com.biancco.admin.model.catalog.RoleSimpleRecord;
+import com.biancco.admin.model.employee.EmployeeSimpleRecord;
 import com.biancco.admin.model.view.EmployeeModuleView;
 import com.biancco.admin.persistence.dao.EmployeeDAO;
 import com.biancco.admin.persistence.dao.RoleDAO;
 import com.biancco.admin.persistence.model.Employee;
 import com.biancco.admin.persistence.model.Permission;
-import com.biancco.admin.persistence.model.Role;
 import com.biancco.admin.service.CommonService;
 
 /**
@@ -52,6 +53,10 @@ public class CommonServiceImpl implements CommonService {
 		pages.put("employee", "list");
 		// modules.put("CONFIGURACION", "configuration");
 	}
+	/**
+	 * Roles.
+	 */
+	private static List<RoleSimpleRecord> roles = new ArrayList<RoleSimpleRecord>();
 
 	/**
 	 * {@inheritDoc}
@@ -97,7 +102,7 @@ public class CommonServiceImpl implements CommonService {
 	 * @throws DBException
 	 */
 	private void setEmployees(EmployeeModuleView info) throws DBException {
-		List<EmployeeBasicRecord> result = this.employeeDAO.getAll();
+		List<EmployeeSimpleRecord> result = this.employeeDAO.getAll();
 		info.setEmployees(result);
 	}
 
@@ -122,8 +127,11 @@ public class CommonServiceImpl implements CommonService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Role> getRoles(boolean enabledOnly) throws DBException {
-		return this.roleDAO.getAll(enabledOnly);
+	public List<RoleSimpleRecord> getRoles(boolean enabledOnly) throws DBException {
+		if (roles.isEmpty()) {
+			roles = this.roleDAO.getAll(enabledOnly);
+		}
+		return roles;
 	}
 
 }

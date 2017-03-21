@@ -3,7 +3,7 @@
  */
 package com.biancco.admin.persistence.model;
 
-import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -15,9 +15,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
+import com.biancco.admin.app.util.DateUtils;
 
 /**
- * Employee.
+ * Employee detail.
  * 
  * @author SOSExcellence.
  *
@@ -87,27 +92,33 @@ public class EmployeeDetail {
 	 * The birthdate.
 	 */
 	@Column(name = "date_born")
-	private Timestamp date_born;
+	@Temporal(TemporalType.DATE)
+	private Calendar date_born;
+	/**
+	 * Birthdate with format (yyyy-mm-dd).
+	 */
+	@Transient
+	private String dateBornWithFormat;
 	/**
 	 * The date of the superintendente.
 	 */
 	@Column(name = "date_superintendente")
-	private Timestamp date_superintendente;
+	private Date date_superintendente;
 	/**
 	 * The date of unit price.
 	 */
 	@Column(name = "date_precio_unitario")
-	private Timestamp date_precio_unitario;
+	private Date date_precio_unitario;
 	/**
 	 * The date of register sign.
 	 */
 	@Column(name = "date_firma_registro")
-	private Timestamp date_firma_registro;
+	private Date date_firma_registro;
 	/**
 	 * The date of vigency sign
 	 */
 	@Column(name = "date_firma_vigencia")
-	private Timestamp date_firma_vigencia;
+	private Date date_firma_vigencia;
 
 	/**
 	 * @return the idEmployeeDetail.
@@ -285,7 +296,7 @@ public class EmployeeDetail {
 	 * @param date_superintendente
 	 *            the date_superintendente to set
 	 */
-	public void setDate_superintendente(Timestamp date_superintendente) {
+	public void setDate_superintendente(Date date_superintendente) {
 		this.date_superintendente = date_superintendente;
 	}
 
@@ -300,7 +311,7 @@ public class EmployeeDetail {
 	 * @param date_precio_unitario
 	 *            the date_precio_unitario to set
 	 */
-	public void setDate_precio_unitario(Timestamp date_precio_unitario) {
+	public void setDate_precio_unitario(Date date_precio_unitario) {
 		this.date_precio_unitario = date_precio_unitario;
 	}
 
@@ -315,7 +326,7 @@ public class EmployeeDetail {
 	 * @param date_firma_registro
 	 *            the date_firma_registro to set
 	 */
-	public void setDate_firma_registro(Timestamp date_firma_registro) {
+	public void setDate_firma_registro(Date date_firma_registro) {
 		this.date_firma_registro = date_firma_registro;
 	}
 
@@ -330,14 +341,14 @@ public class EmployeeDetail {
 	 * @param date_firma_vigencia
 	 *            the date_firma_vigencia to set
 	 */
-	public void setDate_firma_vigencia(Timestamp date_firma_vigencia) {
+	public void setDate_firma_vigencia(Date date_firma_vigencia) {
 		this.date_firma_vigencia = date_firma_vigencia;
 	}
 
 	/**
 	 * @return the date_born.
 	 */
-	public Date getDate_born() {
+	public Calendar getDate_born() {
 		return date_born;
 	}
 
@@ -345,7 +356,23 @@ public class EmployeeDetail {
 	 * @param date_born
 	 *            the date_born to set.
 	 */
-	public void setDate_born(Timestamp date_born) {
+	public void setDate_born(Calendar date_born) {
 		this.date_born = date_born;
+	}
+
+	/**
+	 * @return the dateBornWithFormat.
+	 */
+	public String getDateBornWithFormat() {
+		this.dateBornWithFormat = DateUtils.getDateWithFormat("yyyy-MM-dd", date_born.getTime());
+		return dateBornWithFormat;
+	}
+
+	/**
+	 * @param dateBornWithFormat
+	 *            the dateBornWithFormat to set.
+	 */
+	public void setDateBornWithFormat(String dateBornWithFormat) {
+		this.dateBornWithFormat = dateBornWithFormat;
 	}
 }

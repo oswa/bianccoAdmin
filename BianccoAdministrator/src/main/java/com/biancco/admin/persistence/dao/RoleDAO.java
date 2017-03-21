@@ -6,6 +6,7 @@ package com.biancco.admin.persistence.dao;
 import java.util.List;
 
 import com.biancco.admin.app.exception.DBException;
+import com.biancco.admin.model.catalog.RoleSimpleRecord;
 import com.biancco.admin.persistence.model.Role;
 
 /**
@@ -55,5 +56,5 @@ public interface RoleDAO {
 	 * @throws DBException
 	 *             If a problem occurs.
 	 */
-	List<Role> getAll(boolean enabledOnly) throws DBException;
+	List<RoleSimpleRecord> getAll(boolean enabledOnly) throws DBException;
 }

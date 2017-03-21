@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.biancco.admin.app.exception.DBException;
-import com.biancco.admin.persistence.model.Role;
+import com.biancco.admin.model.catalog.RoleSimpleRecord;
 
 /**
  * Common service.
@@ -40,6 +40,6 @@ public interface CommonService {
 	 * @exception DBException
 	 *                If a db exception thrown.
 	 */
-	List<Role> getRoles(boolean enabledOnly) throws DBException;
+	List<RoleSimpleRecord> getRoles(boolean enabledOnly) throws DBException;
 
 }

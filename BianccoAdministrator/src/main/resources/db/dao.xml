@@ -8,5 +8,6 @@
     <bean id="ModuleDAO" class="com.biancco.admin.persistence.dao.impl.ModuleDAOImpl"/>
     <bean id="RoleDAO" class="com.biancco.admin.persistence.dao.impl.RoleDAOImpl"/>
     <bean id="PermissionDAO" class="com.biancco.admin.persistence.dao.impl.PermissionDAOImpl"/>
+    <bean id="EmployeeDetailDAO" class="com.biancco.admin.persistence.dao.impl.EmployeeDetailDAOImpl"/>
 
 </beans>

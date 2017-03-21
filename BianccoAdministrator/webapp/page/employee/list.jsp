@@ -2,6 +2,7 @@
 <div class="page-header">
 	<h1>Empleados</h1>
 </div>
+<div id="messageAlert"></div>
 <table width="100%">
 	<td align="right">
 		<button class="btn btn-primary btn-block" id="addButton"
@@ -18,8 +19,8 @@
 			<thead>
 				<tr>
 					<th width="5%">#</th>
-					<th width="65%">Nombre</th>
-					<th width="20%">Puesto</th>
+					<th width="55%">Nombre</th>
+					<th width="30%">Puesto</th>
 					<th width="5%">Editar</th>
 					<th width="5%">Habilitar</th>
 				</tr>

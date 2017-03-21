@@ -49,7 +49,7 @@ public class Role {
 	/**
 	 * Permission list.
 	 */
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "role")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
 	private List<Permission> permissions;
 
 	/**

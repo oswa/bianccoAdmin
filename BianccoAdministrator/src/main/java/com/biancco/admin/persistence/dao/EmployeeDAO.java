@@ -6,7 +6,7 @@ package com.biancco.admin.persistence.dao;
 import java.util.List;
 
 import com.biancco.admin.app.exception.DBException;
-import com.biancco.admin.model.employee.EmployeeBasicRecord;
+import com.biancco.admin.model.employee.EmployeeSimpleRecord;
 import com.biancco.admin.persistence.model.Employee;
 
 /**
@@ -52,12 +52,12 @@ public interface EmployeeDAO {
 	/**
 	 * Delete an Employee from persistent data.
 	 * 
-	 * @param employee
+	 * @param idEmployee
 	 *            the element to delete.
 	 * @throws DBException
 	 *             If a problem occurs.
 	 */
-	void delete(Employee employee) throws DBException;
+	void delete(long idEmployee) throws DBException;
 
 	/**
 	 * Update an Employee in persistent data.
@@ -89,5 +89,5 @@ public interface EmployeeDAO {
 	 * @throws DBException
 	 *             If a problem occurs.
 	 */
-	List<EmployeeBasicRecord> getAll() throws DBException;
+	List<EmployeeSimpleRecord> getAll() throws DBException;
 }

@@ -9,23 +9,39 @@ package com.biancco.admin.model.view;
  * @author SOSExcellence.
  */
 public class SimpleResponse {
-    /**
-     * The message.
-     */
-    private String message;
+	/**
+	 * The message.
+	 */
+	private String message;
 
-    /**
-     * @return the message.
-     */
-    public String getMessage() {
-        return message;
-    }
+	/**
+	 * Constructor.
+	 */
+	public SimpleResponse() {
+	}
 
-    /**
-     * @param message
-     *            the message to set.
-     */
-    public void setMessage(String message) {
-        this.message = message;
-    }
+	/**
+	 * Constructor.
+	 * 
+	 * @param message
+	 *            Message.
+	 */
+	public SimpleResponse(String message) {
+		this.message = message;
+	}
+
+	/**
+	 * @return the message.
+	 */
+	public String getMessage() {
+		return message;
+	}
+
+	/**
+	 * @param message
+	 *            the message to set.
+	 */
+	public void setMessage(String message) {
+		this.message = message;
+	}
 }

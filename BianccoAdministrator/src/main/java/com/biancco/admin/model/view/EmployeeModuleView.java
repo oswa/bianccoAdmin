@@ -5,10 +5,10 @@ package com.biancco.admin.model.view;
 
 import java.util.List;
 
-import com.biancco.admin.model.employee.EmployeeBasicRecord;
+import com.biancco.admin.model.catalog.RoleSimpleRecord;
+import com.biancco.admin.model.employee.EmployeeSimpleRecord;
 import com.biancco.admin.persistence.model.Employee;
 import com.biancco.admin.persistence.model.PermissionType;
-import com.biancco.admin.persistence.model.Role;
 
 /**
  * Initial information for module views.
@@ -19,7 +19,7 @@ public class EmployeeModuleView {
 	/**
 	 * Employee list.
 	 */
-	private List<EmployeeBasicRecord> employees;
+	private List<EmployeeSimpleRecord> employees;
 	/**
 	 * Permission type.
 	 */
@@ -31,12 +31,12 @@ public class EmployeeModuleView {
 	/**
 	 * Roles.
 	 */
-	private List<Role> roles;
+	private List<RoleSimpleRecord> roles;
 
 	/**
 	 * @return the employees.
 	 */
-	public List<EmployeeBasicRecord> getEmployees() {
+	public List<EmployeeSimpleRecord> getEmployees() {
 		return employees;
 	}
 
@@ -44,7 +44,7 @@ public class EmployeeModuleView {
 	 * @param result
 	 *            the employees to set.
 	 */
-	public void setEmployees(List<EmployeeBasicRecord> employees) {
+	public void setEmployees(List<EmployeeSimpleRecord> employees) {
 		this.employees = employees;
 	}
 
@@ -81,7 +81,7 @@ public class EmployeeModuleView {
 	/**
 	 * @return the roles.
 	 */
-	public List<Role> getRoles() {
+	public List<RoleSimpleRecord> getRoles() {
 		return roles;
 	}
 
@@ -89,7 +89,7 @@ public class EmployeeModuleView {
 	 * @param roles
 	 *            the roles to set.
 	 */
-	public void setRoles(List<Role> roles) {
+	public void setRoles(List<RoleSimpleRecord> roles) {
 		this.roles = roles;
 	}
 

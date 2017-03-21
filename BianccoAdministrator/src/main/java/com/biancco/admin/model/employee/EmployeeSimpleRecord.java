@@ -8,7 +8,7 @@ package com.biancco.admin.model.employee;
  * 
  * @author SOSExcellence.
  */
-public class EmployeeBasicRecord {
+public class EmployeeSimpleRecord {
 	/**
 	 * Identifier.
 	 */
@@ -50,7 +50,7 @@ public class EmployeeBasicRecord {
 	 * @param enable
 	 *            Enable flag.
 	 */
-	public EmployeeBasicRecord(long id, String name, String lastName, String nick, String roleName, Boolean enable) {
+	public EmployeeSimpleRecord(long id, String name, String lastName, String nick, String roleName, Boolean enable) {
 		this.id = id;
 		this.name = name;
 		this.lastName = lastName;

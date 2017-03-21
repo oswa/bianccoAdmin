@@ -17,7 +17,7 @@ import javax.persistence.criteria.Root;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.biancco.admin.app.exception.DBException;
-import com.biancco.admin.model.employee.EmployeeBasicRecord;
+import com.biancco.admin.model.employee.EmployeeSimpleRecord;
 import com.biancco.admin.persistence.dao.EmployeeDAO;
 import com.biancco.admin.persistence.model.Employee;
 import com.biancco.admin.persistence.model.EmployeeDetail;
@@ -57,6 +57,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			this.entityManager.flush();
 			return employee;
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new DBException(e);
 		}
 	}
@@ -68,10 +69,12 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	 */
 	@Override
 	@Transactional
-	public void delete(Employee employee) throws DBException {
+	public void delete(long idEmployee) throws DBException {
 		try {
-			this.entityManager.remove(employee);
+			Employee e = this.entityManager.getReference(Employee.class, idEmployee);
+			this.entityManager.remove(e);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new DBException(e);
 		}
 	}
@@ -127,10 +130,10 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public List<EmployeeBasicRecord> getAll() throws DBException {
+	public List<EmployeeSimpleRecord> getAll() throws DBException {
 		try {
 			CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
-			CriteriaQuery<EmployeeBasicRecord> criteria = builder.createQuery(EmployeeBasicRecord.class);
+			CriteriaQuery<EmployeeSimpleRecord> criteria = builder.createQuery(EmployeeSimpleRecord.class);
 
 			Root<Employee> e = criteria.from(Employee.class);
 			// join table(s)
@@ -144,7 +147,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			Path<String> pathRole = joinRole.get("name");
 			Path<Boolean> pathEnable = e.get("enable");
 
-			criteria.select(builder.construct(EmployeeBasicRecord.class, pathId, pathName, pathLastName, pathNick,
+			criteria.select(builder.construct(EmployeeSimpleRecord.class, pathId, pathName, pathLastName, pathNick,
 					pathRole, pathEnable));
 			// conditions
 			// Predicate pEnabled = builder.equal(e.get("enable"), true);

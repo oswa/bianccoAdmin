@@ -88,12 +88,12 @@ function checkError(xhr) {
 	} else {
 		try {
 			var object = JSON.parse(xhr.responseText);
-			showWaitDialog(object.responseDescription);
+			alert(object.messaje);
 		} catch(e) {
 			if (typeof console != "undefined") {
 				console.log('error: ' + e.name + ': ' + e.message);
 			}
-			showWaitDialog('Ha ocurrido un problema en la aplicación, contacte a un administrador.');
+			alert('Ha ocurrido un problema en la aplicación, contacte a un administrador.');
 		}
 	}
 }
@@ -106,7 +106,7 @@ var _waitDialog;
  */
 function showWaitDialog(_msg) {
     $('#pleaseWaitDialog').remove();
-    _waitDialog = _waitDialog || (function () {
+    _waitDialog = (function () {
     var pleaseWaitDiv = $('<div class="modal fade mask-dialog" tabindex="-1" role="dialog" aria-labelledby="modalLabel" ' +
                             'aria-hidden="true" data-keyboard="false" data-backdrop="static" id="pleaseWaitDialog">' +
                                 '<div class="modal-dialog">' +
@@ -133,7 +133,7 @@ function showWaitDialog(_msg) {
     	};
     })();
 
-    _waitDialog.showPleaseWait();    
+    _waitDialog.showPleaseWait();
 }
 /**
  * Hides the wait dialog.
@@ -141,4 +141,54 @@ function showWaitDialog(_msg) {
 function hideWaitDialog() {
 	_waitDialog.hidePleaseWait();
 	$('#pleaseWaitDialog').remove();
+}
+/**
+ * Wait dialog.
+ */
+var _messageAlert;
+/**
+ * Shows a wait dialog.
+ */
+function showAlert(_type, _msg) {
+    //$('#messageAlert').html(''); display:none
+	var _title = '';
+	switch (_type) {
+		case 'danger':
+			_title = 'Error!';
+			break;
+		case 'success':
+			_title = 'Hecho!';
+			break;
+		case 'warning':
+			_title = 'Alerta!';
+			break;
+		case 'info':
+			_title = 'Nota!';
+			break;
+		default: break;
+	}
+    _messageAlert = (function () {
+    var alertDiv = $('<div class="alert alert-' + _type + ' alert-demissable fade in" role="alert">' +
+            			'<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
+            			'<strong>' + _title + '</strong> ' + _msg +
+          			'</div>');
+    	return {
+    	    show: function() {
+    	    	$('#messageAlert').html(alertDiv);
+    	    	$('#messageAlert').show();    	    	
+    	    },
+    	    close: function () {
+    	    	$('#messageAlert').html('');
+    	    	$('#messageAlert').hide();
+    	    },
+    	};
+    })();
+
+    _messageAlert.show();
+}
+/**
+ * Hides the wait dialog.
+ */
+function closeAlert() {
+	_messageAlert.close();
 }

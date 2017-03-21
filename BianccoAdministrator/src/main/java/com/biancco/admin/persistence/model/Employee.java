@@ -3,6 +3,7 @@
  */
 package com.biancco.admin.persistence.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -16,7 +17,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
- *
+ * Employee.
+ * 
  * @author SOSExcellence.
  */
 @Entity
@@ -32,7 +34,7 @@ public class Employee {
 	/**
 	 * The employee detail.
 	 */
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "employee")
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "employee", cascade = CascadeType.ALL)
 	private EmployeeDetail employeeDetail;
 	/**
 	 * The role.

@@ -9,12 +9,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.springframework.transaction.annotation.Transactional;
 
 import com.biancco.admin.app.exception.DBException;
+import com.biancco.admin.model.catalog.RoleSimpleRecord;
 import com.biancco.admin.persistence.dao.RoleDAO;
 import com.biancco.admin.persistence.model.Role;
 
@@ -76,20 +78,25 @@ public class RoleDAOImpl implements RoleDAO {
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public List<Role> getAll(boolean enabledOnly) throws DBException {
+	public List<RoleSimpleRecord> getAll(boolean enabledOnly) throws DBException {
 		try {
 			CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
-
-			CriteriaQuery<Role> q = builder.createQuery(Role.class);
-			Root<Role> root = q.from(Role.class);
-			q.select(root);
+			CriteriaQuery<RoleSimpleRecord> criteria = builder.createQuery(RoleSimpleRecord.class);
+			// build query
+			Root<Role> r = criteria.from(Role.class);
+			// selection
+			Path<Long> pathId = r.get("idRole");
+			Path<String> pathName = r.get("name");
+			criteria.select(builder.construct(RoleSimpleRecord.class, pathId, pathName));
+			// condition
 			if (enabledOnly) {
-				Predicate pEnabled = builder.equal(root.get("enable"), enabledOnly);
-				q.where(pEnabled);
+				Predicate pEnabled = builder.equal(r.get("enable"), enabledOnly);
+				criteria.where(pEnabled);
 			}
-			q.orderBy(builder.asc(root.get("name")));
+			// order
+			criteria.orderBy(builder.asc(r.get("name")));
 
-			return this.entityManager.createQuery(q).getResultList();
+			return this.entityManager.createQuery(criteria).getResultList();
 		} catch (Exception e) {
 			throw new DBException(e);
 		}
