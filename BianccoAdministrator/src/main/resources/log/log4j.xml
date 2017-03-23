@@ -3,14 +3,24 @@
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
-	<appender name="console" class="org.apache.log4j.ConsoleAppender">
+	<appender name="console_stderr" class="org.apache.log4j.ConsoleAppender">
+		<param name="target" value="System.err" />
+		<param name="threshold" value="error" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{ABSOLUTE} %-5p [%c{1}] %m%n"/>
+		</layout>
+	</appender>
+	<appender name="console_stdout" class="org.apache.log4j.ConsoleAppender">
+		<param name="target" value="System.out" />
+		<param name="threshold" value="info" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%d{ABSOLUTE} %-5p [%c{1}] %m%n"/>
 		</layout>
 	</appender>
 	
 	<root>
-		<level value="DEBUG"/>
-		<appender-ref ref="console"/>
+		<level value="info"/>
+		<appender-ref ref="console_stderr"/>
+		<appender-ref ref="console_stdout"/>
 	</root>
 </log4j:configuration>

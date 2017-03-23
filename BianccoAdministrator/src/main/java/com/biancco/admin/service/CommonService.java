@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.biancco.admin.app.exception.DBException;
 import com.biancco.admin.model.catalog.RoleSimpleRecord;
+import com.biancco.admin.model.view.FolderView;
 
 /**
  * Common service.
@@ -41,5 +42,20 @@ public interface CommonService {
 	 *                If a db exception thrown.
 	 */
 	List<RoleSimpleRecord> getRoles(boolean enabledOnly) throws DBException;
+
+	/**
+	 * Gets a folder by module and identifier.
+	 * 
+	 * @param module
+	 *            Module.
+	 * @param identifier
+	 *            Identifier.
+	 * @param session
+	 *            HTTP session.
+	 * @return Folder view.
+	 * @exception DBException
+	 *                If a db exception thrown.
+	 */
+	FolderView getFolderByModuleAndId(String module, long identifier, HttpSession session) throws DBException;
 
 }

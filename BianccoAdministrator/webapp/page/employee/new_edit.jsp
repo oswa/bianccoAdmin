@@ -2,7 +2,7 @@
 <c:choose>
 	<c:when test="${empty model.employee}">
 		<div class="page-header">
-			<h1>Nuevo</h1>
+			<h3>Nuevo</h3>
 		</div>
 		<c:if test="${model.pType.type eq 'M'}">
 			<table width="100%">
@@ -15,6 +15,9 @@
 				</td>
 			</table>
 		</c:if>
+		
+		<div id="messageAlert"></div>
+		
 		<form id="empDetailForm">
 			<div class="form-group">
 				<label for="name">Nombre</label> <input type="text"
@@ -77,8 +80,22 @@
 	</c:when>
 	<c:otherwise>
 		<div class="page-header">
+        	<table width="100%">
+          		<tr>
+            		<td width="30%"><h3>Editar</h3></td>
+            		<td width="70%" align="right">
+              			<button class="btn btn-default btn-block" id="showDocumentsButton" onclick="showFolder('employee', ${model.employee.idEmployee})" style="width:130px;">
+        					<span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span>Documentos
+        				</button> 
+            		</td>
+          		</tr>
+        	</table>
+      	</div>
+      	<!-- 
+		<div class="page-header">
 			<h1>Editar</h1>
 		</div>
+		 -->
 		<c:if test="${model.pType.type eq 'M'}">
 			<table width="100%">
 				<td align="right">
@@ -90,6 +107,9 @@
 				</td>
 			</table>
 		</c:if>
+		
+		<div id="messageAlert"></div>
+		
 		<form id="addEmployeeForm">
 			<div class="form-group">
 				<label for="name">Nombre</label> <input type="text"
@@ -98,13 +118,13 @@
 			</div>
 			<div class="form-group">
 				<label for="last_name">Apellidos</label> <input type="text"
-					class="form-control" id="last_name" name="last_name"
+					class="form-control" id="lastName" name="lastName"
 					placeholder="apellidos" value="${model.employee.employeeDetail.lastName}" required>
 			</div>
 			<div class="form-group">
 				<label for="date_born">Fecha de nacimiento</label>
 				<div class="input-group date form_date col-md-5" data-date=""
-					data-date-format="yyyy-mm-dd" data-link-field="date_born"
+					data-date-format="dd-mm-yyyy" data-link-field="date_born"
 					data-link-format="yyyy-mm-dd">
 					<input class="form-control" size="16" type="text"
 						value="${model.employee.employeeDetail.dateBornWithFormat}"
@@ -128,9 +148,11 @@
 				<label for="mail">Correo electr&oacute;nico</label> <input type="email"
 					class="form-control" id="mail" name="mail" placeholder="e-mail" value="${model.employee.employeeDetail.phone}" required>
 			</div>
+		</form>
+		<form id="empRoleForm">
 			<div class="form-group">
 				<label for="position">Puesto</label>
-				<select class="form-control" id="position" required>
+				<select class="form-control" id="idRole" name="idRole" required>
 					<option value="0">Seleccione una opci&oacute;n</option>
 					<c:forEach items="${model.roles}" var="item" varStatus="loop">
 						<option value="${item.id}" ${(model.employee.role.name eq item.name) ? 'selected' : ''}><c:out value="${item.name}"/></option>

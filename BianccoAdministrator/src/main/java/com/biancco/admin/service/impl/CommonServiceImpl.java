@@ -18,10 +18,13 @@ import com.biancco.admin.app.util.BianccoConstants;
 import com.biancco.admin.model.catalog.RoleSimpleRecord;
 import com.biancco.admin.model.employee.EmployeeSimpleRecord;
 import com.biancco.admin.model.view.EmployeeModuleView;
+import com.biancco.admin.model.view.FolderView;
+import com.biancco.admin.model.view.Node;
 import com.biancco.admin.persistence.dao.EmployeeDAO;
 import com.biancco.admin.persistence.dao.RoleDAO;
 import com.biancco.admin.persistence.model.Employee;
 import com.biancco.admin.persistence.model.Permission;
+import com.biancco.admin.persistence.model.PermissionType;
 import com.biancco.admin.service.CommonService;
 
 /**
@@ -69,6 +72,22 @@ public class CommonServiceImpl implements CommonService {
 		EmployeeModuleView info = this.getInitialInformationByModule(module, session);
 		view.addObject(BianccoConstants.MODEL_ATTRIBUTE, info);
 		return view;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public FolderView getFolderByModuleAndId(String module, long identifier, HttpSession session) throws DBException {
+		// set permission type
+		PermissionType pType = (PermissionType) session.getAttribute(module);
+		// build view
+		FolderView fv = new FolderView();
+		fv.setpType(pType);
+		fv.setTypeId(identifier);
+		fv.setFolder(getFolder());
+
+		return fv;
 	}
 
 	/**
@@ -132,6 +151,27 @@ public class CommonServiceImpl implements CommonService {
 			roles = this.roleDAO.getAll(enabledOnly);
 		}
 		return roles;
+	}
+
+	private Node getFolder() {
+		Node node = new Node();
+		node.setText("Parent");
+		node.setHref("2");
+		node.setIcon("glyphicon glyphicon-folder-close");
+		node.setSelectedIcon("glyphicon glyphicon-folder-open");
+		node.setTags("");
+		List<Node> nodes = new ArrayList<Node>();
+		for (int i = 0; i < 5; i++) {
+			Node n1 = new Node();
+			n1.setText("Folder " + (i + 1));
+			n1.setHref("2");
+			n1.setIcon("glyphicon glyphicon-folder-close");
+			n1.setSelectedIcon("glyphicon glyphicon-folder-open");
+			n1.setTags("");
+			nodes.add(n1);
+		}
+		node.setNodes(nodes);
+		return node;
 	}
 
 }

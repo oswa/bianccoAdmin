@@ -9,5 +9,8 @@
     <bean id="RoleDAO" class="com.biancco.admin.persistence.dao.impl.RoleDAOImpl"/>
     <bean id="PermissionDAO" class="com.biancco.admin.persistence.dao.impl.PermissionDAOImpl"/>
     <bean id="EmployeeDetailDAO" class="com.biancco.admin.persistence.dao.impl.EmployeeDetailDAOImpl"/>
-
+    
+	<bean id="CompanyDAO" class="com.biancco.admin.persistence.dao.impl.CompanyDAOImpl"/>
+    <bean id="WorkDAO" class="com.biancco.admin.persistence.dao.impl.WorkDAOImpl"/>
+    <bean id="FolderDAO" class="com.biancco.admin.persistence.dao.impl.FolderDAOImpl"/>
 </beans>

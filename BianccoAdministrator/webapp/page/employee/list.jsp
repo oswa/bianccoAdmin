@@ -1,18 +1,17 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="page-header">
-	<h1>Empleados</h1>
-</div>
-<div id="messageAlert"></div>
 <table width="100%">
-	<td align="right">
-		<button class="btn btn-primary btn-block" id="addButton"
-			style="width: 110px;" onclick="addEmployee()">
-			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-			Agregar
-		</button>
-	</td>
+	<tr>
+		<td width="30%"><div class="page-header"><h3>Empleados</h3></div></td>
+		<td width="70%" align="right">
+			<button class="btn btn-primary btn-block" id="addButton" style="width: 110px;" onclick="addEmployee()">
+				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Agregar
+			</button>
+		</td>
+	</tr>
 </table>
-<br>
+
+<div id="messageAlert"></div>
+
 <c:choose>
 	<c:when test="${not empty model.employees}">
 		<table class="table table-striped">

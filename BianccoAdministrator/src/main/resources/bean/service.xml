@@ -6,5 +6,6 @@
     <bean id="AuthenticationService" class="com.biancco.admin.service.impl.AuthenticationServiceImpl" lazy-init="false"/>
     <bean id="CommonService" class="com.biancco.admin.service.impl.CommonServiceImpl" lazy-init="false"/>
     <bean id="EmployeeService" class="com.biancco.admin.service.impl.EmployeeServiceImpl" lazy-init="false"/>
+	<bean id="FolderService" class="com.biancco.admin.service.impl.FolderServiceImpl" lazy-init="false"/>
 
 </beans>

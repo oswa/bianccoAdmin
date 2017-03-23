@@ -93,7 +93,7 @@ function checkError(xhr) {
 			if (typeof console != "undefined") {
 				console.log('error: ' + e.name + ': ' + e.message);
 			}
-			alert('Ha ocurrido un problema en la aplicación, contacte a un administrador.');
+			alert('Ha ocurrido un problema en la aplicaci&oacute;n, contacte a un administrador.');
 		}
 	}
 }
