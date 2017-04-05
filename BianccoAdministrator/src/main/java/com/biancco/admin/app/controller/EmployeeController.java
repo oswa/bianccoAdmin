@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -104,6 +103,10 @@ public class EmployeeController {
 	 *            The HTTP response.
 	 * @param session
 	 *            The HTTP session.
+	 * @param detailEncoded
+	 *            Employee detail.
+	 * @param idRole
+	 *            Role identifier.
 	 * @return view.
 	 * @throws DBException
 	 *             If a db exception thrown.
@@ -113,10 +116,40 @@ public class EmployeeController {
 	@RequestMapping(method = RequestMethod.POST, value = "/save")
 	public ModelAndView saveEmployee(final HttpServletRequest request, final HttpServletResponse response,
 			HttpSession session, @RequestParam(value = "_detail", required = true) String detailEncoded,
-			@RequestParam(value = "_role") long idRole) throws ApplicationException, DBException {
-		this.logger.info(
-				"Controller | saveEmployee " + ReflectionToStringBuilder.toString(detailEncoded) + " - " + idRole);
+			@RequestParam(value = "_role", required = true) long idRole) throws ApplicationException, DBException {
+		this.logger.info("Controller | saveEmployee " + detailEncoded + " - " + idRole);
 		this.employeeService.saveEmployee(detailEncoded, idRole);
+		// build view
+		ModelAndView view = this.employeeService.getMainView(session);
+		return view;
+	}
+
+	/**
+	 * Updates an employee.
+	 * 
+	 * @param request
+	 *            The HTTP request.
+	 * @param response
+	 *            The HTTP response.
+	 * @param session
+	 *            The HTTP session.
+	 * @param detailEncoded
+	 *            Employee detail.
+	 * @param idRole
+	 *            Role identifier.
+	 * @return view.
+	 * @throws DBException
+	 *             If a db exception thrown.
+	 * @throws ApplicationException
+	 *             If an application exception thrown.
+	 */
+	@RequestMapping(method = RequestMethod.POST, value = "/update")
+	public ModelAndView updateEmployee(final HttpServletRequest request, final HttpServletResponse response,
+			HttpSession session, @RequestParam(value = "_detail", required = true) String detailEncoded,
+			@RequestParam(value = "_role", required = true) long idRole,
+			@RequestParam(value = "_emp", required = true) long idEmployee) throws ApplicationException, DBException {
+		this.logger.info("Controller | updateEmployee " + detailEncoded + " - " + idRole + " - " + idEmployee);
+		this.employeeService.updateEmployee(detailEncoded, idRole, idEmployee);
 		// build view
 		ModelAndView view = this.employeeService.getMainView(session);
 		return view;

@@ -4,6 +4,7 @@
 package com.biancco.admin.persistence.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.biancco.admin.app.exception.DBException;
 import com.biancco.admin.model.employee.EmployeeSimpleRecord;
@@ -64,10 +65,20 @@ public interface EmployeeDAO {
 	 * 
 	 * @param employee
 	 *            the element to update.
+	 * @return Employee updated.
 	 * @throws DBException
 	 *             If a problem occurs.
 	 */
-	void update(Employee employee) throws DBException;
+	Employee update(Employee employee) throws DBException;
+
+	/**
+	 * Updates a specific fields on Employee.
+	 * 
+	 * @return Employee updated.
+	 * @throws DBException
+	 *             If a problem occurs.
+	 */
+	Employee update(long idEmployee, Map<String, String> properties) throws DBException;
 
 	/**
 	 * Validates the user credentials.
@@ -83,7 +94,7 @@ public interface EmployeeDAO {
 	Employee validateCredentials(String nick, String pass) throws DBException;
 
 	/**
-	 * Gets all employees (basi record).
+	 * Gets all employees (simple record).
 	 * 
 	 * @return A employee list.
 	 * @throws DBException

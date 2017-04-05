@@ -3,6 +3,7 @@
  */
 package com.biancco.admin.service.impl;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -22,8 +24,6 @@ import com.biancco.admin.model.view.FolderView;
 import com.biancco.admin.model.view.Node;
 import com.biancco.admin.persistence.dao.EmployeeDAO;
 import com.biancco.admin.persistence.dao.RoleDAO;
-import com.biancco.admin.persistence.model.Employee;
-import com.biancco.admin.persistence.model.Permission;
 import com.biancco.admin.persistence.model.PermissionType;
 import com.biancco.admin.service.CommonService;
 
@@ -33,6 +33,10 @@ import com.biancco.admin.service.CommonService;
  * @author SOSExcellence.
  */
 public class CommonServiceImpl implements CommonService {
+	/**
+	 * Logger.
+	 */
+	private Logger logger = Logger.getRootLogger();
 	/**
 	 * Employee DAO.
 	 */
@@ -69,7 +73,7 @@ public class CommonServiceImpl implements CommonService {
 		// build view
 		ModelAndView view = new ModelAndView("/page/" + module + "/" + pages.get(module));
 		// get initial information
-		EmployeeModuleView info = this.getInitialInformationByModule(module, session);
+		Object info = this.getInitialInformationByModule(module, session);
 		view.addObject(BianccoConstants.MODEL_ATTRIBUTE, info);
 		return view;
 	}
@@ -100,15 +104,16 @@ public class CommonServiceImpl implements CommonService {
 	 * @return Initial information.
 	 * @throws DBException
 	 */
-	private EmployeeModuleView getInitialInformationByModule(String module, HttpSession session) throws DBException {
-		// extract permissions
-		Employee e = (Employee) session.getAttribute(BianccoConstants.ATTR_USER);
-		List<Permission> permissions = e.getRole().getPermissions();
+	private Object getInitialInformationByModule(String module, HttpSession session) throws DBException {
+		// get permission type from session
+		PermissionType pType = (PermissionType) session.getAttribute(module);
 		// set info by module
-		EmployeeModuleView info = new EmployeeModuleView();
+		Object info = null;
 		if ("employee".equals(module)) {
-			this.setEmployees(info);
-			this.setPermission(info, permissions);
+			// set info by module
+			info = new EmployeeModuleView();
+			this.setEmployees((EmployeeModuleView) info);
+			this.setPermission(info, pType);
 		}
 		return info;
 	}
@@ -130,15 +135,15 @@ public class CommonServiceImpl implements CommonService {
 	 * 
 	 * @param info
 	 *            Info model.
-	 * @param permissions
-	 *            Permission list.
+	 * @param pType
+	 *            Permission type.
 	 */
-	private void setPermission(EmployeeModuleView info, List<Permission> permissions) {
-		for (Permission p : permissions) {
-			if (p.getModule().equals("EMPLEADOS")) {
-				info.setpType(p.getType());
-				break;
-			}
+	private void setPermission(Object info, PermissionType pType) {
+		try {
+			Method m = info.getClass().getDeclaredMethod("setpType", PermissionType.class);
+			m.invoke(info, pType);
+		} catch (Exception e) {
+			this.logger.error("Error on set permission", e);
 		}
 	}
 

@@ -15,7 +15,7 @@ public enum PermissionType {
 	/**
 	 * MODIFY.
 	 */
-	MODIFY("MOFICACION", "M");
+	MODIFY("MODIFICACION", "M");
 	/**
 	 * Name.
 	 */

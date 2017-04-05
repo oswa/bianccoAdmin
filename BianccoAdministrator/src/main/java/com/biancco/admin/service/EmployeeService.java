@@ -62,8 +62,23 @@ public interface EmployeeService {
 	 *            Role identifier.
 	 * @return Employee.
 	 * @exception DBException
-	 *                If a db exception thrown
+	 *                If a db exception thrown.
 	 */
 	Employee saveEmployee(String detailEncoded, long idRole) throws DBException;
+
+	/**
+	 * Updates an employee.
+	 * 
+	 * @param detailEncoded
+	 *            Employee detail.
+	 * @param idRole
+	 *            Role identifier.
+	 * @param idEmployee
+	 *            Employee identifier.
+	 * @return Employee.
+	 * @exception DBException
+	 *                If a db exception thrown
+	 */
+	Employee updateEmployee(String detailEncoded, long idRole, long idEmployee) throws DBException;
 
 }

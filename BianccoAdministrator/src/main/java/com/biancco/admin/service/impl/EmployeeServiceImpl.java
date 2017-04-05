@@ -4,6 +4,7 @@
 package com.biancco.admin.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.biancco.admin.app.exception.DBException;
+import com.biancco.admin.app.util.BeanUtils;
 import com.biancco.admin.app.util.HTTPUtils;
 import com.biancco.admin.app.util.UserPasswordGenerator;
 import com.biancco.admin.model.catalog.RoleSimpleRecord;
@@ -102,5 +104,26 @@ public class EmployeeServiceImpl implements EmployeeService {
 		e.setEmployeeDetail(d);
 		// save
 		return this.employeeDAO.save(e);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Employee updateEmployee(String detailEncoded, long idRole, long idEmployee) throws DBException {
+		// employee detail
+		Map<String, String> detailProps = HTTPUtils.getPropertiesFromEncodedString(detailEncoded);
+		// get employee to update
+		Employee e = this.employeeDAO.getById(idEmployee);
+		// role
+		Role r = new Role();
+		r.setIdRole(idRole);
+		// set changes
+		e.setRole(r);
+		BeanUtils.setPropertiesToObject(e.getEmployeeDetail(), detailProps);
+		// set nick if mail was change
+		e.setNick(UserPasswordGenerator.getUserByMail(e.getEmployeeDetail().getMail()));
+		// update
+		return this.employeeDAO.update(e);
 	}
 }

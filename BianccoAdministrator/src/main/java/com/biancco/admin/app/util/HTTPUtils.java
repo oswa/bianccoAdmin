@@ -4,13 +4,8 @@
 package com.biancco.admin.app.util;
 
 import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -152,64 +147,43 @@ public final class HTTPUtils {
 	 */
 	public static Object getObjectFromFormString(String form, Class<?> clazz) {
 		try {
-			form = HTTPUtils.decodeString(form, HTTPUtils.CHARSET_UTF8);
-			String[] attributes = form.split("&");
 			// gets a new instance from Object to convert
 			Object o = clazz.newInstance();
-			// register methods
-			Method[] methods = o.getClass().getDeclaredMethods();
-			Map<String, Class<?>[]> mapMethods = new HashMap<String, Class<?>[]>();
-			for (Method m : methods) {
-				if (m.getName().startsWith("set")) {
-					mapMethods.put(m.getName(), m.getParameterTypes());
-				}
-			}
-			// parse form attributes to Object
-			for (String attr : attributes) {
-				String[] field = attr.split("=");
-				String key = field[0];
-				String value = field[1];
-				// get method
-				String methodName = "set" + String.valueOf(key.charAt(0)).toUpperCase() + key.substring(1);
-				Class<?>[] params = mapMethods.get(methodName);
-				// set value to Object
-				Method m = o.getClass().getDeclaredMethod(methodName, params);
-				Class<?> parameterClazz = params[0];
-				Object param = castStringToObject(parameterClazz, value);
-				m.invoke(o, param);
-			}
+			// get properties to set
+			Map<String, String> props = getPropertiesFromEncodedString(form);
+			// set properties
+			BeanUtils.setPropertiesToObject(o, props);
 			return o;
 		} catch (Exception e) {
-			LOGGER.error("Exception converting form to object", e);
+			LOGGER.error("Error on get object from form", e);
 			return null;
 		}
 	}
 
 	/**
-	 * Cast a string value to Object.
+	 * Gets a properties from Form serialized.
 	 * 
+	 * @param form
+	 *            Form serialized.
 	 * @param clazz
-	 *            Class to cast.
-	 * @param value
-	 *            Value to convert.
+	 *            Class to convert.
 	 * @return Object.
 	 */
-	public static Object castStringToObject(Class<?> clazz, String value) {
+	public static Map<String, String> getPropertiesFromEncodedString(String form) {
 		try {
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-			if (clazz.getName().equals("java.util.Date")) {
-				return format.parse(value);
-			} else if (clazz.getName().equals("java.util.Calendar")) {
-				Method m = clazz.getDeclaredMethod("setTime", Date.class);
-				Object o = Calendar.getInstance();
-				m.invoke(o, format.parse(value));
-				return o;
+			form = HTTPUtils.decodeString(form, HTTPUtils.CHARSET_UTF8);
+			String[] attributes = form.split("&");
+
+			Map<String, String> props = new HashMap<String, String>();
+			for (String attr : attributes) {
+				String[] field = attr.split("=");
+				String key = field[0];
+				String value = field[1];
+				props.put(key, value);
 			}
-			Constructor<?> constructor = (Constructor<?>) clazz.getConstructor(new Class<?>[] { String.class });
-			return (Object) constructor.newInstance(new Object[] { value });
+			return props;
 		} catch (Exception e) {
-			e.printStackTrace();
-			LOGGER.error("Exception casting value to object", e);
+			LOGGER.error("Error on get properties from string encoded", e);
 			return null;
 		}
 	}
@@ -230,7 +204,7 @@ public final class HTTPUtils {
 		} catch (IOException e) {
 			LOGGER.error("IOException", e);
 			vo = new SimpleResponse();
-			vo.setMessage("Error desconocido, intente más tarde.");
+			vo.setMessage("Error desconocido, intente m&aacute;s tarde.");
 		}
 		return vo;
 	}
@@ -288,7 +262,8 @@ public final class HTTPUtils {
 	 */
 	public static SimpleResponse readException(final Exception exception) {
 		String msg = evaluateError(exception.getMessage());
-		SimpleResponse vo = new SimpleResponse("Ha ocurrido un problema en la aplicación, intente más tarde.");
+		SimpleResponse vo = new SimpleResponse(
+				"Ha ocurrido un problema en la aplicaci&oacute;n, intente m&aacute;s tarde.");
 		LOGGER.error("Error: " + msg, exception);
 		return vo;
 	}

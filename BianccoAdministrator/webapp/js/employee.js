@@ -63,12 +63,42 @@ function editEmployee(_emp) {
 }
 
 /**
- * Saves employee.
+ * Saves an employee.
  */
 function saveEmployee() {
 	jQuery.ajax({
 		url: currentURL() + '/app/employee/save',
 		data: {'_detail' : $('#empDetailForm').serialize(), '_role' : $('#idRole').val()},
+        cache: false,
+        contentType: 'application/x-www-form-urlencoded',
+        type: 'POST',
+		beforeSend: function(req) {
+			showWaitDialog('Guardando...');
+		},
+		success: function(response) {
+			// clean tmp files
+			$('.form_date').datetimepicker('remove');
+			$('#content').hide();
+			$('#content').html('');
+			$('#content').html(response);
+			$('#content').show();
+		},
+		error : function(xhr, ajaxOptions, thrownError) {
+			checkError(xhr);
+		},
+		complete: function() {
+			hideWaitDialog();
+		}
+	});
+}
+
+/**
+ * Updates an employee.
+ */
+function updateEmployee() {
+	jQuery.ajax({
+		url: currentURL() + '/app/employee/update',
+		data: {'_detail' : $('#empDetailForm').serialize(), '_role' : $('#idRole').val(), '_emp' : $('#idEmployee').val()},
         cache: false,
         contentType: 'application/x-www-form-urlencoded',
         type: 'POST',

@@ -4,6 +4,7 @@
 package com.biancco.admin.persistence.dao.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,9 +15,11 @@ import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 
+import org.apache.log4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.biancco.admin.app.exception.DBException;
+import com.biancco.admin.app.util.BeanUtils;
 import com.biancco.admin.model.employee.EmployeeSimpleRecord;
 import com.biancco.admin.persistence.dao.EmployeeDAO;
 import com.biancco.admin.persistence.model.Employee;
@@ -30,6 +33,10 @@ import com.biancco.admin.persistence.model.Role;
  *
  */
 public class EmployeeDAOImpl implements EmployeeDAO {
+	/**
+	 * Logger.
+	 */
+	private Logger logger = Logger.getRootLogger();
 	/**
 	 * Entity Maneger.
 	 */
@@ -57,7 +64,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			this.entityManager.flush();
 			return employee;
 		} catch (Exception e) {
-			e.printStackTrace();
+			this.logger.error("Error on poersist employee", e);
 			throw new DBException(e);
 		}
 	}
@@ -74,7 +81,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			Employee e = this.entityManager.getReference(Employee.class, idEmployee);
 			this.entityManager.remove(e);
 		} catch (Exception e) {
-			e.printStackTrace();
+			this.logger.error("Error on delete employee", e);
 			throw new DBException(e);
 		}
 	}
@@ -84,10 +91,26 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	 */
 	@Override
 	@Transactional
-	public void update(Employee employee) throws DBException {
+	public Employee update(Employee employee) throws DBException {
 		try {
-			//
+			return entityManager.merge(employee);
 		} catch (Exception e) {
+			this.logger.error("Error on update employee", e);
+			throw new DBException(e);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Employee update(long idEmployee, Map<String, String> properties) throws DBException {
+		try {
+			Employee e = this.entityManager.find(Employee.class, idEmployee);
+			BeanUtils.setPropertiesToObject(e, properties);
+			return e;
+		} catch (Exception e) {
+			this.logger.error("Error on update employee", e);
 			throw new DBException(e);
 		}
 	}
@@ -101,6 +124,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		try {
 			return this.entityManager.find(Employee.class, identifier);
 		} catch (Exception e) {
+			this.logger.error("Error on get employee by id", e);
 			throw new DBException(e);
 		}
 	}
@@ -121,6 +145,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 			return this.entityManager.createQuery(q).getSingleResult();
 		} catch (Exception e) {
+			this.logger.error("Error on validate employee credentials", e);
 			throw new DBException(e);
 		}
 	}
@@ -155,7 +180,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 			return this.entityManager.createQuery(criteria).getResultList();
 		} catch (Exception e) {
-			e.printStackTrace();
+			this.logger.error("Error on get all employees", e);
 			throw new DBException(e);
 		}
 	}
