@@ -17,7 +17,6 @@ public interface BianccoConstants {
 	 * Folder base
 	 */
 	String PARAM_FOLDER_BASE = "FOLDER_BASE";
-
 	/**
 	 * Input name for nick name
 	 */
@@ -34,5 +33,9 @@ public interface BianccoConstants {
 	 * User attribute.
 	 */
 	String ATTR_USER = "user";
+	/**
+	 * View history.
+	 */
+	String VIEW_HISTORY = "viewHistory";
 
 }

@@ -84,6 +84,12 @@
 		</form>
 		<c:if test="${model.pType.type eq 'M'}">
 			<table width="100%">
+				<td align="left">
+					<button class="btn btn-default" id="backButton" onclick="backTo(1)">
+						<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+						Regresar
+					</button>
+				</td>
 				<td align="right">
 					<button class="btn btn-primary" id="saveButton" onclick="saveEmployee()">
 						<span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
@@ -181,6 +187,12 @@
 		<input type="hidden" id="idEmployee" name="idEmployee" value="${model.employee.idEmployee}">
 		<c:if test="${model.pType.type eq 'M'}">
 			<table width="100%">
+				<td align="left">
+					<button class="btn btn-default" id="backButton" onclick="backTo(1)">
+						<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+						Regresar
+					</button>
+				</td>
 				<td align="right">
 					<button class="btn btn-primary" id="updateButton" onclick="updateEmployee()">
 						<span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>

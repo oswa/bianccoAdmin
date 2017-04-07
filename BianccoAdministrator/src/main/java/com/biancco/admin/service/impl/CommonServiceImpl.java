@@ -6,6 +6,7 @@ package com.biancco.admin.service.impl;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +22,7 @@ import com.biancco.admin.model.catalog.RoleSimpleRecord;
 import com.biancco.admin.model.employee.EmployeeSimpleRecord;
 import com.biancco.admin.model.view.EmployeeModuleView;
 import com.biancco.admin.model.view.FolderView;
+import com.biancco.admin.model.view.InitialView;
 import com.biancco.admin.model.view.Node;
 import com.biancco.admin.persistence.dao.EmployeeDAO;
 import com.biancco.admin.persistence.dao.RoleDAO;
@@ -113,8 +115,9 @@ public class CommonServiceImpl implements CommonService {
 			// set info by module
 			info = new EmployeeModuleView();
 			this.setEmployees((EmployeeModuleView) info);
-			this.setPermission(info, pType);
 		}
+		// set permission
+		this.setPermission(info, pType);
 		return info;
 	}
 
@@ -156,6 +159,78 @@ public class CommonServiceImpl implements CommonService {
 			roles = this.roleDAO.getAll(enabledOnly);
 		}
 		return roles;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public ModelAndView backToView(HttpSession session, Integer indexView) {
+		// get history
+		LinkedList<ModelAndView> history = (LinkedList<ModelAndView>) session
+				.getAttribute(BianccoConstants.VIEW_HISTORY);
+		// get number of views to remove
+		int size = history.size();
+		int diff = size - (size - indexView);
+		// get main view if apply
+		if (indexView == 0 || (diff == size - 1)) {
+			// indexView = size - 1;
+			ModelAndView mainView = history.get(0);
+			// initialize history
+			history = new LinkedList<ModelAndView>();
+			history.add(this.getMainView(mainView));
+		} else {
+			// remove unused views
+			for (int index = 0; index < diff; index++) {
+				history.removeLast();
+			}
+		}
+		// update history
+		session.removeAttribute(BianccoConstants.VIEW_HISTORY);
+		session.setAttribute(BianccoConstants.VIEW_HISTORY, history);
+		// get last view
+		return history.getLast();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public void addViewToHistory(ModelAndView view, boolean updatePreviousView, HttpSession session) {
+		LinkedList<ModelAndView> history = null;
+		// validate view history
+		if (session.getAttribute(BianccoConstants.VIEW_HISTORY) == null) {
+			history = new LinkedList<ModelAndView>();
+		} else {
+			history = (LinkedList<ModelAndView>) session.getAttribute(BianccoConstants.VIEW_HISTORY);
+		}
+		// remove previous view if apply
+		if (updatePreviousView) {
+			history.removeLast();
+			history.removeLast();
+		}
+		// add view
+		history.add(view);
+		// update history
+		session.removeAttribute(BianccoConstants.VIEW_HISTORY);
+		session.setAttribute(BianccoConstants.VIEW_HISTORY, history);
+	}
+
+	/**
+	 * Gets the main view content.
+	 * 
+	 * @param mainView
+	 *            Main page.
+	 * @return Main view content.
+	 */
+	private ModelAndView getMainView(ModelAndView mainView) {
+		// get initial info
+		InitialView iView = (InitialView) mainView.getModel().get(BianccoConstants.MODEL_ATTRIBUTE);
+		mainView = new ModelAndView("/page/modules");
+		mainView.addObject(BianccoConstants.MODEL_ATTRIBUTE, iView);
+		return mainView;
 	}
 
 	private Node getFolder() {

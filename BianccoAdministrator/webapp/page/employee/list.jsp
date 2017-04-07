@@ -45,21 +45,28 @@
 								<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 							</button>
 						</td>
-						<td align="center"><input type="checkbox" ${(model.pType.type eq 'Q') ? 'disabled' : ''}></td>
+						<td align="center"><input type="checkbox" ${(model.pType.type eq 'Q') ? 'disabled' : ''} 
+						${(item.enable) ? 'checked' : ''}></td>
 					</tr>					
 				</c:forEach>
 			</tbody>
 		</table>
-		<c:if test="${model.pType.type eq 'M'}">
-			<table width="100%">
+		<table width="100%">
+			<td align="left">
+				<button class="btn btn-default" id="backButton" onclick="backTo(0)">
+					<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+					Regresar
+				</button>
+			</td>
+			<c:if test="${model.pType.type eq 'M'}">
 				<td align="right">
 					<button class="btn btn-primary" id="addButton" onclick="addEmployee()">
 						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 						Agregar
 					</button>
 				</td>
-			</table>
-		</c:if>
+			</c:if>
+		</table>
 	</c:when>
 	<c:otherwise>
 		<div class="alert alert-warning" role="alert">

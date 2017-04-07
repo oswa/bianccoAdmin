@@ -60,6 +60,8 @@ public class ApplicationController {
 		this.logger.info("Controller | " + module);
 		// build view
 		ModelAndView view = this.commonService.getViewByModule(module, session);
+		// add view to history
+		this.commonService.addViewToHistory(view, false, session);
 		return view;
 	}
 
@@ -89,6 +91,33 @@ public class ApplicationController {
 		// get information
 		FolderView info = this.commonService.getFolderByModuleAndId(module, identifier, session);
 		view.addObject(BianccoConstants.MODEL_ATTRIBUTE, info);
+		// add view to history
+		this.commonService.addViewToHistory(view, false, session);
+		return view;
+	}
+
+	/**
+	 * Gets a folder by module.
+	 * 
+	 * @param request
+	 *            The HTTP request.
+	 * @param response
+	 *            The HTTP response.
+	 * @param session
+	 *            The HTTP session.
+	 * @return view.
+	 * @throws DBException
+	 *             If a db exception thrown.
+	 * @throws ApplicationException
+	 *             If an application exception thrown.
+	 */
+	@RequestMapping(method = RequestMethod.POST, value = "/back")
+	public ModelAndView backToView(final HttpServletRequest request, final HttpServletResponse response,
+			HttpSession session, @RequestParam(value = "_view", required = true) final Integer indexView)
+			throws ApplicationException, DBException {
+		this.logger.info("Controller | backToView " + indexView);
+		// get view
+		ModelAndView view = this.commonService.backToView(session, indexView);
 		return view;
 	}
 

@@ -65,3 +65,35 @@ function showFolder(_module, _id) {
 		}
 	});
 }
+/**
+ * Back to specific view.
+ * @param _view View to go.
+ * @returns page.
+ */
+function backTo(_view) {
+	jQuery.ajax({
+		url: currentURL() + '/app/back',
+		data: {'_view' : _view},
+        cache: false,
+        contentType: 'application/x-www-form-urlencoded',
+        type: 'POST',
+		beforeSend: function(req) {
+			showWaitDialog('Cargando...');
+		},
+		success: function(response) {
+			// clean tmp files
+			$('.form_date').datetimepicker('remove');
+			
+			$('#content').hide();
+			$('#content').html('');
+			$('#content').html(response);
+			$('#content').show();
+		},
+		error : function(xhr, ajaxOptions, thrownError) {
+			checkError(xhr);
+		},
+		complete: function() {
+			hideWaitDialog();
+		}
+	});
+}

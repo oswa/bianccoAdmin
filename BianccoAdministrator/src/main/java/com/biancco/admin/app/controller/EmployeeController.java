@@ -19,6 +19,7 @@ import com.biancco.admin.app.exception.ApplicationException;
 import com.biancco.admin.app.exception.DBException;
 import com.biancco.admin.app.util.BianccoConstants;
 import com.biancco.admin.model.view.EmployeeModuleView;
+import com.biancco.admin.service.CommonService;
 import com.biancco.admin.service.EmployeeService;
 
 /**
@@ -38,6 +39,11 @@ public class EmployeeController {
 	 */
 	@Autowired
 	private EmployeeService employeeService;
+	/**
+	 * Common service.
+	 */
+	@Autowired
+	private CommonService commonService;
 
 	/**
 	 * Shows view to add employee.
@@ -63,6 +69,8 @@ public class EmployeeController {
 		// build view
 		ModelAndView view = new ModelAndView("/page/employee/new_edit");
 		view.addObject(BianccoConstants.MODEL_ATTRIBUTE, info);
+		// add view to history
+		this.commonService.addViewToHistory(view, false, session);
 		return view;
 	}
 
@@ -91,6 +99,8 @@ public class EmployeeController {
 		// build view
 		ModelAndView view = new ModelAndView("/page/employee/new_edit");
 		view.addObject(BianccoConstants.MODEL_ATTRIBUTE, info);
+		// add view to history
+		this.commonService.addViewToHistory(view, false, session);
 		return view;
 	}
 
@@ -121,6 +131,8 @@ public class EmployeeController {
 		this.employeeService.saveEmployee(detailEncoded, idRole);
 		// build view
 		ModelAndView view = this.employeeService.getMainView(session);
+		// add view to history
+		this.commonService.addViewToHistory(view, true, session);
 		return view;
 	}
 
@@ -152,6 +164,8 @@ public class EmployeeController {
 		this.employeeService.updateEmployee(detailEncoded, idRole, idEmployee);
 		// build view
 		ModelAndView view = this.employeeService.getMainView(session);
+		// add view to history
+		this.commonService.addViewToHistory(view, true, session);
 		return view;
 	}
 }

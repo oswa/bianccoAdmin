@@ -58,4 +58,27 @@ public interface CommonService {
 	 */
 	FolderView getFolderByModuleAndId(String module, long identifier, HttpSession session) throws DBException;
 
+	/**
+	 * Back to view in session.
+	 * 
+	 * @param session
+	 *            HTTP session.
+	 * @param indexView
+	 *            Index view to go.
+	 * @return View.
+	 */
+	ModelAndView backToView(HttpSession session, Integer indexView);
+
+	/**
+	 * Add view to history.
+	 * 
+	 * @param view
+	 *            View to add.
+	 * @param updatePreviousView
+	 *            Update previous view flag.
+	 * @param session
+	 *            HTTP session.
+	 */
+	void addViewToHistory(ModelAndView view, boolean updatePreviousView, HttpSession session);
+
 }

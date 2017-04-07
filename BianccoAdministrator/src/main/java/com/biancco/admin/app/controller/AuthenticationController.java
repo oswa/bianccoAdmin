@@ -23,6 +23,7 @@ import com.biancco.admin.model.view.InitialView;
 import com.biancco.admin.model.view.SimpleResponse;
 import com.biancco.admin.persistence.model.Employee;
 import com.biancco.admin.service.AuthenticationService;
+import com.biancco.admin.service.CommonService;
 
 /**
  * Authentication controller.
@@ -41,6 +42,11 @@ public class AuthenticationController {
 	 */
 	@Autowired
 	private AuthenticationService authenticationService;
+	/**
+	 * Common service.
+	 */
+	@Autowired
+	private CommonService commonService;
 
 	/**
 	 * Sign in.
@@ -64,6 +70,8 @@ public class AuthenticationController {
 			Employee emp = (Employee) session.getAttribute(BianccoConstants.ATTR_USER);
 			InitialView iView = this.authenticationService.getInitialView(emp, session);
 			view.addObject(BianccoConstants.MODEL_ATTRIBUTE, iView);
+			// add view to history
+			this.commonService.addViewToHistory(view, false, session);
 		} else {
 			view.setViewName("/login");
 			view.addObject(BianccoConstants.MODEL_ATTRIBUTE, rsp);
@@ -83,7 +91,6 @@ public class AuthenticationController {
 	@RequestMapping(method = RequestMethod.POST, value = "/signoff")
 	public RedirectView signoff(final HttpServletRequest request, final HttpSession session) {
 		this.logger.info("Controller | signoff");
-		session.removeAttribute("token");
 		session.invalidate();
 		RedirectView view = new RedirectView("/login.jsp");
 		view.setContextRelative(true);
