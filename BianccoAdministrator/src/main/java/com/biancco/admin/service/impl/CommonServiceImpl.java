@@ -12,6 +12,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,11 +24,12 @@ import com.biancco.admin.model.employee.EmployeeSimpleRecord;
 import com.biancco.admin.model.view.EmployeeModuleView;
 import com.biancco.admin.model.view.FolderView;
 import com.biancco.admin.model.view.InitialView;
-import com.biancco.admin.model.view.Node;
 import com.biancco.admin.persistence.dao.EmployeeDAO;
 import com.biancco.admin.persistence.dao.RoleDAO;
+import com.biancco.admin.persistence.model.FolderType;
 import com.biancco.admin.persistence.model.PermissionType;
 import com.biancco.admin.service.CommonService;
+import com.biancco.admin.service.FolderService;
 
 /**
  * Common service implementation.
@@ -39,6 +41,11 @@ public class CommonServiceImpl implements CommonService {
 	 * Logger.
 	 */
 	private Logger logger = Logger.getRootLogger();
+	/**
+	 * Folder service.
+	 */
+	@Autowired
+	private FolderService folderService;
 	/**
 	 * Employee DAO.
 	 */
@@ -84,14 +91,19 @@ public class CommonServiceImpl implements CommonService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public FolderView getFolderByModuleAndId(String module, long identifier, HttpSession session) throws DBException {
+	public FolderView getTreeFolder(String type, long ownerModuleId, HttpSession session) throws DBException {
+		// get folder type
+		FolderType fType = FolderType.fromName(type);
+		logger.info(ReflectionToStringBuilder.toString(fType));
+		logger.info(ReflectionToStringBuilder.toString(session.getAttributeNames()));
 		// set permission type
-		PermissionType pType = (PermissionType) session.getAttribute(module);
+		PermissionType pType = (PermissionType) session.getAttribute(fType.getOwnerModule());
 		// build view
 		FolderView fv = new FolderView();
 		fv.setpType(pType);
-		fv.setTypeId(identifier);
-		fv.setFolder(getFolder());
+		fv.setOwnerModuleId(ownerModuleId);
+		// get tree folder
+		fv.setFolder(this.folderService.getTreeFolderByType(fType, ownerModuleId));
 
 		return fv;
 	}
@@ -232,26 +244,4 @@ public class CommonServiceImpl implements CommonService {
 		mainView.addObject(BianccoConstants.MODEL_ATTRIBUTE, iView);
 		return mainView;
 	}
-
-	private Node getFolder() {
-		Node node = new Node();
-		node.setText("Parent");
-		node.setHref("2");
-		node.setIcon("glyphicon glyphicon-folder-close");
-		node.setSelectedIcon("glyphicon glyphicon-folder-open");
-		node.setTags("");
-		List<Node> nodes = new ArrayList<Node>();
-		for (int i = 0; i < 5; i++) {
-			Node n1 = new Node();
-			n1.setText("Folder " + (i + 1));
-			n1.setHref("2");
-			n1.setIcon("glyphicon glyphicon-folder-close");
-			n1.setSelectedIcon("glyphicon glyphicon-folder-open");
-			n1.setTags("");
-			nodes.add(n1);
-		}
-		node.setNodes(nodes);
-		return node;
-	}
-
 }

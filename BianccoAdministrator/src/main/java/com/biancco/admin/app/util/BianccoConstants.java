@@ -37,5 +37,37 @@ public interface BianccoConstants {
 	 * View history.
 	 */
 	String VIEW_HISTORY = "viewHistory";
+	/**
+	 * Module employee.
+	 */
+	String MODULE_EMPLOYEE = "employee";
+	/**
+	 * Module company.
+	 */
+	String MODULE_COMPANY = "company";
+	/**
+	 * Module quality.
+	 */
+	String MODULE_QUALITY = "quality";
+	/**
+	 * Module office.
+	 */
+	String MODULE_OFFICE = "office";
+	/**
+	 * Module vehicle control.
+	 */
+	String MODULE_VEHICLE_CONTROL = "vehicle_control";
+	/**
+	 * Module inventory.
+	 */
+	String MODULE_INVENTORY = "inventory";
+	/**
+	 * Module accounting.
+	 */
+	String MODULE_ACCOUNTING = "accounting";
+	/**
+	 * Module results.
+	 */
+	String MODULE_RESULTS = "results";
 
 }

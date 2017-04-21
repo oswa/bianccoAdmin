@@ -6,18 +6,25 @@ package com.biancco.admin.persistence.model;
 import java.util.Calendar;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 /**
  * Document.
  * 
  * @author SOSExcellence.
  */
+@Entity
+@Table(name = "document")
 public class Document {
 	/**
 	 * The identifier.
@@ -29,7 +36,7 @@ public class Document {
 	/**
 	 * Folder.
 	 */
-	@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_folder_base")
 	private FolderBase folder;
 	/**
@@ -38,6 +45,17 @@ public class Document {
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_template_doc")
 	private TemplateDocument template;
+	/**
+	 * Module owner.
+	 */
+	@Column(name = "owner_module_id")
+	private Long ownerModuleId;
+	/**
+	 * Folder type owner.
+	 */
+	@Column(name = "owner_folder_type")
+	@Enumerated(EnumType.STRING)
+	private FolderType ownerFolderType;
 	/**
 	 * Name.
 	 */
@@ -91,7 +109,7 @@ public class Document {
 	 */
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "locked_employee")
-	private Employee lockeEmployee;
+	private Employee lockedEmployee;
 
 	/**
 	 * @return the idDocument.
@@ -276,15 +294,45 @@ public class Document {
 	/**
 	 * @return the lockeEmployee.
 	 */
-	public Employee getLockeEmployee() {
-		return lockeEmployee;
+	public Employee getLockedEmployee() {
+		return lockedEmployee;
 	}
 
 	/**
 	 * @param lockeEmployee
 	 *            the lockeEmployee to set.
 	 */
-	public void setLockeEmployee(Employee lockeEmployee) {
-		this.lockeEmployee = lockeEmployee;
+	public void setLockedEmployee(Employee lockedEmployee) {
+		this.lockedEmployee = lockedEmployee;
+	}
+
+	/**
+	 * @return the ownerModuleId.
+	 */
+	public Long getOwnerModuleId() {
+		return ownerModuleId;
+	}
+
+	/**
+	 * @param ownerModuleId
+	 *            the ownerModuleId to set.
+	 */
+	public void setOwnerModuleId(Long ownerModuleId) {
+		this.ownerModuleId = ownerModuleId;
+	}
+
+	/**
+	 * @return the ownerFolderType.
+	 */
+	public FolderType getOwnerFolderType() {
+		return ownerFolderType;
+	}
+
+	/**
+	 * @param ownerFolderType
+	 *            the ownerFolderType to set.
+	 */
+	public void setOwnerFolderType(FolderType ownerFolderType) {
+		this.ownerFolderType = ownerFolderType;
 	}
 }

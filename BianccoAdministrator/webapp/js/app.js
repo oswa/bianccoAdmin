@@ -38,9 +38,9 @@ function goToView(_module) {
  * @param _module The module.
  * @param _id The module.
  */
-function showFolder(_module, _id) {
+function showFolder(_folder, _id) {
 	jQuery.ajax({
-		url: currentURL() + '/app/' + _module + '/folder',
+		url: currentURL() + '/app/folder/' + _folder,
 		data: {'_id' : _id},
         cache: false,
         contentType: 'application/x-www-form-urlencoded',

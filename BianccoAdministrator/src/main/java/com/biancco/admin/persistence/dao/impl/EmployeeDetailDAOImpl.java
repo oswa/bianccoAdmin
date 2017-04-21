@@ -47,7 +47,7 @@ public class EmployeeDetailDAOImpl implements EmployeeDetailDAO {
 	@Transactional
 	public void update(EmployeeDetail detail) throws DBException {
 		try {
-			//
+			this.entityManager.merge(detail);
 		} catch (Exception e) {
 			throw new DBException(e);
 		}

@@ -3,6 +3,7 @@
  */
 package com.biancco.admin.model.view;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,7 +31,7 @@ public class Node {
 	/**
 	 * Tags.
 	 */
-	private String tags;
+	private Integer[] tags;
 	/**
 	 * Node list.
 	 */
@@ -99,7 +100,7 @@ public class Node {
 	/**
 	 * @return the tags.
 	 */
-	public String getTags() {
+	public Integer[] getTags() {
 		return tags;
 	}
 
@@ -107,7 +108,7 @@ public class Node {
 	 * @param tags
 	 *            the tags to set.
 	 */
-	public void setTags(String tags) {
+	public void setTags(Integer[] tags) {
 		this.tags = tags;
 	}
 
@@ -124,5 +125,18 @@ public class Node {
 	 */
 	public void setNodes(List<Node> nodes) {
 		this.nodes = nodes;
+	}
+
+	/**
+	 * Add node to nodes.
+	 * 
+	 * @param node
+	 *            Node to add.
+	 */
+	public void addNode(Node node) {
+		if (this.nodes == null) {
+			this.nodes = new ArrayList<Node>();
+		}
+		this.nodes.add(node);
 	}
 }

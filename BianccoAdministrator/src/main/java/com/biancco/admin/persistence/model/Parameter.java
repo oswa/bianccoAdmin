@@ -4,6 +4,7 @@
 package com.biancco.admin.persistence.model;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -45,6 +46,12 @@ public class Parameter {
 	 */
 	@Column(name = "description")
 	private String description;
+	/**
+	 * Enable flag.
+	 */
+	@Column(name = "enable")
+	@Convert(converter = BooleanYNConverter.class)
+	private Boolean enable;
 
 	/**
 	 * @return the identifier.
@@ -119,6 +126,21 @@ public class Parameter {
 	 */
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	/**
+	 * @return the enable.
+	 */
+	public Boolean getEnable() {
+		return enable;
+	}
+
+	/**
+	 * @param enable
+	 *            the enable to set.
+	 */
+	public void setEnable(Boolean enable) {
+		this.enable = enable;
 	}
 
 }

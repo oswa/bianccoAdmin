@@ -3,13 +3,19 @@
  */
 package com.biancco.admin.persistence.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  * Folder base.
@@ -17,6 +23,7 @@ import javax.persistence.Id;
  * @author SOSExcellence.
  */
 @Entity
+@Table(name = "folder_base")
 public class FolderBase {
 	/**
 	 * The identifier.
@@ -26,10 +33,17 @@ public class FolderBase {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idFolder;
 	/**
+	 * Parent folder.
+	 */
+	// @ManyToOne(fetch = FetchType.LAZY)
+	// @JoinColumn(name = "id_folder_parent")
+	@Column(name = "id_folder_parent")
+	private Long parent;
+	/**
 	 * Type.
 	 */
 	@Column(name = "type")
-	@Enumerated
+	@Enumerated(EnumType.STRING)
 	private FolderType type;
 	/**
 	 * Path root.
@@ -52,6 +66,16 @@ public class FolderBase {
 	 */
 	@Column(name = "patterns")
 	private String patterns;
+	/**
+	 * Folder childs.
+	 */
+	// @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent")
+	// private List<FolderBase> childs;
+	/**
+	 * Documents.
+	 */
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "folder")
+	private List<Document> documents;
 
 	/**
 	 * @return the idFolder.
@@ -142,4 +166,62 @@ public class FolderBase {
 	public void setPatterns(String patterns) {
 		this.patterns = patterns;
 	}
+
+	/**
+	 * @return the parent.
+	 */
+	public Long getParent() {
+		return parent;
+	}
+
+	/**
+	 * @param parent
+	 *            the parent to set.
+	 */
+	public void setParent(Long parent) {
+		this.parent = parent;
+	}
+
+	/**
+	 * @return the documents.
+	 */
+	public List<Document> getDocuments() {
+		return documents;
+	}
+
+	/**
+	 * @param documents
+	 *            the documents to set.
+	 */
+	public void setDocuments(List<Document> documents) {
+		this.documents = documents;
+	}
+
+	/**
+	 * @return the parent.
+	 * 
+	 *         public FolderBase getParent() { return parent; }
+	 */
+
+	/**
+	 * @param parent
+	 *            the parent to set.
+	 * 
+	 *            public void setParent(FolderBase parent) { this.parent =
+	 *            parent; }
+	 */
+
+	/**
+	 * @return the childs.
+	 * 
+	 *         public List<FolderBase> getChilds() { return childs; }
+	 */
+
+	/**
+	 * @param childs
+	 *            the childs to set.
+	 * 
+	 *            public void setChilds(List<FolderBase> childs) { this.childs =
+	 *            childs; }
+	 */
 }

@@ -6,18 +6,22 @@ package com.biancco.admin.persistence.model;
 import java.util.Calendar;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 /**
  * Template document.
  * 
  * @author SOSExcellence.
  */
+@Entity
+@Table(name = "template_doc")
 public class TemplateDocument {
 	/**
 	 * The identifier.

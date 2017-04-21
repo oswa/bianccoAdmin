@@ -45,18 +45,18 @@ public interface CommonService {
 
 	/**
 	 * Gets a folder by module and identifier.
-	 * 
-	 * @param module
-	 *            Module.
-	 * @param identifier
-	 *            Identifier.
+	 *
+	 * @param type
+	 *            Folder type.
+	 * @param ownerModuleId
+	 *            Owner module identifier.
 	 * @param session
 	 *            HTTP session.
 	 * @return Folder view.
 	 * @exception DBException
 	 *                If a db exception thrown.
 	 */
-	FolderView getFolderByModuleAndId(String module, long identifier, HttpSession session) throws DBException;
+	FolderView getTreeFolder(String type, long ownerModuleId, HttpSession session) throws DBException;
 
 	/**
 	 * Back to view in session.

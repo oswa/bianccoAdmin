@@ -80,16 +80,16 @@ public class ApplicationController {
 	 * @throws ApplicationException
 	 *             If an application exception thrown.
 	 */
-	@RequestMapping(method = RequestMethod.POST, value = "/{module}/folder")
+	@RequestMapping(method = RequestMethod.POST, value = "/folder/{type}")
 	public ModelAndView getFolderView(final HttpServletRequest request, final HttpServletResponse response,
-			HttpSession session, @PathVariable final String module,
-			@RequestParam(value = "_id", required = true) final long identifier)
+			HttpSession session, @PathVariable final String type,
+			@RequestParam(value = "_id", required = true) final long ownerModuleId)
 			throws ApplicationException, DBException {
-		this.logger.info("Controller | getFolderView " + module + " " + identifier);
+		this.logger.info("Controller | getFolderView " + type + " " + ownerModuleId);
 		// build view
 		ModelAndView view = new ModelAndView("/page/folder");
 		// get information
-		FolderView info = this.commonService.getFolderByModuleAndId(module, identifier, session);
+		FolderView info = this.commonService.getTreeFolder(type, ownerModuleId, session);
 		view.addObject(BianccoConstants.MODEL_ATTRIBUTE, info);
 		// add view to history
 		this.commonService.addViewToHistory(view, false, session);

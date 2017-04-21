@@ -28,6 +28,10 @@ public class DateUtils {
 	 * ES.
 	 */
 	private static final String ESPANOL_MAY = "MX";
+	/**
+	 * Application format.
+	 */
+	public static final String APP_PATTERN = "dd-MM-yyyy";
 
 	/**
 	 * DateUtils.

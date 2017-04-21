@@ -3,14 +3,15 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
        
-    <bean id="ParameterDAO" class="com.biancco.admin.persistence.dao.impl.ParameterDAOImplementation"/>
+    <bean id="ParameterDAO" class="com.biancco.admin.persistence.dao.impl.ParameterDAOImpl"/>
     <bean id="EmployeeDAO" class="com.biancco.admin.persistence.dao.impl.EmployeeDAOImpl"/>
     <bean id="ModuleDAO" class="com.biancco.admin.persistence.dao.impl.ModuleDAOImpl"/>
     <bean id="RoleDAO" class="com.biancco.admin.persistence.dao.impl.RoleDAOImpl"/>
     <bean id="PermissionDAO" class="com.biancco.admin.persistence.dao.impl.PermissionDAOImpl"/>
     <bean id="EmployeeDetailDAO" class="com.biancco.admin.persistence.dao.impl.EmployeeDetailDAOImpl"/>
-    
 	<bean id="CompanyDAO" class="com.biancco.admin.persistence.dao.impl.CompanyDAOImpl"/>
     <bean id="WorkDAO" class="com.biancco.admin.persistence.dao.impl.WorkDAOImpl"/>
     <bean id="FolderDAO" class="com.biancco.admin.persistence.dao.impl.FolderDAOImpl"/>
+    <bean id="DocumentDAO" class="com.biancco.admin.persistence.dao.impl.DocumentDAOImpl"/>
+    <bean id="FolderFieldDAO" class="com.biancco.admin.persistence.dao.impl.FolderFieldDAOImpl"/>
 </beans>

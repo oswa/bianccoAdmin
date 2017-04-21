@@ -3,8 +3,11 @@
  */
 package com.biancco.admin.model.view;
 
+import java.util.List;
+
 import com.biancco.admin.app.util.HTTPUtils;
 import com.biancco.admin.app.util.JSONUtil;
+import com.biancco.admin.model.folder.FieldValue;
 import com.biancco.admin.persistence.model.PermissionType;
 
 /**
@@ -14,35 +17,51 @@ import com.biancco.admin.persistence.model.PermissionType;
  */
 public class FolderView {
 	/**
-	 * Type identifier.
+	 * Owner module identifier.
 	 */
-	private long typeId;
+	private long ownerModuleId;
 	/**
 	 * Permission type.
 	 */
 	private PermissionType pType;
 	/**
-	 * Folder.
+	 * Folder tree.
 	 */
 	private Node folder;
 	/**
-	 * Folder as JSON.
+	 * Folder tree as JSON.
 	 */
 	private String folderAsJSON;
+	/**
+	 * Folder identifier.
+	 */
+	private long folderId;
+	/**
+	 * Folder fields.
+	 */
+	private List<FieldValue> fields;
 
 	/**
-	 * @return the typeId.
+	 * @return the ownerModuleId.
 	 */
-	public long getTypeId() {
-		return typeId;
+	public long getOwnerModuleId() {
+		return ownerModuleId;
 	}
 
 	/**
-	 * @param typeId
-	 *            the typeId to set.
+	 * @param ownerModuleId
+	 *            the ownerModuleId to set.
 	 */
-	public void setTypeId(long typeId) {
-		this.typeId = typeId;
+	public void setOwnerModuleId(long ownerModuleId) {
+		this.ownerModuleId = ownerModuleId;
+	}
+
+	/**
+	 * @param folderAsJSON
+	 *            the folderAsJSON to set.
+	 */
+	public void setFolderAsJSON(String folderAsJSON) {
+		this.folderAsJSON = folderAsJSON;
 	}
 
 	/**
@@ -73,6 +92,36 @@ public class FolderView {
 	 */
 	public void setFolder(Node folder) {
 		this.folder = folder;
+	}
+
+	/**
+	 * @return the folderId.
+	 */
+	public long getFolderId() {
+		return folderId;
+	}
+
+	/**
+	 * @param folderId
+	 *            the folderId to set.
+	 */
+	public void setFolderId(long folderId) {
+		this.folderId = folderId;
+	}
+
+	/**
+	 * @return the fields.
+	 */
+	public List<FieldValue> getFields() {
+		return fields;
+	}
+
+	/**
+	 * @param fields
+	 *            the fields to set.
+	 */
+	public void setFields(List<FieldValue> fields) {
+		this.fields = fields;
 	}
 
 	/**
