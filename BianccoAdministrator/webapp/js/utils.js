@@ -82,19 +82,30 @@ function signoff() {
  * Check error type.
  */
 function checkError(xhr) {
-	if(xhr.status == 401) {
-		var url = currentURL() + '/error.jsp';
-		window.location = url;
-	} else {
-		try {
-			var object = JSON.parse(xhr.responseText);
-			alert(object.messaje);
-		} catch(e) {
-			if (typeof console != "undefined") {
-				console.log('error: ' + e.name + ': ' + e.message);
-			}
-			alert('Ha ocurrido un problema en la aplicaci&oacute;n, contacte a un administrador.');
+	try {
+		var object = JSON.parse(xhr.responseText);
+		showAlert('error', 'messageAlert', object.message);
+	} catch(e) {
+		if (typeof console != "undefined") {
+			console.log('error: ' + e.name);
+			console.log('error response:', xhr.responseText);
 		}
+		alert('Ha ocurrido un problema en la aplicación, contacte a un administrador.');
+	}
+}
+/**
+ * Check error type.
+ */
+function checkError(xhr, divContainerId) {
+	try {
+		var object = JSON.parse(xhr.responseText);
+		showAlert('error', divContainerId, object.message);
+	} catch(e) {
+		if (typeof console != "undefined") {
+			console.log('error: ' + e.name);
+			console.log('error response:', xhr.responseText);
+		}
+		alert('Ha ocurrido un problema en la aplicación, contacte a un administrador.');
 	}
 }
 /**
@@ -149,7 +160,7 @@ var _messageAlert;
 /**
  * Shows a wait dialog.
  */
-function showAlert(_type, _msg) {
+function showModalAlert(_type, _msg) {
     //$('#messageAlert').html(''); display:none
 	var _title = '';
 	switch (_type) {
@@ -187,8 +198,45 @@ function showAlert(_type, _msg) {
     _messageAlert.show();
 }
 /**
+ * Create & show alert.
+ * @param _type Alert type.
+ * @param _divContainer Div container.
+ * @param _message Message to show.
+ */
+function showAlert(_type, _divContainer, _message) {
+	var _title = '';
+	switch (_type) {
+		case 'danger':
+			_title = 'Error!';
+			break;
+		case 'success':
+			_title = 'Hecho!';
+			break;
+		case 'warning':
+			_title = 'Alerta!';
+			break;
+		case 'info':
+			_title = 'Nota!';
+			break;
+		default: break;
+	}
+	var _divAlert = $('#' + _divContainer); 
+	if (_divAlert.length) {
+		var _alertTmpl = '<div class="alert alert-' + _type + ' alert-dismissible" role="alert">' +
+			'<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+				'<span aria-hidden="true">&times;</span>' +
+			'</button><strong>'+ _title +'</strong>&nbsp;' + _message + '</div>';
+		_divAlert.hide();
+		_divAlert.html('');
+		_divAlert.html(_alertTmpl);
+		_divAlert.show();
+	} else {
+		alert(object.message);
+	}
+}
+/**
  * Hides the wait dialog.
  */
-function closeAlert() {
+function closeModalAlert() {
 	_messageAlert.close();
 }

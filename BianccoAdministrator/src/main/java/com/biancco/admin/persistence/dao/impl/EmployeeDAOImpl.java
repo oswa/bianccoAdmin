@@ -18,6 +18,7 @@ import javax.persistence.criteria.Root;
 import org.apache.log4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.biancco.admin.app.exception.AuthenticationException;
 import com.biancco.admin.app.exception.DBException;
 import com.biancco.admin.app.util.BeanUtils;
 import com.biancco.admin.model.employee.EmployeeSimpleRecord;
@@ -146,7 +147,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			return this.entityManager.createQuery(q).getSingleResult();
 		} catch (Exception e) {
 			this.logger.error("Error on validate employee credentials", e);
-			throw new DBException(e);
+			throw new AuthenticationException("Usuario/Contraseña incorrecto.");
 		}
 	}
 

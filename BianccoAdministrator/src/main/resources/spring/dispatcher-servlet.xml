@@ -17,17 +17,34 @@
 		<property name="prefix" value="/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-
-    <!-- Scans the classpath of this application for @Components to deploy as beans -->
-    <context:component-scan base-package="com.biancco.admin" />
-
-    <!-- Configures the @Controller programming model -->
-    <mvc:annotation-driven/>
+	
+	<!-- Configures the @Controller programming model -->
+	<mvc:annotation-driven/>
+	
+	<!-- Configures to plugin JSON as request and response 
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+	-->
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<ref bean="jsonMessageConverter"/>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Configures bean to convert JSON to POJO and vice versa -->
+	<bean id="jsonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+    
+    <!-- Handles multipart resolver -->
+    <bean id="multipartResolver"  class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
     
     <!-- Handles the annotations on the @Controller classes. -->
 	<bean id="handlerMapping" class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
 
 	<!-- The default handler adapter, this calls the simple MVC controllers for handling requests.-->
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>
+    
+    <!-- Scans the classpath of this application for @Components to deploy as beans -->
+    <context:component-scan base-package="com.biancco.admin" />
 
 </beans>

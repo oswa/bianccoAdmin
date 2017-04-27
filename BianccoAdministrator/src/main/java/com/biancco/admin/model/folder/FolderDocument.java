@@ -76,6 +76,12 @@ public class FolderDocument {
 	private Boolean locked;
 
 	/**
+	 * Dummy constructor.
+	 */
+	public FolderDocument() {
+	}
+
+	/**
 	 * Constructor.
 	 * 
 	 * @param idFolder

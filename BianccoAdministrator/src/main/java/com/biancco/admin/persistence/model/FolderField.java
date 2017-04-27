@@ -86,6 +86,12 @@ public class FolderField {
 	private List<Parameter> catalogValues;
 
 	/**
+	 * Dummy constructor.
+	 */
+	public FolderField() {
+	}
+
+	/**
 	 * @return the idFolderField.
 	 */
 	public Long getIdFolderField() {

@@ -135,6 +135,7 @@ public class FolderFieldDAOImpl implements FolderFieldDAO {
 			Path<Integer> pMaxLength = root.get("maxLength");
 			Path<String> pField = root.get("field");
 			Path<Long> pCatalog = root.get("catalog");
+			Path<Boolean> pDate = root.get("date");
 			Path<Long> pFolderValueId = joinVal.get("idFolderValue");
 			Path<Long> pOwnerModuleId = joinVal.get("ownerModuleId");
 			Path<FolderType> pOwnerFolderType = joinVal.get("ownerFolderType");
@@ -146,10 +147,10 @@ public class FolderFieldDAOImpl implements FolderFieldDAO {
 			joinVal.on(builder.and(pOwner, pType));
 
 			q.select(builder.construct(FieldValue.class, pFolderFieldId, pFolderValueId, pField, pOwnerModuleId,
-					pOwnerFolderType, pValue, pFieldType, pRequired, pMaxLength, pCatalog));
+					pOwnerFolderType, pValue, pFieldType, pRequired, pMaxLength, pCatalog, pDate));
 
 			// condition
-			Predicate pFolder = builder.equal(pFolderFieldId, idFolder);
+			Predicate pFolder = builder.equal(root.get("folderBase").get("idFolder"), idFolder);
 			q.where(builder.and(pFolder));
 			// order
 			q.orderBy(builder.asc(pFolderFieldId));

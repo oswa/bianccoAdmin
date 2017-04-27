@@ -41,7 +41,7 @@
             <p align="right">v0.0.1-SNAPSHOT</p>
 			<c:if test="${not empty model and not empty model.message}">
 				<div class="alert alert-danger" role="alert">
-        			<strong>Error!</strong> <c:out value="${model.message}"/>.
+        			<strong>Error!</strong> <c:out value="${model.message}"/>
       			</div>
 			</c:if>            
             <img src="${pageContext.request.contextPath}/image/footer_biancco_519.png" width="300px"/>

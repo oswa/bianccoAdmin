@@ -28,7 +28,7 @@ import com.biancco.admin.service.CommonService;
  * @author SOSExcellence.
  */
 @Controller
-public class ApplicationController {
+public class ApplicationController extends ExceptionController {
 	/**
 	 * Logger.
 	 */

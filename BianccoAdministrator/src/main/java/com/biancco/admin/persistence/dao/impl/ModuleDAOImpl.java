@@ -50,7 +50,7 @@ public class ModuleDAOImpl implements ModuleDAO {
 	@Override
 	public void update(Module module) throws DBException {
 		try {
-			// this.entityManager.persist(module);
+			this.entityManager.merge(module);
 		} catch (Exception e) {
 			throw new DBException(e);
 		}

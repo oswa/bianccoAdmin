@@ -169,8 +169,6 @@ public class FolderDAOImpl implements FolderDAO {
 
 			// condition
 			Predicate pType = builder.equal(root.get("type"), folderType);
-			// Predicate pDoc = builder.equal(joinDoc.get("ownerModuleId"),
-			// idModule);
 			q.where(builder.and(pType));
 			// order
 			q.orderBy(builder.asc(root.get("idFolder")));

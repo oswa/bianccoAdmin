@@ -22,7 +22,9 @@ import com.biancco.admin.model.view.FolderView;
 import com.biancco.admin.model.view.Node;
 import com.biancco.admin.persistence.dao.FolderDAO;
 import com.biancco.admin.persistence.dao.FolderFieldDAO;
+import com.biancco.admin.persistence.dao.FolderFieldValueDAO;
 import com.biancco.admin.persistence.dao.ParameterDAO;
+import com.biancco.admin.persistence.model.FolderFieldValue;
 import com.biancco.admin.persistence.model.FolderType;
 import com.biancco.admin.persistence.model.Parameter;
 import com.biancco.admin.persistence.model.PermissionType;
@@ -54,6 +56,11 @@ public class FolderServiceImpl implements FolderService {
 	@Autowired
 	private ParameterDAO paramaterDAO;
 	/**
+	 * Folder field value DAO.
+	 */
+	@Autowired
+	private FolderFieldValueDAO folderFieldValueDAO;
+	/**
 	 * Icon folder-close.
 	 */
 	private String ICON_FOLDER_CLOSE = "glyphicon glyphicon-folder-close";
@@ -78,7 +85,7 @@ public class FolderServiceImpl implements FolderService {
 					"Estructura de folder no configurado, por favor contacte a un administrador.");
 		}
 		// build tree node
-		Node node = buildTreeFolder(folder);
+		Node node = buildTreeFolder(folder, ownerModuleId);
 		return node;
 	}
 
@@ -87,20 +94,27 @@ public class FolderServiceImpl implements FolderService {
 	 * 
 	 * @param folder
 	 *            Folder-documents.
+	 * @param ownerModuleId
+	 *            Owner module identifier.
 	 * @return Node root.
 	 */
-	private Node buildTreeFolder(List<FolderDocument> folder) {
+	private Node buildTreeFolder(List<FolderDocument> folder, long ownerModuleId) {
 		// get root
 		FolderDocument root = folder.get(0);
+		// set owner module identifier
+		root.setOwnerModuleId(ownerModuleId);
+		// create root node
 		Node node = new Node();
 		node.setText(root.getPathChild());
 		node.setIcon(ICON_BRIEFCASE);
+		node.setFolder(true);
+		node.setDetail(root);
 		// clean folder
 		folder.remove(0);
 		// get parent
 		Long parent = root.getIdFolder();
 		// set childs to root
-		List<Node> childs = this.extractNodesByParent(folder, parent);
+		List<Node> childs = this.extractNodesByParent(folder, parent, ownerModuleId);
 		node.setNodes(childs);
 
 		return node;
@@ -113,9 +127,11 @@ public class FolderServiceImpl implements FolderService {
 	 *            Folder-documents.
 	 * @param parent
 	 *            Parent identifier.
+	 * @param ownerModuleId
+	 *            Owner module identifier.
 	 * @return Nodes (folders & documents) by parent.
 	 */
-	private List<Node> extractNodesByParent(List<FolderDocument> folder, final Long parent) {
+	private List<Node> extractNodesByParent(List<FolderDocument> folder, final Long parent, long ownerModuleId) {
 		// select items
 		List<FolderDocument> selectedItems = this.selectFoldersByParent(folder, parent);
 		// initialize nodes
@@ -124,16 +140,20 @@ public class FolderServiceImpl implements FolderService {
 		Node node = null;
 		int totalDocs = 0;
 		for (FolderDocument fd : selectedItems) {
+			// set owner module identifier
+			fd.setOwnerModuleId(ownerModuleId);
 			// create a folder node
 			if (node == null) {
 				node = new Node();
 				node.setText(fd.getPathChild());
 				node.setIcon(ICON_FOLDER_CLOSE);
+				node.setFolder(true);
+				node.setDetail(fd);
 				// add node
 				nodes.add(node);
 				// set childs if contains
 				Long nodeParent = fd.getIdFolder();
-				List<Node> childs = this.extractNodesByParent(folder, nodeParent);
+				List<Node> childs = this.extractNodesByParent(folder, nodeParent, ownerModuleId);
 				if (!childs.isEmpty()) {
 					node.setNodes(childs);
 				}
@@ -145,6 +165,8 @@ public class FolderServiceImpl implements FolderService {
 				Node child = new Node();
 				child.setText(fd.getName());
 				child.setIcon(ICON_FILE);
+				child.setFolder(false);
+				child.setDetail(fd);
 				// add child
 				node.addNode(child);
 				// count docs
@@ -198,6 +220,7 @@ public class FolderServiceImpl implements FolderService {
 		fv.setpType(pType);
 		fv.setOwnerModuleId(ownerModuleId);
 		fv.setFolderId(folderId);
+		fv.setFolderType(fType);
 		// get fields
 		List<FieldValue> fields = this.folderFieldDAO.getFieldValueByFolder(folderId, ownerModuleId, fType);
 		// retrieve catalogs if apply
@@ -227,24 +250,14 @@ public class FolderServiceImpl implements FolderService {
 
 	/**
 	 * {@inheritDoc}
-	 * 
-	 * @Override public void buildFolders(long idWork, FolderType folderType)
-	 *           throws DBException { this.logger.trace("building fodlers for
-	 *           idWork " + idWork); WorkCompany work =
-	 *           this.workDao.getWorkById(idWork); if ( null == work ) { throw
-	 *           new ApplicationException("Work not exists"); } List<FolderBase>
-	 *           folders = this.folderDao.getFolders(folderType); if ( null ==
-	 *           folders ) { throw new ApplicationException("There are not
-	 *           folder base defined"); } boolean hasError = false; for (
-	 *           FolderBase folder : folders ) { String folderPath = null; try {
-	 *           folderPath =
-	 *           folder.getPathRoot()+File.separator+idWork+File.separator+folder.getPathChild();
-	 *           BianccoUtils.buildPath(folderPath); this.logger.trace("Created
-	 *           folder '" + folderPath + "'"); } catch (IOException e) {
-	 *           this.logger.trace("Can't create folder '" + folderPath + "': "+
-	 *           e.getMessage()); this.logger.error("Folder can't be created '"
-	 *           + folderPath +"'", e); hasError = true; } } if ( hasError ) {
-	 *           throw new ApplicationException("Error al crear directorios"); }
-	 *           }
 	 */
+	@Override
+	public FolderView saveFieldValues(List<FolderFieldValue> values, HttpSession session) throws DBException {
+		// save
+		this.folderFieldValueDAO.save(values);
+		// refresh view
+		FolderFieldValue val = values.get(0);
+		return this.getFolderFields(val.getOwnerFolderType().getFolder(), val.getOwnerModuleId(), val.getIdFolder(),
+				session);
+	}
 }

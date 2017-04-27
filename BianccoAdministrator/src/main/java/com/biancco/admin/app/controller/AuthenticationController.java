@@ -32,7 +32,7 @@ import com.biancco.admin.service.CommonService;
  */
 @Controller
 @RequestMapping(value = "/login")
-public class AuthenticationController {
+public class AuthenticationController extends ExceptionController {
 	/**
 	 * Logger.
 	 */

@@ -6,6 +6,8 @@ package com.biancco.admin.model.view;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.biancco.admin.model.folder.FolderDocument;
+
 /**
  * Node (Folder).
  * 
@@ -36,6 +38,14 @@ public class Node {
 	 * Node list.
 	 */
 	private List<Node> nodes;
+	/**
+	 * Folder flag.
+	 */
+	private Boolean folder;
+	/**
+	 * Folder/Document detail.
+	 */
+	private FolderDocument detail;
 
 	/**
 	 * @return the text.
@@ -138,5 +148,35 @@ public class Node {
 			this.nodes = new ArrayList<Node>();
 		}
 		this.nodes.add(node);
+	}
+
+	/**
+	 * @return the folder.
+	 */
+	public Boolean getFolder() {
+		return folder;
+	}
+
+	/**
+	 * @param folder
+	 *            the folder to set.
+	 */
+	public void setFolder(Boolean folder) {
+		this.folder = folder;
+	}
+
+	/**
+	 * @return the detail.
+	 */
+	public FolderDocument getDetail() {
+		return detail;
+	}
+
+	/**
+	 * @param detail
+	 *            the detail to set.
+	 */
+	public void setDetail(FolderDocument detail) {
+		this.detail = detail;
 	}
 }

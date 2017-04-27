@@ -18,7 +18,6 @@ import com.biancco.admin.app.util.UserPasswordGenerator;
 import com.biancco.admin.model.catalog.RoleSimpleRecord;
 import com.biancco.admin.model.view.EmployeeModuleView;
 import com.biancco.admin.persistence.dao.EmployeeDAO;
-import com.biancco.admin.persistence.dao.EmployeeDetailDAO;
 import com.biancco.admin.persistence.model.Employee;
 import com.biancco.admin.persistence.model.EmployeeDetail;
 import com.biancco.admin.persistence.model.PermissionType;
@@ -42,11 +41,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 	 */
 	@Autowired
 	private EmployeeDAO employeeDAO;
-	/**
-	 * Employee detail DAO.
-	 */
-	@Autowired
-	private EmployeeDetailDAO employeeDetailDAO;
 
 	/**
 	 * {@inheritDoc}
@@ -96,7 +90,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		Employee e = new Employee();
 		e.setEnable(true);
 		e.setNick(UserPasswordGenerator.getUserByMail(d.getMail()));
-		e.setPassword(UserPasswordGenerator.getPassword());
+		// TODO fix password UserPasswordGenerator.getPassword()
+		e.setPassword("biancco");
 		e.setRole(r);
 		// set employee to detail
 		d.setEmployee(e);

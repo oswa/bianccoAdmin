@@ -54,7 +54,7 @@ public class RoleDAOImpl implements RoleDAO {
 	@Transactional
 	public void update(Role role) throws DBException {
 		try {
-			//
+			this.entityManager.merge(role);
 		} catch (Exception e) {
 			throw new DBException(e);
 		}

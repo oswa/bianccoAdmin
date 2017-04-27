@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * Represents a folder-field value.
@@ -52,6 +53,17 @@ public class FolderFieldValue {
 	 */
 	@Column(name = "value")
 	private String value;
+	/**
+	 * Folder identifier.
+	 */
+	@Transient
+	private Long idFolder;
+
+	/**
+	 * Dummy constructor.
+	 */
+	public FolderFieldValue() {
+	}
 
 	/**
 	 * @return the idFolderValue.
@@ -126,6 +138,21 @@ public class FolderFieldValue {
 	 */
 	public void setValue(String value) {
 		this.value = value;
+	}
+
+	/**
+	 * @return the idFolder.
+	 */
+	public Long getIdFolder() {
+		return idFolder;
+	}
+
+	/**
+	 * @param idFolder
+	 *            the idFolder to set.
+	 */
+	public void setIdFolder(Long idFolder) {
+		this.idFolder = idFolder;
 	}
 
 }

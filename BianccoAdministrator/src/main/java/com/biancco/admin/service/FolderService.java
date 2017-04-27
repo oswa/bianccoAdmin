@@ -3,11 +3,14 @@
  */
 package com.biancco.admin.service;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import com.biancco.admin.app.exception.DBException;
 import com.biancco.admin.model.view.FolderView;
 import com.biancco.admin.model.view.Node;
+import com.biancco.admin.persistence.model.FolderFieldValue;
 import com.biancco.admin.persistence.model.FolderType;
 
 /**
@@ -46,4 +49,15 @@ public interface FolderService {
 	 *             If a db exception is thrown.
 	 */
 	FolderView getFolderFields(String type, long ownerModuleId, long folderId, HttpSession session) throws DBException;
+
+	/**
+	 * Saves the field values.
+	 * 
+	 * @param values
+	 *            Field values.
+	 * @return Folder view.
+	 * @throws DBException
+	 *             If a db exception is thrown.
+	 */
+	FolderView saveFieldValues(List<FolderFieldValue> values, HttpSession session) throws DBException;
 }

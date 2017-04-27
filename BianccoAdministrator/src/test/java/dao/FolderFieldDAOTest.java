@@ -42,7 +42,7 @@ public class FolderFieldDAOTest extends DAOTest {
 			 * for (FolderField ff : dao.getFieldsByFolder(13L)) {
 			 * System.out.println(ff.getField()); }
 			 */
-			for (FieldValue fv : dao.getFieldValueByFolder(4L, 1L, FolderType.EMPLOYEE)) {
+			for (FieldValue fv : dao.getFieldValueByFolder(3L, 9L, FolderType.EMPLOYEE)) {
 				System.out.println(fv.getField());
 			}
 

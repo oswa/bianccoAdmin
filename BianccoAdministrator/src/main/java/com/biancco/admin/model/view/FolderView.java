@@ -8,6 +8,7 @@ import java.util.List;
 import com.biancco.admin.app.util.HTTPUtils;
 import com.biancco.admin.app.util.JSONUtil;
 import com.biancco.admin.model.folder.FieldValue;
+import com.biancco.admin.persistence.model.FolderType;
 import com.biancco.admin.persistence.model.PermissionType;
 
 /**
@@ -40,6 +41,10 @@ public class FolderView {
 	 * Folder fields.
 	 */
 	private List<FieldValue> fields;
+	/**
+	 * Folder type.
+	 */
+	private FolderType folderType;
 
 	/**
 	 * @return the ownerModuleId.
@@ -122,6 +127,21 @@ public class FolderView {
 	 */
 	public void setFields(List<FieldValue> fields) {
 		this.fields = fields;
+	}
+
+	/**
+	 * @return the folderType.
+	 */
+	public FolderType getFolderType() {
+		return folderType;
+	}
+
+	/**
+	 * @param folderType
+	 *            the folderType to set.
+	 */
+	public void setFolderType(FolderType folderType) {
+		this.folderType = folderType;
 	}
 
 	/**

@@ -14,4 +14,5 @@
     <bean id="FolderDAO" class="com.biancco.admin.persistence.dao.impl.FolderDAOImpl"/>
     <bean id="DocumentDAO" class="com.biancco.admin.persistence.dao.impl.DocumentDAOImpl"/>
     <bean id="FolderFieldDAO" class="com.biancco.admin.persistence.dao.impl.FolderFieldDAOImpl"/>
+    <bean id="FolderFieldValueDAO" class="com.biancco.admin.persistence.dao.impl.FolderFieldValueDAOImpl"/>
 </beans>

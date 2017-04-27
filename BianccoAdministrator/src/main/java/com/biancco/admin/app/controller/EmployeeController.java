@@ -29,7 +29,7 @@ import com.biancco.admin.service.EmployeeService;
  */
 @Controller
 @RequestMapping(value = "/employee")
-public class EmployeeController {
+public class EmployeeController extends ExceptionController {
 	/**
 	 * Logger.
 	 */

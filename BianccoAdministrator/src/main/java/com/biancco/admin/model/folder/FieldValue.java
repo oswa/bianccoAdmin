@@ -55,6 +55,10 @@ public class FieldValue {
 	 */
 	private String catalog;
 	/**
+	 * Date flag.
+	 */
+	private Boolean date;
+	/**
 	 * Catalog if apply.
 	 */
 	private List<Parameter> catalogValues;
@@ -82,16 +86,19 @@ public class FieldValue {
 	 *            Field max length.
 	 * @param catalog
 	 *            Catalog.
-	 * @param catalogValues
-	 *            Catalog values.
+	 * @param date
+	 *            Date flag.
 	 */
 	public FieldValue(Long idFolderField, Long idFolderValue, String field, Long ownerModuleId,
-			FolderType ownerFolderType, String value, String fieldType, Boolean required, int maxLength,
-			String catalog/*
-							 * , List<Parameter> catalogValues
-							 */) {
+			FolderType ownerFolderType, String value, String fieldType, Boolean required, int maxLength, String catalog,
+			Boolean date/*
+						 * , List<Parameter> catalogValues
+						 */) {
 		this.idFolderField = idFolderField;
-		this.idFolderValue = idFolderValue;
+		this.idFolderValue = 0l;
+		if (idFolderValue != null) {
+			this.idFolderValue = idFolderValue;
+		}
 		this.field = field;
 		this.ownerModuleId = ownerModuleId;
 		this.ownerFolderType = ownerFolderType;
@@ -100,6 +107,7 @@ public class FieldValue {
 		this.required = required;
 		this.maxLength = maxLength;
 		this.catalog = catalog;
+		this.date = date;
 		// this.catalogValues = catalogValues;
 	}
 
@@ -266,5 +274,20 @@ public class FieldValue {
 	 */
 	public void setCatalogValues(List<Parameter> catalogValues) {
 		this.catalogValues = catalogValues;
+	}
+
+	/**
+	 * @return the date.
+	 */
+	public Boolean getDate() {
+		return date;
+	}
+
+	/**
+	 * @param date
+	 *            the date to set.
+	 */
+	public void setDate(Boolean date) {
+		this.date = date;
 	}
 }

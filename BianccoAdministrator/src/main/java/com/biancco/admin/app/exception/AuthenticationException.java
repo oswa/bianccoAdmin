@@ -1,14 +1,14 @@
 /**
- * SOSExcellence S.A. de C.V. All rights reserved 2016.
+ * SOSExcellence S.A. de C.V. all rights reserved 2016.
  */
 package com.biancco.admin.app.exception;
 
 /**
- * Application exception.
+ * Authentication exception.
  * 
  * @author SOSExcellence.
  */
-public class ApplicationException extends RuntimeException {
+public class AuthenticationException extends RuntimeException {
 	/**
 	 * Serial version.
 	 */
@@ -32,7 +32,7 @@ public class ApplicationException extends RuntimeException {
 	 * @param message
 	 *            The message error.
 	 */
-	public ApplicationException(final String message) {
+	public AuthenticationException(final String message) {
 		super(message, new Throwable(message));
 		this.messageError = message;
 		this.originalMessageError = message;
@@ -46,7 +46,7 @@ public class ApplicationException extends RuntimeException {
 	 * @param exception
 	 *            The exception.
 	 */
-	public ApplicationException(final String message, final Exception exception) {
+	public AuthenticationException(final String message, final Exception exception) {
 		super(message, exception);
 		this.messageError = message;
 		this.originalMessageError = exception.getMessage();
@@ -59,7 +59,7 @@ public class ApplicationException extends RuntimeException {
 	 * @param exception
 	 *            The exception.
 	 */
-	public ApplicationException(final Exception exception) {
+	public AuthenticationException(final Exception exception) {
 		super(exception);
 		this.messageError = exception.getMessage();
 		this.originalMessageError = exception.getMessage();
