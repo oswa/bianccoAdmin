@@ -16,15 +16,25 @@
     <link href="${pageContext.request.contextPath}/js/lib/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
     <link href="${pageContext.request.contextPath}/js/lib/bootstrap-treeview.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/js/lib/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/css/app.css" rel="stylesheet">
-    <script src="${pageContext.request.contextPath}/js/lib/assets/js/ie-emulation-modes-warning.js"></script>
+    <link href="${pageContext.request.contextPath}/js/lib/jquery.fileupload.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/js/lib/jquery.fileupload-ui.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/js/lib/fileuploadUI.css" rel="stylesheet">
     
+    <link href="${pageContext.request.contextPath}/css/app.css" rel="stylesheet">
+    
+    <script src="${pageContext.request.contextPath}/js/lib/assets/js/ie-emulation-modes-warning.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/lib/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="${pageContext.request.contextPath}/js/lib/assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/lib/bootstrap.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/lib/bootstrap-datetimepicker.min.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/lib/bootstrap-treeview.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/lib/assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/lib/bootstrap-treeview.min.js"></script>    
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/lib/assets/js/vendor/jquery.ui.widget.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/lib/jquery.iframe-transport.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/lib/jquery.fileupload.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/lib/jquery.fileupload-process.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/lib/jquery.fileupload-validate.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/lib/fileuploadUI.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/lib/assets/js/ie10-viewport-bug-workaround.js"></script>
     
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/utils.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/app.js"></script>

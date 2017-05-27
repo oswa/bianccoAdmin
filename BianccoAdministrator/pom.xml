@@ -10,6 +10,7 @@
 	<hibernate.version>5.2.2.Final</hibernate.version>
 	<jackson.version>2.8.7</jackson.version>
 	<jdk.version>1.6</jdk.version>
+	<encoding>UTF-8</encoding>
   </properties>
   <build>
     <plugins>
@@ -19,6 +20,7 @@
         <configuration>
           <source>${jdk.version}</source>
           <target>${jdk.version}</target>
+          <encoding>${encoding}</encoding>
         </configuration>
       </plugin>
       <plugin>

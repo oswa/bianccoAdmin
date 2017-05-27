@@ -147,7 +147,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			return this.entityManager.createQuery(q).getSingleResult();
 		} catch (Exception e) {
 			this.logger.error("Error on validate employee credentials", e);
-			throw new AuthenticationException("Usuario/Contraseña incorrecto.");
+			throw new AuthenticationException("Usuario/ContraseÃ±a incorrecto.");
 		}
 	}
 

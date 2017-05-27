@@ -69,5 +69,9 @@ public interface BianccoConstants {
 	 * Module results.
 	 */
 	String MODULE_RESULTS = "results";
+	/**
+	 * Folder variable path.
+	 */
+	String FOLDER_VARIAIBLE_PATH = "{ownerModuleId}";
 
 }

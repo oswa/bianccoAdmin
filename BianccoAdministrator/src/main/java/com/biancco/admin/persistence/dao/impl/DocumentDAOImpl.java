@@ -63,6 +63,18 @@ public class DocumentDAOImpl implements DocumentDAO {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public void saveWithoutATransaction(Document doc) throws DBException {
+		try {
+			this.entityManager.persist(doc);
+		} catch (Exception e) {
+			throw new DBException(e);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	@Transactional
 	public void delete(long idDoc) throws DBException {
 		try {

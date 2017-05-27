@@ -84,7 +84,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 			// create session
 			session.setAttribute(BianccoConstants.ATTR_USER, employee);
 		} else {
-			response.setMessage("Verifica usuario y contraseña y vuelve a intentar");
+			response.setMessage("Verifica usuario y contraseÃ±a y vuelve a intentar");
 			System.out.println("Parametros nulos");
 		}
 		return response;

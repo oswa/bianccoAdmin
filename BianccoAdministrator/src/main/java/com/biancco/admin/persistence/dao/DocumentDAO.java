@@ -38,6 +38,17 @@ public interface DocumentDAO {
 	Document save(Document doc) throws DBException;
 
 	/**
+	 * Insert a new Document.
+	 * 
+	 * @param doc
+	 *            Document to save.
+	 * @return Document stored.
+	 * @throws DBException
+	 *             If a problem occurs.
+	 */
+	void saveWithoutATransaction(Document doc) throws DBException;
+
+	/**
 	 * Deletes a Document.
 	 * 
 	 * @param idDoc

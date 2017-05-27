@@ -3,11 +3,15 @@
  */
 package com.biancco.admin.service;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
 import com.biancco.admin.app.exception.DBException;
+import com.biancco.admin.model.folder.FileMeta;
 import com.biancco.admin.model.view.FolderView;
 import com.biancco.admin.model.view.Node;
 import com.biancco.admin.persistence.model.FolderFieldValue;
@@ -60,4 +64,15 @@ public interface FolderService {
 	 *             If a db exception is thrown.
 	 */
 	FolderView saveFieldValues(List<FolderFieldValue> values, HttpSession session) throws DBException;
+
+	/**
+	 * Upload files.
+	 * 
+	 * @param request
+	 *            Multipart HTTP request.
+	 * @param session
+	 *            HTTP session.
+	 * @return File meta list.
+	 */
+	LinkedList<FileMeta> saveAndUploadFiles(MultipartHttpServletRequest request, HttpSession session);
 }

@@ -78,13 +78,13 @@ public enum FolderType {
 	/**
 	 * Gets the folder type from a string.
 	 * 
-	 * @param folder
-	 *            Folder name.
+	 * @param string
+	 *            Value Enum name.
 	 * @return Folder type.
 	 */
-	public static FolderType fromModule(final String module) {
+	public static FolderType fromString(final String string) {
 		for (FolderType f : FolderType.values()) {
-			if (f.ownerModule.equals(module)) {
+			if (f.name().equals(string)) {
 				return f;
 			}
 		}

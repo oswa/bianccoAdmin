@@ -1,0 +1,21 @@
+@CHARSET "UTF-8";
+/*
+ * jQuery File Upload UI Plugin CSS | (c) RAPA Services
+ *
+ * Copyright 2017, Oswaldo Gutierrez <o.gutierrez@rapaservices.com>
+ *
+ * Licensed under the MIT license:
+ * https://opensource.org/licenses/MIT
+ */
+.fileupload-button-ui {
+ 	margin-top: 10px;
+}
+
+#dropzone {
+    background: #ccccc;
+    height: 80px;
+    line-height: 40px;
+    text-align: center;
+    border: dashed 2px gray;
+    margin-top: 10px;
+}

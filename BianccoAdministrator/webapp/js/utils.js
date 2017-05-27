@@ -90,7 +90,7 @@ function checkError(xhr) {
 			console.log('error: ' + e.name);
 			console.log('error response:', xhr.responseText);
 		}
-		alert('Ha ocurrido un problema en la aplicación, contacte a un administrador.');
+		alert('Ha ocurrido un problema en la aplicaci&oacute;n, contacte a un administrador.');
 	}
 }
 /**
@@ -105,7 +105,7 @@ function checkError(xhr, divContainerId) {
 			console.log('error: ' + e.name);
 			console.log('error response:', xhr.responseText);
 		}
-		alert('Ha ocurrido un problema en la aplicación, contacte a un administrador.');
+		alert('Ha ocurrido un problema en la aplicaci&oacute;n, contacte a un administrador.');
 	}
 }
 /**

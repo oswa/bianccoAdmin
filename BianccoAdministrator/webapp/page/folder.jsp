@@ -26,9 +26,8 @@
             </div>
             <div class="panel-body">
             	<div id="_folderMessage"></div>
-            	<div id="_folderName"></div>
+	            <div id="_folderName"></div>
 				<div id="_folderFields"></div>
-				<div id="_folderUploadFiles"></div>
             </div>
           </div>
 	</div>
@@ -44,10 +43,12 @@
 		showTags: true,
 		data: _data,
 		onNodeSelected: function(event, node) {
+			console.log('node selected', node);
 			// get fields
-			if (node.folder) {
+			if (node.folder && node.nodeId != 0) {
 				getFolderFields(node.detail);
 			}
         }
 	});
+	//initTreeView(<c:out value="${model.folderAsJSON}"/>);
 </script>

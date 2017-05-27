@@ -32,7 +32,6 @@ function goToView(_module) {
 		}
 	});
 }
-
 /**
  * Goes to folder page by module.
  * @param _folderType Flder type.
@@ -120,11 +119,16 @@ function getFolderFields(_folder) {
 			$('#_folderName').html('');
 			$('#_folderName').html('<p><b>Carpeta:</b> ' + _folder.pathChild + '</p>');
 			$('#_folderName').show();
+			// clean msg
+			$('#_folderMessage').html('');
 			// set content
 			$('#_folderFields').hide();
 			$('#_folderFields').html('');
 			$('#_folderFields').html(response);
 			$('#_folderFields').show();
+			// set path
+			$('#path').val(_folder.pathRoot);
+			$('#child').val(_folder.pathChild);
 		},
 		error : function(xhr, ajaxOptions, thrownError) {
 			checkError(xhr);
@@ -137,8 +141,10 @@ function getFolderFields(_folder) {
 
 /**
  * Saves the folder detail.
+ * @param _folder Folder.
  */
 function saveFolderDetail() {
+	var _folder = $('#folderTreeview').treeview('getSelected')[0].detail;
 	var _data = getDataFromFolderDetail();
 	jQuery.ajax({
 		url: currentURL() + '/app/folder/fields/save',
@@ -152,13 +158,18 @@ function saveFolderDetail() {
 		success: function(response) {
 			// clean tmp files
 			$('.form_date').datetimepicker('remove');
+			// clean msg
+			$('#_folderMessage').html('');
 			// update detail
 			$('#_folderFields').hide();
 			$('#_folderFields').html('');
 			$('#_folderFields').html(response);
 			$('#_folderFields').show();
-			// show success alert
-			showAlert('success', '_folderMessage', 'Infomación guardada.');
+			// set path
+			$('#path').val(_folder.pathRoot);
+			$('#child').val(_folder.pathChild);
+			// show success alert			
+			showAlert('success', '_folderMessage', 'Infomaci&oacute;n guardada.');
 		},
 		error : function(xhr, ajaxOptions, thrownError) {
 			checkError(xhr, '_folderMessage');
@@ -201,4 +212,77 @@ function getDataFromFolderDetail() {
 		}
 	});
 	return _fields;
+}
+/**
+ * Refresh the folder content.
+ */
+function refreshFolder(_data) {
+	var _folderType = $('#folderType').val();
+	var _id = $('#ownerModuleId').val();
+	jQuery.ajax({
+		url: currentURL() + '/app/folder/refresh',
+		data: {'_id' : _id, '_type' : _folderType},
+        cache: false,
+        contentType: 'application/x-www-form-urlencoded',
+        dataType: 'text',
+        type: 'POST',
+		beforeSend: function(req) {
+			showWaitDialog('Actualizando documentos...');
+		},
+		success: function(response) {
+			// clean folder
+			$('#folderTreeview').treeview('remove');
+			// update
+			var _data = '[' + decodeURIComponent(response.replace(/\+/g, '%20')) + ']';
+			console.log('data updated', _data);
+			$('#folderTreeview').treeview({
+				showTags: true,
+				data: _data,
+				onNodeSelected: function(event, node) {
+					// get fields
+					if (node.folder && node.nodeId != 0) {
+						getFolderFields(node.detail);
+					} else if (!node.folder && node.nodeId != 0) {
+						// get file detail
+						//getFileDetail(node.detail);
+					}
+		        }
+			});
+			//initTreeView(response);
+		},
+		error : function(xhr, ajaxOptions, thrownError) {
+			checkError(xhr);
+		},
+		complete: function() {
+			hideWaitDialog();
+		}
+	});
+}
+/**
+ * Handles file upload error.
+ * @param _data Data result.
+ */
+function handleFileUploadError(_data) {
+	checkError(_data.response().jqXHR, '_folderMessage');
+}
+/**
+ * Initializes folder tree view.
+ * @param _dataEncoded Data encoded.
+ * @returns Folder as tree view.
+ */
+function initTreeView(_dataEncoded) {
+	var _data = '[' + decodeURIComponent(new String(_dataEncoded).replace(/\+/g, '%20')) + ']';
+	$('#folderTreeview').treeview({
+		showTags: true,
+		data: _data,
+		onNodeSelected: function(event, node) {
+			// get fields
+			if (node.folder && node.nodeId != 0) {
+				getFolderFields(node.detail);
+			} else if (!node.folder && node.nodeId != 0) {
+				// get file detail
+				//getFileDetail(node.detail);
+			}
+        }
+	});
 }

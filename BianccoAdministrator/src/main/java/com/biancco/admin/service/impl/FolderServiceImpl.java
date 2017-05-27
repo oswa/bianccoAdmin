@@ -3,7 +3,9 @@
  */
 package com.biancco.admin.service.impl;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -13,10 +15,14 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.biancco.admin.app.exception.ApplicationException;
 import com.biancco.admin.app.exception.DBException;
+import com.biancco.admin.app.util.BianccoConstants;
+import com.biancco.admin.app.util.FileUtils;
 import com.biancco.admin.model.folder.FieldValue;
+import com.biancco.admin.model.folder.FileMeta;
 import com.biancco.admin.model.folder.FolderDocument;
 import com.biancco.admin.model.view.FolderView;
 import com.biancco.admin.model.view.Node;
@@ -28,6 +34,7 @@ import com.biancco.admin.persistence.model.FolderFieldValue;
 import com.biancco.admin.persistence.model.FolderType;
 import com.biancco.admin.persistence.model.Parameter;
 import com.biancco.admin.persistence.model.PermissionType;
+import com.biancco.admin.service.DocumentService;
 import com.biancco.admin.service.FolderService;
 
 /**
@@ -40,6 +47,11 @@ public class FolderServiceImpl implements FolderService {
 	 * The logger.
 	 */
 	private Logger logger = Logger.getRootLogger();
+	/**
+	 * Document service.
+	 */
+	@Autowired
+	private DocumentService documentService;
 	/**
 	 * Access to work persistent memory.
 	 */
@@ -105,7 +117,8 @@ public class FolderServiceImpl implements FolderService {
 		root.setOwnerModuleId(ownerModuleId);
 		// create root node
 		Node node = new Node();
-		node.setText(root.getPathChild());
+		// fix path child (only for root)
+		node.setText(root.getPathChild().replace(BianccoConstants.FOLDER_VARIAIBLE_PATH, ""));
 		node.setIcon(ICON_BRIEFCASE);
 		node.setFolder(true);
 		node.setDetail(root);
@@ -138,12 +151,13 @@ public class FolderServiceImpl implements FolderService {
 		List<Node> nodes = new ArrayList<Node>();
 		// evaluate items
 		Node node = null;
+		String previousNode = "";
 		int totalDocs = 0;
 		for (FolderDocument fd : selectedItems) {
 			// set owner module identifier
 			fd.setOwnerModuleId(ownerModuleId);
 			// create a folder node
-			if (node == null) {
+			if (!previousNode.equals(fd.getPathChild())) {
 				node = new Node();
 				node.setText(fd.getPathChild());
 				node.setIcon(ICON_FOLDER_CLOSE);
@@ -151,7 +165,7 @@ public class FolderServiceImpl implements FolderService {
 				node.setDetail(fd);
 				// add node
 				nodes.add(node);
-				// set childs if contains
+				// set children if contains
 				Long nodeParent = fd.getIdFolder();
 				List<Node> childs = this.extractNodesByParent(folder, nodeParent, ownerModuleId);
 				if (!childs.isEmpty()) {
@@ -174,10 +188,12 @@ public class FolderServiceImpl implements FolderService {
 				node.setTags(new Integer[] { totalDocs });
 			} else {
 				// reset node
-				node = null;
+				// node = null;
 				// reset counter
 				totalDocs = 0;
 			}
+			// set previous node
+			previousNode = node.getText();
 		}
 		return nodes;
 	}
@@ -259,5 +275,30 @@ public class FolderServiceImpl implements FolderService {
 		FolderFieldValue val = values.get(0);
 		return this.getFolderFields(val.getOwnerFolderType().getFolder(), val.getOwnerModuleId(), val.getIdFolder(),
 				session);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public LinkedList<FileMeta> saveAndUploadFiles(MultipartHttpServletRequest request, HttpSession session) {
+		// get folder info
+		Long folderId = Long.parseLong(request.getParameter("folderId"));
+		FolderType fType = FolderType.fromString(request.getParameter("folderType"));
+		Long ownerModuleId = Long.parseLong(request.getParameter("ownerModuleId"));
+		// build path
+		String path = request.getParameter("path") + File.separator + request.getParameter("child");
+		this.logger.info("uploading " + folderId + ", " + fType.getFolder() + ", " + ownerModuleId);
+		// store files
+		LinkedList<FileMeta> files = FileUtils.storeFiles(request, path, ownerModuleId);
+		// save files
+		try {
+			this.documentService.saveDocuments(folderId, ownerModuleId, fType, files, session);
+		} catch (DBException dbe) {
+			// remove previous files
+			FileUtils.deleteFiles(files, path);
+			throw new ApplicationException("Error al insertar documento(s)", dbe);
+		}
+		return files;
 	}
 }

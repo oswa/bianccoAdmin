@@ -29,7 +29,7 @@ import com.biancco.admin.service.CompanyService;
  * @author SOSExcellence.
  *
  */
-@Service ("companyService")
+@Service("companyService")
 public class CompanyServiceImpl implements CompanyService {
 
 	/**
@@ -37,33 +37,34 @@ public class CompanyServiceImpl implements CompanyService {
 	 */
 	@Autowired
 	CompanyDAO companyDao;
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void createNewCompany(final HttpServletRequest request, @RequestParam(value = "image", required = false) MultipartFile logo) throws DBException {
+	public void createNewCompany(final HttpServletRequest request,
+			@RequestParam(value = "image", required = false) MultipartFile logo) throws DBException {
 		Company company = validateCompanyInput(request, logo);
-		this.companyDao.insertCompany( company );
+		this.companyDao.insertCompany(company);
 	}
 
 	/**
 	 * @param request
-	 * @param logo 
+	 * @param logo
 	 * @return
 	 */
 	private Company validateCompanyInput(HttpServletRequest request, MultipartFile logo) {
 		Company company = new Company();
 		String name = request.getParameter("name");
-		if( name == null ) { 
-			throw new ApplicationException("El nombre de la empresa no puede estar vacÌo.");
+		if (name == null) {
+			throw new ApplicationException("El nombre de la empresa no puede estar vac√≠o.");
 		}
 		String repInput = request.getParameter("representatives");
-		if( repInput == null ) { 
+		if (repInput == null) {
 			throw new ApplicationException("Debe ingresar al menos un representante legal.");
 		}
 		List<Representative> repList = new ArrayList<Representative>();
-		for(String repName:StringUtils.split(repInput, ":")) {
+		for (String repName : StringUtils.split(repInput, ":")) {
 			Representative rep = new Representative();
 			rep.setName(repName);
 			repList.add(rep);
@@ -72,28 +73,27 @@ public class CompanyServiceImpl implements CompanyService {
 		if (!logo.isEmpty()) {
 			try {
 				if (!logo.getContentType().equals("image/jpeg")) {
-					throw new ApplicationException("Solo im·genes JPG son aceptadas");
+					throw new ApplicationException("Solo im√°genes JPG son aceptadas");
 				}
 				String[] paths = StringUtils.split(logo.getOriginalFilename(), "\\");
-				paths = StringUtils.split(paths[paths.length-1], "/");
-				String fileName = paths[paths.length-1];
+				paths = StringUtils.split(paths[paths.length - 1], "/");
+				String fileName = paths[paths.length - 1];
 				File f = saveLogo(fileName + ".jpg", logo);
 				company.setLogo(f.getCanonicalPath());
 			} catch (IOException e) {
-				throw new ApplicationException("Error al cargar archivo. "+ e.getMessage());
+				throw new ApplicationException("Error al cargar archivo. " + e.getMessage());
 			}
 		}
 		return company;
 	}
 
-	private File saveLogo(String filename, MultipartFile image)
-			throws RuntimeException, IOException {
+	private File saveLogo(String filename, MultipartFile image) throws RuntimeException, IOException {
 		File file = null;
 		try {
 			file = new File("/tmp/" + filename);
 			FileUtils.writeByteArrayToFile(file, image.getBytes());
 		} catch (IOException e) {
-			throw new ApplicationException("Error al cargar archivo. "+ e.getMessage());
+			throw new ApplicationException("Error al cargar archivo. " + e.getMessage());
 		}
 		return file;
 	}
@@ -125,13 +125,15 @@ public class CompanyServiceImpl implements CompanyService {
 
 	/**
 	 * {@inheritDoc}
-	 * @throws DBException If there is a DB error
+	 * 
+	 * @throws DBException
+	 *             If there is a DB error
 	 */
 	@Override
 	public void addNewWork(HttpServletRequest request, long idCompany) throws DBException {
 		Company comp = validateCompany(request, idCompany);
-		if( comp.getWorks() == null ) {
-			comp.setWorks( new ArrayList<WorkCompany>());
+		if (comp.getWorks() == null) {
+			comp.setWorks(new ArrayList<WorkCompany>());
 		}
 		WorkCompany work = new WorkCompany();
 		work.setName(request.getParameter("workName"));
@@ -141,19 +143,21 @@ public class CompanyServiceImpl implements CompanyService {
 
 	/**
 	 * Validate the inputs values
-	 * @param request 
+	 * 
+	 * @param request
 	 * @param idCompany
 	 * @return
-	 * @throws DBException If there is a DB error
+	 * @throws DBException
+	 *             If there is a DB error
 	 */
 	private Company validateCompany(HttpServletRequest request, long idCompany) throws DBException {
 		String workName = request.getParameter("workName");
-		if ( workName == null || StringUtils.isEmpty(workName)) {
-			throw new ApplicationException("El nombre de la obra no puede estar vacÌo");
+		if (workName == null || StringUtils.isEmpty(workName)) {
+			throw new ApplicationException("El nombre de la obra no puede estar vac√≠o");
 		}
 		Company comp = this.companyDao.getCompanyById(idCompany);
 		if (comp == null) {
-			throw new ApplicationException("CompaÒia "+idCompany+" no existe");
+			throw new ApplicationException("Compa√±ia " + idCompany + " no existe");
 		}
 		return comp;
 	}
