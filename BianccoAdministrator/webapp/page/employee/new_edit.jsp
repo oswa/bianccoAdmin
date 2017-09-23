@@ -82,22 +82,22 @@
 				</select>
 			</div>
 		</form>
-		<c:if test="${model.pType.type eq 'M'}">
-			<table width="100%">
-				<td align="left">
-					<button class="btn btn-default" id="backButton" onclick="backTo(1)">
-						<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-						Regresar
-					</button>
-				</td>
+		<table width="100%">
+			<td align="left">
+				<button class="btn btn-default" id="backButton" onclick="backTo(1)">
+					<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+					Regresar
+				</button>
+			</td>
+			<c:if test="${model.pType.type eq 'M'}">
 				<td align="right">
 					<button class="btn btn-primary" id="saveButton" onclick="saveEmployee()">
 						<span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
 						Guardar
 					</button>
 				</td>
-			</table>
-		</c:if>
+			</c:if>
+		</table>
 	</c:when>
 	<c:otherwise>
 		<div class="page-header">
@@ -108,10 +108,12 @@
               			<button class="btn btn-default" id="showDocumentsButton" onclick="showFolder('employee', ${model.employee.idEmployee})">
         					<span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span>Documentos
         				</button>
-        				<button class="btn btn-primary" id="updateButton" onclick="updateEmployee()">
-							<span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-							Guardar
-						</button>
+        				<c:if test="${model.pType.type eq 'M'}">
+	        				<button class="btn btn-primary" id="updateButton" onclick="updateEmployee()">
+								<span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+								Guardar
+							</button>
+						</c:if>
             		</td>
           		</tr>
         	</table>
@@ -185,22 +187,22 @@
 			</div>
 		</form>
 		<input type="hidden" id="idEmployee" name="idEmployee" value="${model.employee.idEmployee}">
-		<c:if test="${model.pType.type eq 'M'}">
-			<table width="100%">
-				<td align="left">
-					<button class="btn btn-default" id="backButton" onclick="backTo(1)">
-						<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-						Regresar
-					</button>
-				</td>
+		<table width="100%">
+			<td align="left">
+				<button class="btn btn-default" id="backButton" onclick="backTo(1)">
+					<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+					Regresar
+				</button>
+			</td>
+			<c:if test="${model.pType.type eq 'M'}">
 				<td align="right">
 					<button class="btn btn-primary" id="updateButton" onclick="updateEmployee()">
 						<span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
 						Guardar
 					</button>
 				</td>
-			</table>
-		</c:if>
+			</c:if>
+		</table>
 	</c:otherwise>
 </c:choose>
 <script type="text/javascript">

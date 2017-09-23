@@ -69,26 +69,28 @@
 				Guardar
 		</button>
 	</div>
+
+	<form id="_folderUploadForm">
+		<input type="hidden" id="folderId" name="folderId" value="${model.folderId}" />
+		<input type="hidden" id="folderType" name="folderType" value="${model.folderType}" />
+		<input type="hidden" id="ownerModuleId" name="ownerModuleId" value="${model.ownerModuleId}" />
+		<input type="hidden" id="path" name="path" value="" />
+		<input type="hidden" id="child" name="child" value="" />
+		<div id="_folderUploadFiles"></div>
+	</form>
+	<script type="text/javascript">
+		$('#_folderUploadFiles').fileuploadUI({
+			url: currentURL() + '/app/folder/upload',
+			maxFileSize: 4194304, // 4mb
+			acceptFileTypes: /(\.|\/)(gif|png|jpe?g|pdf|docx?|xlsx?|txt)$/i,
+			multiple: false, // multiple selection
+			dropZone: true, // drop zone
+			handlers: {
+				done: 'refreshFolder',
+				fail: 'handleFileUploadError' 
+			},
+			debug: false
+		});
+	</script>
+
 </c:if>
-<form id="_folderUploadForm">
-	<input type="hidden" id="folderId" name="folderId" value="${model.folderId}" />
-	<input type="hidden" id="folderType" name="folderType" value="${model.folderType}" />
-	<input type="hidden" id="ownerModuleId" name="ownerModuleId" value="${model.ownerModuleId}" />
-	<input type="hidden" id="path" name="path" value="" />
-	<input type="hidden" id="child" name="child" value="" />
-	<div id="_folderUploadFiles"></div>
-</form>
-<script type="text/javascript">
-	$('#_folderUploadFiles').fileuploadUI({
-		url: currentURL() + '/app/folder/upload',
-		maxFileSize: 4194304, // 4mb
-		acceptFileTypes: /(\.|\/)(gif|png|jpe?g|pdf|docx?|xlsx?|txt)$/i,
-		multiple: false, // multiple selection
-		dropZone: true, // drop zone
-		handlers: {
-			done: 'refreshFolder',
-			fail: 'handleFileUploadError' 
-		},
-		debug: true
-	});
-</script>

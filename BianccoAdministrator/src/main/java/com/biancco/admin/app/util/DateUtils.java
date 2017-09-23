@@ -116,6 +116,7 @@ public class DateUtils {
 	public static String getDateWithFormat(final String format, final Date dateToFormat) {
 		final SimpleDateFormat dateFormat = new SimpleDateFormat(format,
 				new Locale(DateUtils.ESPANOL_MIN, DateUtils.ESPANOL_MAY));
+		dateFormat.setTimeZone(TimeZone.getTimeZone(DateUtils.AMERICA));
 		return dateFormat.format(dateToFormat);
 	}
 

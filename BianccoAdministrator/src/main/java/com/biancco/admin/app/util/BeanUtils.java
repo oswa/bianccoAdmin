@@ -43,6 +43,10 @@ public class BeanUtils {
 				Object o = Calendar.getInstance();
 				m.invoke(o, format.parse(value));
 				return o;
+			} else if (clazz.getName().equals("java.sql.Timestamp")) {
+				Calendar c = Calendar.getInstance();
+				c.setTime(format.parse(value));
+				return new java.sql.Timestamp(c.getTimeInMillis());
 			}
 			Constructor<?> constructor = (Constructor<?>) clazz.getConstructor(new Class<?>[] { String.class });
 			return (Object) constructor.newInstance(new Object[] { value });
@@ -82,7 +86,6 @@ public class BeanUtils {
 				Class<?> parameterClazz = params[0];
 				Object param = BeanUtils.castStringToObject(parameterClazz, value);
 				m.invoke(obj, param);
-
 			}
 		} catch (Exception e) {
 			LOGGER.error("Error on set properties to object", e);

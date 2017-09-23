@@ -84,4 +84,10 @@ public interface FolderFieldDAO {
 	 *             If a db exception is thrown.
 	 */
 	List<FieldValue> getFieldValueByFolder(long idFolder, long ownerModuleId, FolderType folderType) throws DBException;
+
+	/**
+	 * Returns the max id of the Folder Base.
+	 * @return
+	 */
+	Long getMaxFolderBaseId() throws DBException;
 }

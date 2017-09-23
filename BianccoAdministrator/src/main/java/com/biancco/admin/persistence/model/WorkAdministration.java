@@ -81,7 +81,7 @@ public class WorkAdministration {
 	 * The monto pago.
 	 */
 	@Column(name = "monto_pago")
-	private double montoPägo;
+	private double montoPago;
 	/**
 	 * The plazo ejecucion.
 	 */
@@ -240,16 +240,16 @@ public class WorkAdministration {
 		this.numeroConcurso = numeroConcurso;
 	}
 	/**
-	 * @return the montoPägo
+	 * @return the montoPago
 	 */
-	public double getMontoPägo() {
-		return montoPägo;
+	public double getMontoPago() {
+		return montoPago;
 	}
 	/**
-	 * @param montoPägo the montoPägo to set
+	 * @param montoPago the montoPago to set
 	 */
-	public void setMontoPägo(double montoPägo) {
-		this.montoPägo = montoPägo;
+	public void setMontoPago(double montoPago) {
+		this.montoPago = montoPago;
 	}
 	/**
 	 * @return the plazoEjecucion

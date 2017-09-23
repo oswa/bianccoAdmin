@@ -215,7 +215,7 @@ public class FolderServiceImpl implements FolderService {
 			@Override
 			public boolean evaluate(final Object o) {
 				FolderDocument fd = (FolderDocument) o;
-				return fd.getParent() == parent;
+				return fd.getParent().longValue() == parent.longValue();
 			}
 		};
 		return (List<FolderDocument>) CollectionUtils.select(folder, p);

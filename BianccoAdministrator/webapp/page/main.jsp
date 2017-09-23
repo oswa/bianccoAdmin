@@ -68,9 +68,9 @@
           <p class="navbar-brand">BIANCCO Administrador</p>
         </div-->
         <div class="navbar-header">
-        	<p class="nav navbar-nav">
+        	<a class="nav navbar-nav" href="#" onclick="backTo(0)">
         		<img src="${pageContext.request.contextPath}/image/lg_gbiancco.png" width="150px" />
-           	</p>
+           	</a>
            	<p class="nav navbar-nav">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
@@ -79,7 +79,9 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">M&oacute;dulos <span class="caret"></span></a>
               <ul class="dropdown-menu">
               	<c:forEach items="${model.menu}" var="item" varStatus="loop">
+              	<c:if test="${item.module != 'work'}">
               		<li><a href="#" onclick="goToView('${item.module}');"><c:out value="${item.option}"/></a></li>
+				</c:if>
               	</c:forEach>
               </ul>
             </li>
@@ -99,7 +101,7 @@
           	</li>
           	<li>
                 <p class="navbar-btn">
-                    <a href="#" class="btn btn-danger">Salir</a>
+                    <a href="${pageContext.request.contextPath}/app/login/signoff" class="btn btn-danger">Salir</a>
                 </p>
             </li>
           </ul>

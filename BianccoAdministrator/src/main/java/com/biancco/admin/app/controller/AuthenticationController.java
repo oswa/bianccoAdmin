@@ -88,7 +88,7 @@ public class AuthenticationController extends ExceptionController {
 	 *            The HTTP session.
 	 * @return login view.
 	 */
-	@RequestMapping(method = RequestMethod.POST, value = "/signoff")
+	@RequestMapping(method = RequestMethod.GET, value = "/signoff")
 	public RedirectView signoff(final HttpServletRequest request, final HttpSession session) {
 		this.logger.info("Controller | signoff");
 		session.invalidate();

@@ -168,4 +168,30 @@ public class EmployeeController extends ExceptionController {
 		this.commonService.addViewToHistory(view, true, session);
 		return view;
 	}
+
+	/**
+	 * Enable/Disable an employee.
+	 * 
+	 * @param request
+	 *            The HTTP request.
+	 * @param response
+	 *            The HTTP response.
+	 * @param session
+	 *            The HTTP session.
+	 * @param idEmployee
+	 *            Employee identifier.
+	 * @param enable
+	 *            Enable flag.
+	 * @throws DBException
+	 *             If a db exception thrown.
+	 * @throws ApplicationException
+	 *             If an application exception thrown.
+	 */
+	@RequestMapping(method = RequestMethod.POST, value = "/enable")
+	public void enable(final HttpServletRequest request, final HttpServletResponse response, HttpSession session,
+			@RequestParam(value = "_id", required = true) long idEmployee,
+			@RequestParam(value = "_enable", required = true) boolean enable) throws ApplicationException, DBException {
+		this.logger.info("Controller | enable employee " + idEmployee + " - " + enable);
+		this.employeeService.enableEmployee(idEmployee, enable);
+	}
 }

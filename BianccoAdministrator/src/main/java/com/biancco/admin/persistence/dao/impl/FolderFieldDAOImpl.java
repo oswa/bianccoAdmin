@@ -161,4 +161,20 @@ public class FolderFieldDAOImpl implements FolderFieldDAO {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Long getMaxFolderBaseId() throws DBException {
+		try {
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<Number> cq = qb.createQuery(Number.class);
+			Root<FolderBase> root = cq.from(FolderBase.class);
+			cq.select(qb.max(root.<Number>get("idFolder")));
+			return (Long) entityManager.createQuery(cq).getSingleResult();
+		} catch (Exception e) {
+			throw new DBException(e);
+		}
+	}
+
 }

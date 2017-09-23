@@ -36,6 +36,8 @@
 	<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
 	Regresar
 </button>
+
+<input type="hidden" id="per" name="per" value="${model.pType.type}" />
 				
 <script type="text/javascript">
 	var _data = '[' + decodeURIComponent('<c:out value="${model.folderAsJSON}"/>'.replace(/\+/g, '%20')) + ']';
@@ -45,8 +47,12 @@
 		onNodeSelected: function(event, node) {
 			console.log('node selected', node);
 			// get fields
-			if (node.folder && node.nodeId != 0) {
-				getFolderFields(node.detail);
+			if (node.nodeId != 0) {
+				if (node.folder) {
+					getFolderFields(node.detail);
+				} else {
+					showDocumentDetail(node.detail);
+				}
 			}
         }
 	});

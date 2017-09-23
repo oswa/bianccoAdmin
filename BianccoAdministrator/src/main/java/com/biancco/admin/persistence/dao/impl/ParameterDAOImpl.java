@@ -129,9 +129,21 @@ public class ParameterDAOImpl implements ParameterDAO {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getParameterValue(String groupName, String paramName) throws DBException {
-		// TODO Auto-generated method stub
-		return null;
+	public Parameter getParameterValue(String groupName, String paramName) throws DBException {
+		try {
+			CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+
+			CriteriaQuery<Parameter> q = builder.createQuery(Parameter.class);
+			Root<Parameter> root = q.from(Parameter.class);
+			q.select(root);
+			q.where(builder.and(
+					builder.equal(root.get("group"), groupName)),
+					builder.equal(root.get("name"), paramName));
+
+			return this.entityManager.createQuery(q).getSingleResult();
+		} catch (Exception e) {
+			throw new DBException(e);
+		}
 	}
 
 }

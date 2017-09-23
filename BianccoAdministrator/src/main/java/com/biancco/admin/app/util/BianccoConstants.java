@@ -73,5 +73,9 @@ public interface BianccoConstants {
 	 * Folder variable path.
 	 */
 	String FOLDER_VARIAIBLE_PATH = "{ownerModuleId}";
+	/**
+	 * Company identifier.
+	 */
+	String ID_COMPANY = "idCompany";
 
 }

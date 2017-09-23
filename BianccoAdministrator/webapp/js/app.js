@@ -233,18 +233,18 @@ function refreshFolder(_data) {
 			// clean folder
 			$('#folderTreeview').treeview('remove');
 			// update
-			var _data = '[' + decodeURIComponent(response.replace(/\+/g, '%20')) + ']';
-			console.log('data updated', _data);
+			var _dataUpdated = '[' + decodeURIComponent(response.replace(/\+/g, '%20')) + ']';
+			//console.log('data updated', _data);
 			$('#folderTreeview').treeview({
 				showTags: true,
-				data: _data,
+				data: _dataUpdated,
 				onNodeSelected: function(event, node) {
-					// get fields
-					if (node.folder && node.nodeId != 0) {
-						getFolderFields(node.detail);
-					} else if (!node.folder && node.nodeId != 0) {
-						// get file detail
-						//getFileDetail(node.detail);
+					if (node.nodeId != 0) {
+						if (node.folder) {
+							getFolderFields(node.detail);
+						} else {
+							showDocumentDetail(node.detail);
+						}
 					}
 		        }
 			});
@@ -265,23 +265,153 @@ function refreshFolder(_data) {
 function handleFileUploadError(_data) {
 	checkError(_data.response().jqXHR, '_folderMessage');
 }
+
+/**
+ * Shows the document detail.
+ * @param _doc Document info.
+ */
+function showDocumentDetail(_doc) {
+	// retrieve permission
+	var allowModify = $('#per').val() == 'M';
+	console.log('allow modify ', allowModify);
+	// get folder type & module
+	var _folderType = '';
+	var _id = '';
+	if (allowModify) {
+		//_folderType = $('#folderType').val();
+		//_id = $('#ownerModuleId').val();
+		_folderType = _doc.type;
+		_id = _doc.ownerModuleId;
+	}
+	// clean tmp files
+	$('.form_date').datetimepicker('remove');
+	// set title
+	$('#_folderName').hide();
+	$('#_folderName').html('');
+	$('#_folderName').html('<p><b>Documento:</b> ' + _doc.name + '</p>');
+	$('#_folderName').show();
+	// clean msg
+	$('#_folderMessage').html('');
+	// clean div
+	$('#_folderFields').html('');
+	var _isLocked = _doc.locked;
+	var _lastModifyDate = '-';
+	if (_doc.lastModifyDate != undefined && _doc.lastModifyDate != null) {
+		_lastModifyDate = _doc.lastModifyDate;
+	}
+	var _detail = $('#_folderFields')
+			.append($('<p />').html('<b>Fecha de creaci&oacute;n:</b>&nbsp;' + _doc.creationDate))
+			//.append($('<br>'))
+			.append($('<p />').html('<b>Fecha de &uacute;ltima modificaci&oacute;n:</b>&nbsp;' + _lastModifyDate))
+			.append($('<br>'));
+	// enable button to download
+	_detail.append(
+			$('<a href="' + currentURL() + '/app/document/get/' + _doc.idDocument + '" class="btn btn-primary" />')
+			.append($('<i class="glyphicon glyphicon-download" />')).append($('<span />').text(' Descargar'))
+		);
+	// enable button to delete
+	if (allowModify) {
+		_detail.append('&nbsp;');
+		_detail.append(
+				$('<a href="#" onclick="deleteDocument(' + _doc.idDocument + ', ' + _id + ', \'' + _folderType + '\');" class="btn btn-danger" />')
+				.append($('<i class="glyphicon glyphicon-trash" />')).append($('<span />').text(' Borrar'))
+			);
+	}
+	// enable button to upload & update
+	/*if (!_isLocked && allowModify) {
+		_detail.append($('<form id="_updateForm" />')
+				.append($('<input type="hidden" id="idDoc" name="idDoc" value="' + _doc.idDocument + '">'))
+				.append($('<div id="_updateDocument" />')));
+		// <input type="hidden" id="child" name="child" value="" />
+		$('#_updateDocument').fileuploadUI({
+			url: currentURL() + '/app/document/upload',
+			maxFileSize: 4194304, // 4mb
+			acceptFileTypes: /(\.|\/)(gif|png|jpe?g|pdf|docx?|xlsx?|txt)$/i,
+			multiple: false,
+			dropZone: false,
+			buttonTitle: 'Actualizar',
+			handlers: {
+				done: 'refreshFolder',
+				fail: 'handleFileUploadError' 
+			},
+			debug: true
+		});
+	}*/
+}
+/**
+ * Delete a document.
+ * @param _idDoc Document identifier.
+ * @param _ownerModule Owner module identifier.
+ * @param _folderType Folder type.
+ */
+function deleteDocument(_idDoc, _ownerModule, _folderType) {
+	jQuery.ajax({
+		url: currentURL() + '/app/document/delete',
+		data: {'_idDoc' : _idDoc, '_id' : _ownerModule, '_type' : _folderType},
+        cache: false,
+        contentType: 'application/x-www-form-urlencoded',
+        dataType: 'text',
+        type: 'POST',
+		beforeSend: function(req) {
+			showWaitDialog('Borrando documento...');
+		},
+		success: function(response) {
+			// clean div
+			$('#_folderName').hide();
+			$('#_folderName').html('');
+			// clean msg
+			$('#_folderMessage').hide('');
+			$('#_folderMessage').html('');
+			// clean div
+			$('#_folderFields').hide('');
+			$('#_folderFields').html('');
+			// clean folder
+			$('#folderTreeview').treeview('remove');
+			// update
+			var _dataUpdated = '[' + decodeURIComponent(response.replace(/\+/g, '%20')) + ']';
+			//console.log('data updated', _data);
+			$('#folderTreeview').treeview({
+				showTags: true,
+				data: _dataUpdated,
+				onNodeSelected: function(event, node) {
+					if (node.nodeId != 0) {
+						if (node.folder) {
+							getFolderFields(node.detail);
+						} else {
+							showDocumentDetail(node.detail);
+						}
+					}
+		        }
+			});
+			//initTreeView(response);
+		},
+		error : function(xhr, ajaxOptions, thrownError) {
+			checkError(xhr);
+		},
+		complete: function() {
+			hideWaitDialog();
+		}
+	});
+}
+
 /**
  * Initializes folder tree view.
  * @param _dataEncoded Data encoded.
  * @returns Folder as tree view.
  */
 function initTreeView(_dataEncoded) {
-	var _data = '[' + decodeURIComponent(new String(_dataEncoded).replace(/\+/g, '%20')) + ']';
+	var _dataUpdated = '[' + decodeURIComponent(response.replace(/\+/g, '%20')) + ']';
+	//console.log('data updated', _data);
 	$('#folderTreeview').treeview({
 		showTags: true,
-		data: _data,
+		data: _dataUpdated,
 		onNodeSelected: function(event, node) {
-			// get fields
-			if (node.folder && node.nodeId != 0) {
-				getFolderFields(node.detail);
-			} else if (!node.folder && node.nodeId != 0) {
-				// get file detail
-				//getFileDetail(node.detail);
+			if (node.nodeId != 0) {
+				if (node.folder) {
+					getFolderFields(node.detail);
+				} else {
+					showDocumentDetail(node.detail);
+				}
 			}
         }
 	});

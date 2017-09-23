@@ -3,8 +3,9 @@
  */
 package com.biancco.admin.persistence.model;
 
-import java.sql.Timestamp;
+import java.util.Calendar;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,7 +14,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
+import com.biancco.admin.app.util.DateUtils;
 
 /**
  * Entity that represents a Work
@@ -30,13 +37,18 @@ public class WorkCompany {
 	@Id
 	@Column(name = "id_work_company")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long idWork;
+	private Long idWork;
 	/**
 	 * Identifier of company.
 	 */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_company", nullable = false)
 	private Company company;
+	/**
+	 * The power.
+	 */
+	@OneToOne(mappedBy = "workCompany", fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
+	private WorkAmount workAmount;
 	/**
 	 * The work name.
 	 */
@@ -46,12 +58,18 @@ public class WorkCompany {
 	 * Work date.
 	 */
 	@Column(name = "work_date")
-	private Timestamp workDate;
+	@Temporal(TemporalType.DATE)
+	private Calendar workDate;
+	/**
+	 * Work date with format (yyyy-mm-dd).
+	 */
+	@Transient
+	private String workDateWithFormat;
 	/**
 	 * Contract num.
 	 */
 	@Column(name = "contract_num")
-	private long contractNum;
+	private Long contractNum;
 	/**
 	 * The location.
 	 */
@@ -63,25 +81,25 @@ public class WorkCompany {
 	@Column(name = "location_map")
 	private String locationMap;
 	/**
-	 * The supervisor.
+	 * Residente.
+	 */
+	@Column(name = "residente")
+	private Long residente;
+	/**
+	 * Super-intendente.
+	 */
+	@Column(name = "superintendente")
+	private Long superintendente;
+	/**
+	 * Supervisor.
 	 */
 	@Column(name = "supervisor")
 	private String supervisor;
-	/**
-	 * The Resident.
-	 */
-	@Column(name = "residente")
-	private String residente;
 
-	/**
-	 * Paths related to the work.
-	 */
-	// @OneToMany(mappedBy = "work_company", fetch = FetchType.LAZY)
-	// private Set<Folder> folders;
 	/**
 	 * @return the idWork
 	 */
-	public long getIdWork() {
+	public Long getIdWork() {
 		return idWork;
 	}
 
@@ -89,7 +107,7 @@ public class WorkCompany {
 	 * @param idWork
 	 *            the idWork to set
 	 */
-	public void setIdWork(long idWork) {
+	public void setIdWork(Long idWork) {
 		this.idWork = idWork;
 	}
 
@@ -111,7 +129,7 @@ public class WorkCompany {
 	/**
 	 * @return the workDate
 	 */
-	public Timestamp getWorkDate() {
+	public Calendar getWorkDate() {
 		return workDate;
 	}
 
@@ -119,14 +137,14 @@ public class WorkCompany {
 	 * @param workDate
 	 *            the workDate to set
 	 */
-	public void setWorkDate(Timestamp workDate) {
+	public void setWorkDate(Calendar workDate) {
 		this.workDate = workDate;
 	}
 
 	/**
 	 * @return the contractNum
 	 */
-	public long getContractNum() {
+	public Long getContractNum() {
 		return contractNum;
 	}
 
@@ -134,7 +152,7 @@ public class WorkCompany {
 	 * @param contractNum
 	 *            the contractNum to set
 	 */
-	public void setContractNum(long contractNum) {
+	public void setContractNum(Long contractNum) {
 		this.contractNum = contractNum;
 	}
 
@@ -168,36 +186,36 @@ public class WorkCompany {
 		this.locationMap = locationMap;
 	}
 
-	/**
-	 * @return the supervisor
-	 */
-	public String getSupervisor() {
-		return supervisor;
-	}
-
-	/**
-	 * @param supervisor
-	 *            the supervisor to set
-	 */
-	public void setSupervisor(String supervisor) {
-		this.supervisor = supervisor;
-	}
-
-	/**
-	 * @return the residente
-	 */
-	public String getResidente() {
-		return residente;
-	}
-
-	/**
-	 * @param residente
-	 *            the residente to set
-	 */
-	public void setResidente(String residente) {
-		this.residente = residente;
-	}
-
+	// /**
+	// * @return the supervisor
+	// */
+	// public String getSupervisor() {
+	// return supervisor;
+	// }
+	//
+	// /**
+	// * @param supervisor
+	// * the supervisor to set
+	// */
+	// public void setSupervisor(String supervisor) {
+	// this.supervisor = supervisor;
+	// }
+	//
+	// /**
+	// * @return the residente
+	// */
+	// public String getResidente() {
+	// return residente;
+	// }
+	//
+	// /**
+	// * @param residente
+	// * the residente to set
+	// */
+	// public void setResidente(String residente) {
+	// this.residente = residente;
+	// }
+	//
 	/**
 	 * @return the company
 	 */
@@ -211,5 +229,81 @@ public class WorkCompany {
 	 */
 	public void setCompany(Company company) {
 		this.company = company;
+	}
+
+	/**
+	 * @return the workAmount
+	 */
+	public WorkAmount getWorkAmount() {
+		return workAmount;
+	}
+
+	/**
+	 * @param workAmount
+	 *            the workAmount to set
+	 */
+	public void setWorkAmount(WorkAmount workAmount) {
+		this.workAmount = workAmount;
+	}
+
+	/**
+	 * @return the workDateWithFormat
+	 */
+	public String getWorkDateWithFormat() {
+		this.workDateWithFormat = DateUtils.getDateWithFormat("yyyy-MM-dd", workDate.getTime());
+		return workDateWithFormat;
+	}
+
+	/**
+	 * @param workDateWithFormat
+	 *            the workDateWithFormat to set
+	 */
+	public void setWorkDateWithFormat(String workDateWithFormat) {
+		this.workDateWithFormat = workDateWithFormat;
+	}
+
+	/**
+	 * @return the residente.
+	 */
+	public Long getResidente() {
+		return residente;
+	}
+
+	/**
+	 * @param residente
+	 *            the residente to set.
+	 */
+	public void setResidente(Long residente) {
+		this.residente = residente;
+	}
+
+	/**
+	 * @return the superintendente.
+	 */
+	public Long getSuperintendente() {
+		return superintendente;
+	}
+
+	/**
+	 * @param superintendente
+	 *            the superintendente to set.
+	 */
+	public void setSuperintendente(Long superintendente) {
+		this.superintendente = superintendente;
+	}
+
+	/**
+	 * @return the supervisor.
+	 */
+	public String getSupervisor() {
+		return supervisor;
+	}
+
+	/**
+	 * @param supervisor
+	 *            the supervisor to set.
+	 */
+	public void setSupervisor(String supervisor) {
+		this.supervisor = supervisor;
 	}
 }

@@ -20,12 +20,18 @@ import org.springframework.web.servlet.ModelAndView;
 import com.biancco.admin.app.exception.DBException;
 import com.biancco.admin.app.util.BianccoConstants;
 import com.biancco.admin.model.catalog.RoleSimpleRecord;
+import com.biancco.admin.model.company.CompanySimpleRecord;
 import com.biancco.admin.model.employee.EmployeeSimpleRecord;
+import com.biancco.admin.model.view.CompanyModuleView;
 import com.biancco.admin.model.view.EmployeeModuleView;
 import com.biancco.admin.model.view.FolderView;
 import com.biancco.admin.model.view.InitialView;
+import com.biancco.admin.model.view.WorkModuleView;
+import com.biancco.admin.persistence.dao.CompanyDAO;
 import com.biancco.admin.persistence.dao.EmployeeDAO;
 import com.biancco.admin.persistence.dao.RoleDAO;
+import com.biancco.admin.persistence.model.Company;
+import com.biancco.admin.persistence.model.Employee;
 import com.biancco.admin.persistence.model.FolderType;
 import com.biancco.admin.persistence.model.PermissionType;
 import com.biancco.admin.service.CommonService;
@@ -57,6 +63,11 @@ public class CommonServiceImpl implements CommonService {
 	@Autowired
 	private RoleDAO roleDAO;
 	/**
+	 * Company DAO.
+	 */
+	@Autowired
+	private CompanyDAO companyDAO;
+	/**
 	 * The main pages for modules.
 	 */
 	private static final Map<String, String> pages;
@@ -67,6 +78,7 @@ public class CommonServiceImpl implements CommonService {
 		pages = new HashMap<String, String>();
 		pages.put("company", "list");
 		pages.put("employee", "list");
+		pages.put("work", "list");
 		// modules.put("CONFIGURACION", "configuration");
 	}
 	/**
@@ -127,6 +139,14 @@ public class CommonServiceImpl implements CommonService {
 			// set info by module
 			info = new EmployeeModuleView();
 			this.setEmployees((EmployeeModuleView) info);
+		} else if ("company".equals(module)) {
+			// set info by module
+			info = new CompanyModuleView();
+			this.setCompanies((CompanyModuleView) info, session);
+		} else if ("work".equals(module)) {
+			// set info by module
+			info = new WorkModuleView();
+			this.setWorks((WorkModuleView) info, session);
 		}
 		// set permission
 		this.setPermission(info, pType);
@@ -143,6 +163,42 @@ public class CommonServiceImpl implements CommonService {
 	private void setEmployees(EmployeeModuleView info) throws DBException {
 		List<EmployeeSimpleRecord> result = this.employeeDAO.getAll();
 		info.setEmployees(result);
+	}
+
+	/**
+	 * Sets companies to info model.
+	 * 
+	 * @param info
+	 *            The info.
+	 * @param session 
+	 * @throws DBException
+	 */
+	private void setCompanies(CompanyModuleView info, HttpSession session) throws DBException {
+		Employee emp = (Employee) session.getAttribute(BianccoConstants.ATTR_USER);
+		List<CompanySimpleRecord> result = null;
+		if ( "SUPERINTENDENTE".equals(emp.getRole().getName()) ) {
+			result = this.companyDAO.getCompanyBySuperintendente(emp.getIdEmployee());
+		} else if ("RESIDENTE".equals(emp.getRole().getName())) {
+			result = this.companyDAO.getCompanyByResidente(emp.getIdEmployee());
+		} else {
+			result = this.companyDAO.getAll();
+		}
+		info.setCompanies(result);
+	}
+
+	/**
+	 * Sets works to info model.
+	 * 
+	 * @param info
+	 *            The info.
+	 * @param session 
+	 * @throws DBException
+	 */
+	private void setWorks(WorkModuleView info, HttpSession session) throws DBException {
+		Long idCompany = (Long) session.getAttribute(BianccoConstants.ID_COMPANY);
+		// get info needed of view
+		Company comp = this.companyDAO.getById(idCompany);
+		info.setCompany(comp);
 	}
 
 	/**

@@ -86,6 +86,6 @@ public interface ParameterDAO {
 	 * @throws DBException
 	 *             when there is a problem on DB.
 	 */
-	String getParameterValue(String groupName, String paramName) throws DBException;
+	Parameter getParameterValue(String groupName, String paramName) throws DBException;
 
 }

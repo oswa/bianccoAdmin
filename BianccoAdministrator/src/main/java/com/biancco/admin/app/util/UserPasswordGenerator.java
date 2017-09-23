@@ -26,7 +26,7 @@ public class UserPasswordGenerator {
 	/**
 	 * Special key.
 	 */
-	private static final String SPECIAL = "ñÑ";
+	protected static final String SPECIAL = "ñÑ";
 
 	/**
 	 * Gets a PIN number of 4 digits.

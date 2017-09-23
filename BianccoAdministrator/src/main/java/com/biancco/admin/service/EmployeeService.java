@@ -77,8 +77,20 @@ public interface EmployeeService {
 	 *            Employee identifier.
 	 * @return Employee.
 	 * @exception DBException
-	 *                If a db exception thrown
+	 *                If a db exception thrown.
 	 */
 	Employee updateEmployee(String detailEncoded, long idRole, long idEmployee) throws DBException;
+
+	/**
+	 * Enable / Disable an employee.
+	 * 
+	 * @param idEmployee
+	 *            Employee identifier.
+	 * @param enable
+	 *            Enable flag.
+	 * @exception DBException
+	 *                If a db exception thrown.
+	 */
+	void enableEmployee(long idEmployee, boolean enable) throws DBException;
 
 }

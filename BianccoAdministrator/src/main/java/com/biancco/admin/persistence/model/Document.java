@@ -6,6 +6,7 @@ package com.biancco.admin.persistence.model;
 import java.util.Calendar;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -103,6 +104,7 @@ public class Document {
 	 * Locked flag.
 	 */
 	@Column(name = "locked")
+	@Convert(converter = BooleanYNConverter.class)
 	private Boolean locked;
 	/**
 	 * Locked employee.
@@ -110,6 +112,16 @@ public class Document {
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "locked_employee")
 	private Employee lockedEmployee;
+	/**
+	 * File path.
+	 */
+	@Column(name = "path")
+	private String path;
+	/**
+	 * Content type.
+	 */
+	@Column(name = "content_type")
+	private String contentType;
 
 	/**
 	 * @return the idDocument.
@@ -334,5 +346,35 @@ public class Document {
 	 */
 	public void setOwnerFolderType(FolderType ownerFolderType) {
 		this.ownerFolderType = ownerFolderType;
+	}
+
+	/**
+	 * @return the path.
+	 */
+	public String getPath() {
+		return path;
+	}
+
+	/**
+	 * @param path
+	 *            the path to set.
+	 */
+	public void setPath(String path) {
+		this.path = path;
+	}
+
+	/**
+	 * @return the contentType.
+	 */
+	public String getContentType() {
+		return contentType;
+	}
+
+	/**
+	 * @param contentType
+	 *            the contentType to set.
+	 */
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
 	}
 }

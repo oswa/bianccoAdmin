@@ -45,6 +45,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		modules = new HashMap<String, String>();
 		modules.put("EMPRESAS", "company");
 		modules.put("EMPLEADOS", "employee");
+		modules.put("OBRAS", "work");
 		// modules.put("CONFIGURACION", "configuration");
 	}
 	/**
@@ -58,6 +59,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		icons = new HashMap<String, String>();
 		icons.put("EMPRESAS", "folder-home.png");
 		icons.put("EMPLEADOS", "users.png");
+		icons.put("OBRAS", "work.png");
 	}
 	/**
 	 * Configuration option.
@@ -85,7 +87,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 			session.setAttribute(BianccoConstants.ATTR_USER, employee);
 		} else {
 			response.setMessage("Verifica usuario y contraseña y vuelve a intentar");
-			System.out.println("Parametros nulos");
 		}
 		return response;
 	}
@@ -105,6 +106,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		// extract permissions
 		for (Permission p : employee.getRole().getPermissions()) {
 			String moduleName = p.getModule().getName();
+
 			if (moduleName.equals(CONFIG_OPTION)) {
 				// set permission to session
 				session.setAttribute("config", true);
@@ -119,7 +121,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 			o.setType(pType);
 			o.setModule(moduleId);
 			o.setIcon(icons.get(moduleName));
-			view.addOption(o);
+			if (!moduleName.equals("OBRAS")) {
+				view.addOption(o);
+			}
 			// set permission to session
 			session.setAttribute(moduleId, pType);
 		}

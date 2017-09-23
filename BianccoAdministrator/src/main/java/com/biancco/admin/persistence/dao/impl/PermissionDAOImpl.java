@@ -11,6 +11,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import org.apache.log4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.biancco.admin.app.exception.DBException;
@@ -22,6 +23,10 @@ import com.biancco.admin.persistence.model.Permission;
  * @author SOSExcellence.
  */
 public class PermissionDAOImpl implements PermissionDAO {
+	/**
+	 * Logger.
+	 */
+	private Logger logger = Logger.getRootLogger();
 	/**
 	 * Entity Manger.
 	 */
@@ -39,6 +44,7 @@ public class PermissionDAOImpl implements PermissionDAO {
 			this.entityManager.flush();
 			return permission;
 		} catch (Exception e) {
+			System.err.println(e.getCause().getCause().getMessage());
 			throw new DBException(e);
 		}
 	}

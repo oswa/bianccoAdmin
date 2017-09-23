@@ -25,7 +25,7 @@
 					<th width="55%">Nombre</th>
 					<th width="30%">Puesto</th>
 					<th width="5%">Editar</th>
-					<th width="5%">Habilitar</th>
+					<th width="5%">Activo</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -40,12 +40,12 @@
 						</c:choose>
 						<td><c:out value="${item.roleName}"/></td>
 						<td align="center">
-							<button class="btn btn-danger" onclick="editEmployee(${item.id})" 
-							${(model.pType.type eq 'Q') ? 'disabled' : ''}>
-								<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+							<button class="btn btn-danger" onclick="editEmployee(${item.id})" >
+								<span class="glyphicon ${(model.pType.type eq 'Q') ? 'glyphicon-eye-open' : 'glyphicon-pencil'}" 
+								aria-hidden="true"></span>
 							</button>
 						</td>
-						<td align="center"><input type="checkbox" ${(model.pType.type eq 'Q') ? 'disabled' : ''} 
+						<td align="center"><input type="checkbox" onclick="disableEmployee(${item.id}, this.checked)" ${(model.pType.type eq 'Q') ? 'disabled' : ''} 
 						${(item.enable) ? 'checked' : ''}></td>
 					</tr>					
 				</c:forEach>
@@ -70,7 +70,7 @@
 	</c:when>
 	<c:otherwise>
 		<div class="alert alert-warning" role="alert">
-        	<strong>Warning!</strong> No hay empleados que mostrar.
+        	<strong>:\ </strong> No hay empleados que mostrar.
       	</div>
 	</c:otherwise>
 </c:choose>

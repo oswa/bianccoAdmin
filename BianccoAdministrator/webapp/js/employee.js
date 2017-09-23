@@ -93,6 +93,28 @@ function saveEmployee() {
 }
 
 /**
+ * Save employee handler.
+ */
+/*$('#loginForm').submit(function(event) {
+    event.preventDefault();
+    showWaitDialog('Autenticando...');
+    this.submit();
+    $.ajax({
+        url: currentURL() + '/app/login/signin',
+        data: $('#loginForm').serialize(),
+        cache: false,
+        contentType: 'application/x-www-form-urlencoded',
+        type: 'POST',
+        beforeSend: function(req) {
+        	showWaitDialog('Autenticando...');
+        },
+        error: function(xhr){
+        	checkError(xhr);
+        }
+    });
+});*/
+
+/**
  * Updates an employee.
  */
 function updateEmployee() {
@@ -112,6 +134,34 @@ function updateEmployee() {
 			$('#content').html('');
 			$('#content').html(response);
 			$('#content').show();
+		},
+		error : function(xhr, ajaxOptions, thrownError) {
+			checkError(xhr);
+		},
+		complete: function() {
+			hideWaitDialog();
+		}
+	});
+}
+/**
+ * Disable/Enable an employee.
+ * @param _id Employee identifier.
+ * @param _checked Employee flag.
+ */
+function disableEmployee(_id, _checked) {
+	jQuery.ajax({
+		url: currentURL() + '/app/employee/enable',
+		data: {'_id' : _id, '_enable' : _checked},
+        cache: false,
+        contentType: 'application/x-www-form-urlencoded',
+        type: 'POST',
+		beforeSend: function(req) {
+			showWaitDialog('Actualizando...');
+		},
+		success: function(response) {
+			// notify
+			console.log('disableEmployee', response);
+			showAlert('success', 'messageAlert', 'Empleado actualizado.');
 		},
 		error : function(xhr, ajaxOptions, thrownError) {
 			checkError(xhr);

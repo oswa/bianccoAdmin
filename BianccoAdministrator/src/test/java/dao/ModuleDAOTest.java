@@ -36,8 +36,13 @@ public class ModuleDAOTest extends DAOTest {
 			m.setDescription("Modulo de configuracion");
 			m.setEnable(true);
 			System.out.println("saved --> " + dao.save(m));
+			m = new Module();
+			m.setName("OBRAS");
+			m.setDescription("Modulo de obras");
+			m.setEnable(true);
+			System.out.println("saved --> " + dao.save(m));
 
-			assertTrue(true);
+			// assertTrue(true);
 		} catch (Exception e) {
 
 			e.printStackTrace();

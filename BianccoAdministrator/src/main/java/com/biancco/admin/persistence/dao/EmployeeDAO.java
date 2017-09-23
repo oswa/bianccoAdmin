@@ -101,4 +101,13 @@ public interface EmployeeDAO {
 	 *             If a problem occurs.
 	 */
 	List<EmployeeSimpleRecord> getAll() throws DBException;
+
+	/**
+	 * Get employees where the role is superintendente or residente.
+	 * 
+	 * @return Employee list.
+	 * @throws DBException
+	 *             If a problem occurs.
+	 */
+	List<EmployeeSimpleRecord> getResidentesAndSuperintendentes() throws DBException;
 }

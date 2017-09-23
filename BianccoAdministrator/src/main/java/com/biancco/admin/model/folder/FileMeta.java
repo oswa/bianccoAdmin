@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * 
  * @author SOSExcellence.
  */
-@JsonIgnoreProperties({ "bytes", "path" })
+@JsonIgnoreProperties({ "bytes", "path", "contentType" })
 public class FileMeta {
 	/**
 	 * Name.
@@ -28,6 +28,36 @@ public class FileMeta {
 	 * Path.
 	 */
 	private String path;
+	/**
+	 * Content type.
+	 */
+	private String contentType;
+	/**
+	 * Exists flag.
+	 */
+	private boolean alreadyExists;
+
+	/**
+	 * Dummy constructor.
+	 */
+	public FileMeta() {
+	}
+
+	/**
+	 * Constructor.
+	 * 
+	 * @param name
+	 *            Name.
+	 * @param path
+	 *            Parent path.
+	 * @param contentType
+	 *            Content type.
+	 */
+	public FileMeta(String name, String path, String contentType) {
+		this.name = name;
+		this.path = path;
+		this.contentType = contentType;
+	}
 
 	/**
 	 * @return the name.
@@ -87,6 +117,36 @@ public class FileMeta {
 	 */
 	public void setPath(String path) {
 		this.path = path;
+	}
+
+	/**
+	 * @return the contentType.
+	 */
+	public String getContentType() {
+		return contentType;
+	}
+
+	/**
+	 * @param contentType
+	 *            the contentType to set.
+	 */
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
+	}
+
+	/**
+	 * @return the alreadyExists.
+	 */
+	public boolean isAlreadyExists() {
+		return alreadyExists;
+	}
+
+	/**
+	 * @param alreadyExists
+	 *            the alreadyExists to set.
+	 */
+	public void setAlreadyExists(boolean alreadyExists) {
+		this.alreadyExists = alreadyExists;
 	}
 
 }

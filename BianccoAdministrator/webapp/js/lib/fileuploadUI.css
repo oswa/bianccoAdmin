@@ -8,7 +8,7 @@
  * https://opensource.org/licenses/MIT
  */
 .fileupload-button-ui {
- 	margin-top: 10px;
+ 	margin: 10px 0px 5px 0px;
 }
 
 #dropzone {
@@ -17,5 +17,5 @@
     line-height: 40px;
     text-align: center;
     border: dashed 2px gray;
-    margin-top: 10px;
+    margin: 10px;
 }

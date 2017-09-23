@@ -31,7 +31,7 @@
 		<filter-class>com.biancco.admin.filter.SessionFilter</filter-class>
 		<init-param>
 			<param-name>URL-Exceptions</param-name>
-			<param-value>/login</param-value>
+			<param-value>signin,js,css,png,gif,ico,map</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>
@@ -67,7 +67,7 @@
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>/app/*</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping>    
     <!-- Session timeout -->
     <session-config>
         <session-timeout>

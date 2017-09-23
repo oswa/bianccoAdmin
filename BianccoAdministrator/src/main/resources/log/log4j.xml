@@ -1,25 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<!DOCTYPE log4j:configuration PUBLIC 
+	"-//APACHE//DTD LOG4J 1.2//EN" "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
 
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
-	<appender name="console_stderr" class="org.apache.log4j.ConsoleAppender">
+	<!-- <appender name="console_stderr" class="org.apache.log4j.ConsoleAppender"> -->
+	<appender name="console_stderr" class="org.apache.log4j.RollingFileAppender">
 		<param name="target" value="System.err" />
 		<param name="threshold" value="error" />
+		
+		<param name="append" value="true"/>
+		<param name="maxFileSize" value="10MB"/>
+		<param name="maxBackupIndex" value="1"/>
+		<param name="file" value="/logs/biancco/syserr.log"/>
+		
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%d{ABSOLUTE} %-5p [%c{1}] %m%n"/>
 		</layout>
 	</appender>
-	<appender name="console_stdout" class="org.apache.log4j.ConsoleAppender">
+	<appender name="console_stdout" class="org.apache.log4j.RollingFileAppender">
 		<param name="target" value="System.out" />
 		<param name="threshold" value="info" />
+		
+		<param name="append" value="true"/>
+		<param name="maxFileSize" value="10MB"/>
+		<param name="maxBackupIndex" value="1"/>
+		<param name="file" value="/logs/biancco/sysout.log"/>
+		
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%d{ABSOLUTE} %-5p [%c{1}] %m%n"/>
 		</layout>
+	</appender>
+	<appender name="errorRecorderAppender"	class="org.apache.log4j.RollingFileAppender">
+		<param name="Threshold" value="warn"/>
+		<param name="Append" value="true"/>
+    	<param name="MaxFileSize" value="10MB"/>
+    	<param name="maxBackupIndex" value="1"/> 
+		<param name="File" value="/logs/biancco/error.log"/>
+			<layout class="org.apache.log4j.PatternLayout">
+				<param name="ConversionPattern" value="%d{ABSOLUTE} %-5p [%c{1}] %m%n" />
+			</layout>
 	</appender>
 	
 	<root>
 		<level value="info"/>
+		<appender-ref ref="errorRecorderAppender"/>
 		<appender-ref ref="console_stderr"/>
 		<appender-ref ref="console_stdout"/>
 	</root>

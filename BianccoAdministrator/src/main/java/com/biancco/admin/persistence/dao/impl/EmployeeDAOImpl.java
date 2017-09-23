@@ -13,6 +13,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.apache.log4j.Logger;
@@ -178,6 +179,42 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			// conditions
 			// Predicate pEnabled = builder.equal(e.get("enable"), true);
 			// criteria.where(pEnabled);
+
+			return this.entityManager.createQuery(criteria).getResultList();
+		} catch (Exception e) {
+			this.logger.error("Error on get all employees", e);
+			throw new DBException(e);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<EmployeeSimpleRecord> getResidentesAndSuperintendentes() throws DBException {
+		try {
+			CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+			CriteriaQuery<EmployeeSimpleRecord> criteria = builder.createQuery(EmployeeSimpleRecord.class);
+
+			Root<Employee> e = criteria.from(Employee.class);
+			// join table(s)
+			Join<Employee, EmployeeDetail> joinDetail = e.join("employeeDetail", JoinType.LEFT);
+			Join<Employee, Role> joinRole = e.join("role", JoinType.LEFT);
+			// selection
+			Path<Long> pathId = e.get("idEmployee");
+			Path<String> pathName = joinDetail.get("name");
+			Path<String> pathLastName = joinDetail.get("lastName");
+			Path<String> pathNick = e.get("nick");
+			Path<String> pathRole = joinRole.get("name");
+			Path<Boolean> pathEnable = e.get("enable");
+
+			criteria.select(builder.construct(EmployeeSimpleRecord.class, pathId, pathName, pathLastName, pathNick,
+					pathRole, pathEnable));
+			// conditions
+			Predicate pEnabled = builder.equal(e.get("enable"), true);
+			Predicate pRole = builder.or(builder.equal(joinRole.get("name"), "RESIDENTE DE OBRA"),
+					builder.equal(joinRole.get("name"), "SUPER INTENDENTE REGIONAL"));
+			criteria.where(pEnabled, pRole);
 
 			return this.entityManager.createQuery(criteria).getResultList();
 		} catch (Exception e) {

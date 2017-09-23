@@ -121,4 +121,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 		// update
 		return this.employeeDAO.update(e);
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void enableEmployee(long idEmployee, boolean enable) throws DBException {
+		// get employee to update
+		Employee e = this.employeeDAO.getById(idEmployee);
+		e.setEnable(enable);
+		// update
+		this.employeeDAO.update(e);
+	}
 }

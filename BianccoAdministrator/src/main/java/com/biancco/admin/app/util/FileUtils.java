@@ -55,6 +55,7 @@ public class FileUtils {
 			FileMeta fm = new FileMeta();
 			fm.setName(mpf.getOriginalFilename());
 			fm.setSize(formatBytes(mpf.getSize()));
+			fm.setContentType(mpf.getContentType());
 			try {
 				// set bytes
 				fm.setBytes(mpf.getBytes());
@@ -69,6 +70,8 @@ public class FileUtils {
 				}
 				// create final file
 				File file = new File(f, fm.getName());
+				// validate if exists
+				fm.setAlreadyExists(file.exists());
 				// copy file to disk
 				FileCopyUtils.copy(fm.getBytes(), new FileOutputStream(file));
 				// add file to list

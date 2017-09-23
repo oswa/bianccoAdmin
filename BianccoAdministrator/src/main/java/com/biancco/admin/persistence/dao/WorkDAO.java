@@ -3,6 +3,7 @@
  */
 package com.biancco.admin.persistence.dao;
 
+import com.biancco.admin.app.exception.DBException;
 import com.biancco.admin.persistence.model.WorkCompany;
 
 /**
@@ -15,24 +16,30 @@ public interface WorkDAO {
 	 * Return an Work based on its id.
 	 * @param idWork the identitifier
 	 * @return the Work object corresponding to the id
+	 * @throws DBException When there is an error in the database
 	 */
-	public WorkCompany getWorkById( long idWork );
-	/**
-	 * Insert a new Work.
-	 * @param Work
-	 * @return true if successful
-	 */
-	public boolean insertWork( WorkCompany Work );
-	/**
-	 * Delete an Work from persistent data.
-	 * @param Work the element to delete
-	 * @return true id successful
-	 */
-	public boolean deleteWork( WorkCompany Work );
+	public WorkCompany getWorkById( long idWork ) throws DBException;
 	/**
 	 * Update an Work in persisten data.
 	 * @param Work the element to update
 	 * @return true id successful
+	 * @throws DBException When an error occurs
 	 */
-	public boolean updateWork( WorkCompany Work );
+	public WorkCompany updateWork( WorkCompany Work ) throws DBException;
+	/**
+	 * Save a work to persistent memory.
+	 * @param work the info to save.
+	 * @return the object saved.
+	 */
+	public WorkCompany save(WorkCompany work) throws DBException;
+	/**
+	 * Update a Work in persistent data.
+	 * 
+	 * @param work
+	 *            the element to update.
+	 * @return Work updated.
+	 * @throws DBException
+	 *             If a problem occurs.
+	 */
+	WorkCompany update(WorkCompany company) throws DBException;
 }

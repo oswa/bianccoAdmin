@@ -33,4 +33,23 @@ public interface DocumentService {
 	 */
 	void saveDocuments(long folderId, long ownerModuleId, FolderType fType, LinkedList<FileMeta> files,
 			HttpSession session) throws DBException;
+
+	/**
+	 * Gets the file from document.
+	 * 
+	 * @param idDoc
+	 *            Document identifier.
+	 * @return File information.
+	 * @throws DBException
+	 *             If a db exception is thrown.
+	 */
+	FileMeta getFileFromDocument(long idDoc) throws DBException;
+
+	/**
+	 * Deletes a document.
+	 * 
+	 * @param idDoc
+	 *            Document identifier.
+	 */
+	void deleteDocument(long idDoc) throws DBException;
 }

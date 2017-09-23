@@ -7,7 +7,8 @@
  * @returns {String} The URL.
  */
 function currentURL() {
-    return location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '')+'/BianccoAdministrator-0.0.1-SNAPSHOT';
+    //return location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '')+'/BianccoAdministrator-0.0.1-SNAPSHOT';
+	return location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '')+'/BianccoAdministrator';
 }
 /**
  * On load functions.
@@ -42,7 +43,7 @@ $(function() {
         showWaitDialog('Saliendo...');
         this.submit();
     });
-}); 
+});
 /**
  * Logout user.
  
@@ -90,7 +91,7 @@ function checkError(xhr) {
 			console.log('error: ' + e.name);
 			console.log('error response:', xhr.responseText);
 		}
-		alert('Ha ocurrido un problema en la aplicaci&oacute;n, contacte a un administrador.');
+		alert('Ha ocurrido un problema en la aplicacion, contacte a un administrador.');
 	}
 }
 /**
@@ -105,7 +106,7 @@ function checkError(xhr, divContainerId) {
 			console.log('error: ' + e.name);
 			console.log('error response:', xhr.responseText);
 		}
-		alert('Ha ocurrido un problema en la aplicaci&oacute;n, contacte a un administrador.');
+		alert('Ha ocurrido un problema en la aplicacion, contacte a un administrador.');
 	}
 }
 /**
@@ -225,13 +226,17 @@ function showAlert(_type, _divContainer, _message) {
 		var _alertTmpl = '<div class="alert alert-' + _type + ' alert-dismissible" role="alert">' +
 			'<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
 				'<span aria-hidden="true">&times;</span>' +
-			'</button><strong>'+ _title +'</strong>&nbsp;' + _message + '</div>';
+	
+				'</button><strong>'+ _title +'</strong>&nbsp;' + _message + '</div>';
 		_divAlert.hide();
 		_divAlert.html('');
 		_divAlert.html(_alertTmpl);
 		_divAlert.show();
 	} else {
-		alert(object.message);
+		alert(_message);
+		
+		
+		
 	}
 }
 /**

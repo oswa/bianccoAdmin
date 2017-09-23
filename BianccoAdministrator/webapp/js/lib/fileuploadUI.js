@@ -35,7 +35,9 @@
 	            acceptFileTypes: 'Tipo de archivo no permitido',
 	            maxFileSize: 'El archivo es demasiado grande',
 	            minFileSize: 'El archivo es demasiado pequeño'
-	        }, 
+	        },
+	        // button title
+	        buttonTitle : 'Cargar archivos...',
 	        // debug
 	        debug: false 
 		}, options);
@@ -100,7 +102,7 @@
 		var ui = this.append(
 					$('<span class="btn btn-success fileinput-button fileupload-button-ui" />')
 					.append($('<i class="glyphicon glyphicon-plus" />'))
-					.append($('<span/>').text('Cargar archivos...'))
+					.append($('<span/>').text(' ' + settings.buttonTitle))
 					.append($('<input id="_fileupload" type="file" name="files[]" data-url="' + settings.url + '" ' + multipleAttr + '>'))
 				);
 		// validate drop zone
